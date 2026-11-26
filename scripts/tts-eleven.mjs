@@ -38,7 +38,7 @@ const cfg = JSON.parse(fs.readFileSync(path.join(root, "src/reels", reel, "scrip
 const sceneTexts = cfg.scenes.map((x) => (typeof x === "string" ? x : x.text));
 const defaultVoice = ELEVEN_VOICE || cfg.voiceId || VOICE_ENV || "bIHbv24MWmeRgasZH58o";
 const sceneVoices = cfg.scenes.map((x) => (typeof x === "object" && x.voiceId ? x.voiceId : defaultVoice));
-let model = MODEL_ENV || cfg.model || "eleven_multilingual_v2";
+let model = cfg.model || MODEL_ENV || "eleven_multilingual_v2";
 const v2Settings = { stability: 0.4, similarity_boost: 0.8, style: 0.25, use_speaker_boost: true, speed: 1.02, ...(cfg.voiceSettings ?? {}) };
 const v3Settings = { stability: 0.5, similarity_boost: 0.85, ...(cfg.voiceSettings ?? {}) };
 const outDir = path.join(root, "public", reel);

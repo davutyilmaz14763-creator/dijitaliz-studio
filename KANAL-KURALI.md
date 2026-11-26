@@ -34,5 +34,6 @@ Bu proje için onaylanan kalıcı ana format: **`cizgi` v2 (Ana Sunucu: `Arda` +
 
 ## 4. İş Bölümü ve Güvenlik
 - **Antigravity:** Konu, 6 vuruşlu senaryo, TTS, sahne kodlama, Frame QA, GitHub'a push.
+- **Kalıcı Çıktı Klasörü (`out/`):** Üretilen veya GitHub Actions'tan indirilen her `.mp4` videosu mutlaka `C:\Users\Davut Can\Desktop\Kanal-Studio\out\` klasörüne (`out/<KompozisyonAdi>.mp4`) kaydedilir.
 - **GitHub Actions:** Yalnızca `1080×1920 Full HD` render alır (`publish_ig` manuel onay olmadıkça `false`; bulutta Gemini API çalıştırılmaz).
 - **Gemini Masaüstü / Web:** İndirilen `.mp4` videosu son göz kontrolü için incelenir.

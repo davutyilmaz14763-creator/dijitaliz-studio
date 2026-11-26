@@ -1252,39 +1252,53 @@ export const ViralCaptions: React.FC<{ words: VWord[]; y?: number; highlight?: s
   const t = frame / fps;
   const idx = words.findIndex((w) => t >= w.start && t <= w.end + 0.14);
   if (idx === -1) return null;
-  const w = words[idx];
-  const age = Math.max(0, t - w.start);
-  const scale = interpolate(age, [0, 0.08], [1.18, 1], clamp);
-  const clean = w.text.replace(/[.,!?;:]/g, "").toLocaleLowerCase("tr");
-  const isHot = highlight.some((h) => clean.startsWith(h.toLocaleLowerCase("tr")));
+  // Group into 2-3 word chunks within the same scene
+  const curScene = words[idx].scene;
+  const sceneWords = words.filter((w) => w.scene === curScene);
+  const posInScene = sceneWords.indexOf(words[idx]);
+  const chunkStart = Math.floor(posInScene / 3) * 3;
+  const group = sceneWords.slice(chunkStart, chunkStart + 3);
+  const age = Math.max(0, t - group[0].start);
+  const scale = interpolate(age, [0, 0.08], [1.12, 1], clamp);
   return (
     <div
       style={{
         position: "absolute",
-        left: 60,
-        right: 60,
+        left: 54,
+        right: 54,
         top: y,
         textAlign: "center",
         transform: `scale(${scale})`,
         zIndex: 30,
         pointerEvents: "none",
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        gap: "10px 16px",
       }}
     >
-      <span
-        style={{
-          fontFamily: sans,
-          fontSize: 78,
-          fontWeight: 900,
-          textTransform: "uppercase",
-          letterSpacing: 1,
-          color: isHot ? "#FACC15" : "#FFFFFF",
-          WebkitTextStroke: "14px #0F172A",
-          paintOrder: "stroke fill",
-          textShadow: "0 10px 24px rgba(0,0,0,0.75)",
-        }}
-      >
-        {w.text}
-      </span>
+      {group.map((gw, gi) => {
+        const clean = gw.text.replace(/[.,!?;:'"’]/g, "").toLocaleLowerCase("tr");
+        const isHot = highlight.some((h) => clean.startsWith(h.toLocaleLowerCase("tr")));
+        return (
+          <span
+            key={gi}
+            style={{
+              fontFamily: sans,
+              fontSize: 64,
+              fontWeight: 900,
+              textTransform: "uppercase",
+              letterSpacing: 0.5,
+              color: isHot ? "#FACC15" : "#FFFFFF",
+              WebkitTextStroke: "12px #0F172A",
+              paintOrder: "stroke fill",
+              textShadow: "0 8px 20px rgba(0,0,0,0.75)",
+            }}
+          >
+            {gw.text}
+          </span>
+        );
+      })}
     </div>
   );
 };
@@ -1298,6 +1312,7 @@ export const SplitScreen: React.FC<{
   bottomValue: string;
   bottomBg?: string;
   dividerText?: string;
+  fullScreen?: boolean;
   at?: number;
 }> = ({
   topLabel,
@@ -1307,6 +1322,7 @@ export const SplitScreen: React.FC<{
   bottomValue,
   bottomBg = "linear-gradient(135deg, #065F46 0%, #064E3B 100%)",
   dividerText = "VS",
+  fullScreen = false,
   at = 0.08,
 }) => {
   const p = usePopAt(at, 15, 200);
@@ -1314,20 +1330,21 @@ export const SplitScreen: React.FC<{
     <div
       style={{
         position: "absolute",
-        left: 70,
-        right: 70,
-        top: 370,
-        height: 620,
-        borderRadius: 28,
+        left: fullScreen ? 0 : 70,
+        right: fullScreen ? 0 : 70,
+        top: fullScreen ? 0 : 370,
+        bottom: fullScreen ? 0 : undefined,
+        height: fullScreen ? "100%" : 620,
+        borderRadius: fullScreen ? 0 : 28,
         overflow: "hidden",
-        border: "6px solid #0F172A",
-        outline: "7px solid #FFFFFF",
-        boxShadow: "0 18px 36px rgba(0,0,0,0.45)",
+        border: fullScreen ? "none" : "6px solid #0F172A",
+        outline: fullScreen ? "none" : "7px solid #FFFFFF",
+        boxShadow: fullScreen ? "none" : "0 18px 36px rgba(0,0,0,0.45)",
         display: "flex",
         flexDirection: "column",
-        scale: String(interpolate(p, [0, 1], [0.86, 1])),
+        scale: fullScreen ? "1" : String(interpolate(p, [0, 1], [0.86, 1])),
         opacity: Math.min(1, p * 2.5),
-        zIndex: 16,
+        zIndex: fullScreen ? 8 : 16,
       }}
     >
       <div style={{ flex: 1, background: topBg, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: 24, borderBottom: "5px solid #0F172A" }}>
@@ -1438,8 +1455,8 @@ export const FloatingParticles: React.FC<{ count?: number; color?: string }> = (
 export const BgMusic: React.FC<{ src?: string; words: VWord[]; baseVol?: number; duckVol?: number }> = ({
   src = "sfx/bgm-curious.mp3",
   words,
-  baseVol = 0.12,
-  duckVol = 0.08,
+  baseVol = 0.18,
+  duckVol = 0.14,
 }) => {
   const { fps } = useVideoConfig();
   return (

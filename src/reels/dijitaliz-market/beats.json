@@ -1,11 +1,10 @@
 {
-  "topic": "Süpermarketlerdeki Dev Alışveriş Arabaları Neden Bu Kadar Büyük?",
+  "topic": "Market Arabaları Neden Bu Kadar Büyük? (v2.1)",
   "beats": [
-    { "beat": "HOOK", "scene": 0, "shot": "wide", "note": "Frame 0 = Kapak + somut olay + RealPhotoBg + Arda + ViralHeadline" },
-    { "beat": "SETUP", "scene": 1, "shot": "insert", "note": "1937 deneyi belgesi InsertCard" },
-    { "beat": "QUIZ", "scene": 2, "shot": "closeup", "note": "Arda close-up mini merak sorusu" },
-    { "beat": "REVEAL", "scene": 3, "shot": "wide", "note": "%40 satış artışı CizgiStatBar + MiniBot" },
-    { "beat": "TWIST", "scene": 4, "shot": "closeup", "note": "Tekerleklerin sola çekme sırrı + InsertCard" },
-    { "beat": "SEAMLESS_LOOP", "scene": 5, "shot": "split", "note": "SplitScreen ikilem + final ≈ Frame 0" }
+    { "beat": "HOOK", "scene": 0, "shot": "wide", "note": "0-3 sn kanca + Arda orta plan + gerçek market arabası fotoğrafı" },
+    { "beat": "SETUP_QUIZ", "scene": 1, "shot": "corner", "note": "1937 küçük sepet vs 2x büyüyen dev araba görsel metafor + Arda alt köşede küçük" },
+    { "beat": "REVEAL", "scene": 2, "shot": "closeup", "note": "Tam yüzde kırk! Arda yakın yüz çekimi (scale 1.55) + %40 CizgiStatBar" },
+    { "beat": "TWIST", "scene": 3, "shot": "corner", "note": "Market kroki/rota animasyonu (Giriş -> Koridor -> Süt/Ekmek) + Arda alt köşede" },
+    { "beat": "FINAL_SPLIT", "scene": 4, "shot": "fullscreen_split", "note": "Tam ekran üst-alt bölünmüş ikilem (DEV ARABA / EL SEPETİ)" }
   ]
 }
