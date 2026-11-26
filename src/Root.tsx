@@ -38,6 +38,7 @@ import { DijitalizTest, DIJITALIZ_TEST_FRAMES } from "./reels/dijitaliz-test/Dij
 import { DijitalizZengin, DIJITALIZ_ZENGIN_FRAMES } from "./reels/dijitaliz-zengin/DijitalizZengin";
 import { DijitalizViralTest, DIJITALIZ_VIRAL_TEST_FRAMES } from "./reels/dijitaliz-viral-test/DijitalizViralTest";
 import { DijitalizMarket, DIJITALIZ_MARKET_FRAMES } from "./reels/dijitaliz-market/DijitalizMarket";
+import { DijitalizMarket3D, DIJITALIZ_MARKET_3D_FRAMES } from "./reels/dijitaliz-market-3d/DijitalizMarket3D";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -164,6 +165,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition id="DijitalizZengin" component={DijitalizZengin} durationInFrames={DIJITALIZ_ZENGIN_FRAMES} fps={30} width={1080} height={1920} />
       <Composition id="DijitalizViralTest" component={DijitalizViralTest} durationInFrames={DIJITALIZ_VIRAL_TEST_FRAMES} fps={30} width={1080} height={1920} />
       <Composition id="DijitalizMarket" component={DijitalizMarket} durationInFrames={DIJITALIZ_MARKET_FRAMES} fps={30} width={1080} height={1920} />
+      <Composition id="DijitalizMarket3D" component={DijitalizMarket3D} durationInFrames={DIJITALIZ_MARKET_3D_FRAMES} fps={30} width={1080} height={1920} />
     </>
   );
 };

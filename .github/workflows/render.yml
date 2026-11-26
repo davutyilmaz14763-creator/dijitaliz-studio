@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       composition:
-        description: "Render alınacak Remotion kompozisyon ID (ör. DijitalizMarket)"
+        description: "Render alınacak Remotion kompozisyon ID (ör. DijitalizMarket3D)"
         required: true
-        default: "DijitalizMarket"
+        default: "DijitalizMarket3D"
       publish_ig:
         description: "Instagram Reels olarak yayınlansın mı?"
         type: boolean
@@ -25,7 +25,7 @@ jobs:
   render:
     runs-on: ubuntu-latest
     env:
-      COMP: ${{ github.event.inputs.composition || 'DijitalizMarket' }}
+      COMP: ${{ github.event.inputs.composition || 'DijitalizMarket3D' }}
     steps:
       - name: Depoyu çek
         uses: actions/checkout@v4
@@ -62,7 +62,7 @@ jobs:
       - name: Full HD (1080x1920) Render
         run: |
           mkdir -p out
-          npx remotion render "${COMP}" "out/${COMP}.mp4"
+          npx remotion render "${COMP}" "out/${COMP}.mp4" --gl=swiftshader
 
       - name: Video Çıktısını Yükle (Artifact)
         uses: actions/upload-artifact@v4
