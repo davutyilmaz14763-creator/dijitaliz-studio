@@ -34,12 +34,13 @@ if (!reel) throw new Error("kullanım: node scripts/tts-eleven.mjs <reel> [--fak
 const fake = args.includes("--fake");
 const cfg = JSON.parse(fs.readFileSync(path.join(root, "src/reels", reel, "script.json"), "utf8"));
 const sceneTexts = cfg.scenes.map((x) => (typeof x === "string" ? x : x.text));
+const defaultVoice = cfg.voiceId || VOICE_ENV || "IKne3meq5aSn9XLyUdCD";
+const sceneVoices = cfg.scenes.map((x) => (typeof x === "object" && x.voiceId ? x.voiceId : defaultVoice));
 const model = cfg.model || "eleven_multilingual_v2";
 const isV3 = model === "eleven_v3";
 const settings = isV3
   ? { stability: 0.5, similarity_boost: 1.0, ...(cfg.voiceSettings ?? {}) }
-  : // style 0 + similarity 1.0: klon sese en yakın sonuç
-    { stability: 0.5, similarity_boost: 1.0, style: 0, use_speaker_boost: true, speed: 1.0, ...(cfg.voiceSettings ?? {}) };
+  : { stability: 0.4, similarity_boost: 0.85, style: 0.25, use_speaker_boost: true, speed: 1.12, ...(cfg.voiceSettings ?? {}) };
 const outDir = path.join(root, "public", reel);
 fs.mkdirSync(outDir, { recursive: true });
 
@@ -64,13 +65,14 @@ const toWords = (chars, starts, ends, sceneOfChar, offset) => {
   return words;
 };
 
-// chunk scenes
+// chunk scenes (split on character limit OR voiceId change)
 const LIMIT = isV3 ? 2400 : 4500;
 const chunks = [];
 let curChunk = [];
 let len = 0;
 sceneTexts.forEach((t, i) => {
-  if (curChunk.length && len + t.length + 1 > LIMIT) {
+  const voiceChanged = curChunk.length && sceneVoices[i] !== sceneVoices[curChunk[0]];
+  if ((curChunk.length && len + t.length + 1 > LIMIT) || voiceChanged) {
     chunks.push(curChunk);
     curChunk = [];
     len = 0;
@@ -104,7 +106,7 @@ for (const [ci, idxs] of chunks.entries()) {
     dur = t + 0.2;
   } else {
     if (!KEY) throw new Error("ELEVENLABS_API_KEY yok — reels-studio/.env dosyasına ekle (ya da --fake ile önizle)");
-    if (!(cfg.voiceId || VOICE_ENV)) throw new Error("voiceId yok — script.json veya .env (ELEVENLABS_VOICE_ID) içine yaz; listelemek için: node scripts/tts-eleven.mjs --voices");
+    const chunkVoice = sceneVoices[idxs[0]];
     const body = { text, model_id: model, voice_settings: settings, ...(cfg.language ? { language_code: cfg.language } : {}) };
     if (!isV3) {
       const prev = chunks[ci - 1]?.map((i) => sceneTexts[i]).join(" ");
@@ -114,7 +116,7 @@ for (const [ci, idxs] of chunks.entries()) {
     }
     let r;
     for (let attempt = 0; attempt < 3; attempt++) {
-      r = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${(cfg.voiceId || VOICE_ENV)}/with-timestamps?output_format=mp3_44100_128`, {
+      r = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${chunkVoice}/with-timestamps?output_format=mp3_44100_128`, {
         method: "POST",
         headers: { "xi-api-key": KEY, "Content-Type": "application/json" },
         body: JSON.stringify(body),

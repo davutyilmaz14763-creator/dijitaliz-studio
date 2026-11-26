@@ -54,12 +54,19 @@ const uploadTemp = (localPath) => {
   const abs = path.isAbsolute(localPath) ? localPath : path.join(root, localPath);
   if (!fs.existsSync(abs)) throw new Error(`Dosya bulunamadı: ${abs}`);
   console.log(`0/3 Geçici HTTPS sunucusuna yükleniyor (${path.basename(abs)})...`);
-  const out = execFileSync("curl.exe", ["-sL", "-F", `file=@${abs}`, "https://tmpfiles.org/api/v1/upload"]).toString();
-  const parsed = JSON.parse(out);
-  if (parsed.status !== "success" || !parsed.data?.url) {
-    throw new Error(`Geçici yükleme hatası: ${out}`);
+  const url = execFileSync("curl.exe", [
+    "-sL",
+    "-F", "reqtype=fileupload",
+    "-F", "time=24h",
+    "-F", `fileToUpload=@${abs}`,
+    "https://litterbox.catbox.moe/resources/internals/api.php",
+  ])
+    .toString()
+    .trim();
+  if (!url.startsWith("https://")) {
+    throw new Error(`Geçici yükleme hatası: ${url}`);
   }
-  return parsed.data.url.replace("https://tmpfiles.org/", "https://tmpfiles.org/dl/");
+  return url;
 };
 
 if (!videoUrl && fileArg) {
