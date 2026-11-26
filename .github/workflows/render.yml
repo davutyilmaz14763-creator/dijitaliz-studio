@@ -68,8 +68,16 @@ jobs:
           mkdir -p out
           npx remotion render "${COMP}" "out/${COMP}.mp4"
 
+      - name: Video Çıktısını Yükle (Artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.COMP }}-fullhd
+          path: out/${{ env.COMP }}.mp4
+          retention-days: 14
+
       - name: Gemini Kalite Kontrolü
         if: ${{ github.event.inputs.gemini_review != 'false' }}
+        continue-on-error: true
         env:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
         run: |
@@ -78,13 +86,6 @@ jobs:
           else
             echo "GOOGLE_API_KEY secret tanımlı değil, atlandı."
           fi
-
-      - name: Video Çıktısını Yükle (Artifact)
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ env.COMP }}-fullhd
-          path: out/${{ env.COMP }}.mp4
-          retention-days: 14
 
       - name: Instagram Reels Yayınla
         if: ${{ github.event.inputs.publish_ig == 'true' }}

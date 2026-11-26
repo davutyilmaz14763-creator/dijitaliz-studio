@@ -43,7 +43,7 @@ const prompt = `Bu dikey (9:16) Türkçe YouTube Shorts / Instagram Reels videos
 4. Düzeltilmesi Gerekenler: Varsa somut zaman damgasıyla (ör. 00:12) 1-3 maddede listele; sorun yoksa "Yayınlanmaya hazır" de.`;
 
 try {
-  const models = ["gemini-3.8-flash", "gemini-3.8-flash", "gemini-3.8-flash", "gemini-3.8-flash-lite"];
+  const models = ["gemini-3.8-flash", "gemini-3.8-flash", "gemini-3.8-flash", "gemini-3.8-flash"];
   let res = null;
   let lastErr = null;
   for (const model of models) {
@@ -63,7 +63,7 @@ try {
       break;
     } catch (e) {
       lastErr = e;
-      await new Promise((r) => setTimeout(r, 6000));
+      await new Promise((r) => setTimeout(r, 8000));
     }
   }
   if (!res) throw lastErr;
