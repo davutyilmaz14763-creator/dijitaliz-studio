@@ -1,0 +1,223 @@
+{
+ "fake": false,
+ "model": "eleven_multilingual_v2",
+ "duration": 15.882,
+ "words": [
+  {
+   "text": "Yapay",
+   "start": 0,
+   "end": 0.348,
+   "scene": 0
+  },
+  {
+   "text": "zekaya",
+   "start": 0.395,
+   "end": 0.801,
+   "scene": 0
+  },
+  {
+   "text": "kredi",
+   "start": 0.848,
+   "end": 1.091,
+   "scene": 0
+  },
+  {
+   "text": "kartını",
+   "start": 1.126,
+   "end": 1.474,
+   "scene": 0
+  },
+  {
+   "text": "verip",
+   "start": 1.509,
+   "end": 1.718,
+   "scene": 0
+  },
+  {
+   "text": "alışveriş",
+   "start": 1.776,
+   "end": 2.252,
+   "scene": 0
+  },
+  {
+   "text": "yaptırır",
+   "start": 2.31,
+   "end": 2.694,
+   "scene": 0
+  },
+  {
+   "text": "mıydın?",
+   "start": 2.752,
+   "end": 3.158,
+   "scene": 0
+  },
+  {
+   "text": "Yeni",
+   "start": 3.483,
+   "end": 3.715,
+   "scene": 1
+  },
+  {
+   "text": "çıkan",
+   "start": 3.75,
+   "end": 4.017,
+   "scene": 1
+  },
+  {
+   "text": "kişisel",
+   "start": 4.063,
+   "end": 4.435,
+   "scene": 1
+  },
+  {
+   "text": "ajanlar",
+   "start": 4.493,
+   "end": 4.946,
+   "scene": 1
+  },
+  {
+   "text": "artık",
+   "start": 5.155,
+   "end": 5.468,
+   "scene": 1
+  },
+  {
+   "text": "senin",
+   "start": 5.526,
+   "end": 5.77,
+   "scene": 1
+  },
+  {
+   "text": "yerine",
+   "start": 5.828,
+   "end": 6.084,
+   "scene": 1
+  },
+  {
+   "text": "sipariş",
+   "start": 6.142,
+   "end": 6.56,
+   "scene": 1
+  },
+  {
+   "text": "bile",
+   "start": 6.618,
+   "end": 6.757,
+   "scene": 1
+  },
+  {
+   "text": "veriyor.",
+   "start": 6.803,
+   "end": 7.268,
+   "scene": 1
+  },
+  {
+   "text": "Ama",
+   "start": 7.593,
+   "end": 7.802,
+   "scene": 1
+  },
+  {
+   "text": "dur!",
+   "start": 7.848,
+   "end": 8.243,
+   "scene": 1
+  },
+  {
+   "text": "Yeni",
+   "start": 8.568,
+   "end": 8.789,
+   "scene": 2
+  },
+  {
+   "text": "araştırmaya",
+   "start": 8.812,
+   "end": 9.381,
+   "scene": 2
+  },
+  {
+   "text": "göre",
+   "start": 9.416,
+   "end": 9.729,
+   "scene": 2
+  },
+  {
+   "text": "her",
+   "start": 9.903,
+   "end": 10.101,
+   "scene": 2
+  },
+  {
+   "text": "üç",
+   "start": 10.194,
+   "end": 10.321,
+   "scene": 2
+  },
+  {
+   "text": "işlemden",
+   "start": 10.368,
+   "end": 10.809,
+   "scene": 2
+  },
+  {
+   "text": "birinde",
+   "start": 10.855,
+   "end": 11.169,
+   "scene": 2
+  },
+  {
+   "text": "ciddi",
+   "start": 11.215,
+   "end": 11.517,
+   "scene": 2
+  },
+  {
+   "text": "hata",
+   "start": 11.575,
+   "end": 11.807,
+   "scene": 2
+  },
+  {
+   "text": "yapıyorlar.",
+   "start": 11.865,
+   "end": 12.423,
+   "scene": 2
+  },
+  {
+   "text": "Şimdilik",
+   "start": 12.748,
+   "end": 13.293,
+   "scene": 3
+  },
+  {
+   "text": "şifrelerini",
+   "start": 13.618,
+   "end": 14.245,
+   "scene": 3
+  },
+  {
+   "text": "ve",
+   "start": 14.28,
+   "end": 14.362,
+   "scene": 3
+  },
+  {
+   "text": "kartını",
+   "start": 14.408,
+   "end": 14.779,
+   "scene": 3
+  },
+  {
+   "text": "kendin",
+   "start": 14.826,
+   "end": 15.139,
+   "scene": 3
+  },
+  {
+   "text": "sakla.",
+   "start": 15.197,
+   "end": 15.882,
+   "scene": 3
+  }
+ ]
+}

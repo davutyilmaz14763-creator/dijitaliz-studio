@@ -1,0 +1,133 @@
+{
+ "fake": false,
+ "model": "tr-TR-AhmetNeural",
+ "duration": 11.11,
+ "words": [
+  {
+   "text": "1945",
+   "start": 0.1,
+   "end": 1.475,
+   "scene": 0
+  },
+  {
+   "text": "yılında",
+   "start": 1.475,
+   "end": 1.825,
+   "scene": 0
+  },
+  {
+   "text": "ilk",
+   "start": 1.863,
+   "end": 2.1,
+   "scene": 0
+  },
+  {
+   "text": "bilgisayar",
+   "start": 2.112,
+   "end": 2.787,
+   "scene": 0
+  },
+  {
+   "text": "tam",
+   "start": 2.813,
+   "end": 3.05,
+   "scene": 0
+  },
+  {
+   "text": "bir",
+   "start": 3.063,
+   "end": 3.212,
+   "scene": 0
+  },
+  {
+   "text": "oda",
+   "start": 3.212,
+   "end": 3.413,
+   "scene": 0
+  },
+  {
+   "text": "büyüklüğündeydi",
+   "start": 3.413,
+   "end": 4.15,
+   "scene": 0
+  },
+  {
+   "text": "ve",
+   "start": 4.188,
+   "end": 4.313,
+   "scene": 0
+  },
+  {
+   "text": "27",
+   "start": 4.313,
+   "end": 4.825,
+   "scene": 0
+  },
+  {
+   "text": "ton",
+   "start": 4.825,
+   "end": 5.05,
+   "scene": 0
+  },
+  {
+   "text": "ağırlığındaydı.",
+   "start": 5.05,
+   "end": 5.8,
+   "scene": 0
+  },
+  {
+   "text": "Bugün",
+   "start": 7.31,
+   "end": 7.947,
+   "scene": 1
+  },
+  {
+   "text": "kolundaki",
+   "start": 7.96,
+   "end": 8.51,
+   "scene": 1
+  },
+  {
+   "text": "akıllı",
+   "start": 8.51,
+   "end": 8.935,
+   "scene": 1
+  },
+  {
+   "text": "saat",
+   "start": 8.935,
+   "end": 9.248,
+   "scene": 1
+  },
+  {
+   "text": "ondan",
+   "start": 9.273,
+   "end": 9.648,
+   "scene": 1
+  },
+  {
+   "text": "milyonlarca",
+   "start": 9.648,
+   "end": 10.285,
+   "scene": 1
+  },
+  {
+   "text": "kat",
+   "start": 10.285,
+   "end": 10.535,
+   "scene": 1
+  },
+  {
+   "text": "daha",
+   "start": 10.535,
+   "end": 10.735,
+   "scene": 1
+  },
+  {
+   "text": "hızlı.",
+   "start": 10.735,
+   "end": 11.11,
+   "scene": 1
+  }
+ ]
+}

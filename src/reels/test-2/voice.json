@@ -1,0 +1,193 @@
+{
+ "fake": false,
+ "model": "tr-TR-AhmetNeural",
+ "duration": 18.652,
+ "words": [
+  {
+   "text": "Aydaki",
+   "start": 0.1,
+   "end": 0.662,
+   "scene": 0
+  },
+  {
+   "text": "astronot",
+   "start": 0.662,
+   "end": 1.175,
+   "scene": 0
+  },
+  {
+   "text": "ayak",
+   "start": 1.175,
+   "end": 1.438,
+   "scene": 0
+  },
+  {
+   "text": "izlerinin",
+   "start": 1.438,
+   "end": 1.938,
+   "scene": 0
+  },
+  {
+   "text": "milyonlarca",
+   "start": 1.938,
+   "end": 2.638,
+   "scene": 0
+  },
+  {
+   "text": "yıl",
+   "start": 2.638,
+   "end": 2.838,
+   "scene": 0
+  },
+  {
+   "text": "silinmeyeceğini",
+   "start": 2.837,
+   "end": 3.625,
+   "scene": 0
+  },
+  {
+   "text": "biliyor",
+   "start": 3.625,
+   "end": 4,
+   "scene": 0
+  },
+  {
+   "text": "musun?",
+   "start": 4,
+   "end": 4.4,
+   "scene": 0
+  },
+  {
+   "text": "Çünkü",
+   "start": 5.918,
+   "end": 6.293,
+   "scene": 1
+  },
+  {
+   "text": "Ay'da",
+   "start": 6.293,
+   "end": 6.618,
+   "scene": 1
+  },
+  {
+   "text": "rüzgar,",
+   "start": 6.618,
+   "end": 7.093,
+   "scene": 1
+  },
+  {
+   "text": "yağmur",
+   "start": 7.293,
+   "end": 7.768,
+   "scene": 1
+  },
+  {
+   "text": "ve",
+   "start": 7.768,
+   "end": 7.88,
+   "scene": 1
+  },
+  {
+   "text": "atmosfer",
+   "start": 7.88,
+   "end": 8.556,
+   "scene": 1
+  },
+  {
+   "text": "yok.",
+   "start": 8.555,
+   "end": 8.793,
+   "scene": 1
+  },
+  {
+   "text": "1969'da",
+   "start": 9.918,
+   "end": 11.568,
+   "scene": 1
+  },
+  {
+   "text": "bırakılan",
+   "start": 11.568,
+   "end": 12.08,
+   "scene": 1
+  },
+  {
+   "text": "izler",
+   "start": 12.105,
+   "end": 12.48,
+   "scene": 1
+  },
+  {
+   "text": "hâlâ",
+   "start": 12.48,
+   "end": 12.855,
+   "scene": 1
+  },
+  {
+   "text": "ilk",
+   "start": 12.893,
+   "end": 13.093,
+   "scene": 1
+  },
+  {
+   "text": "günkü",
+   "start": 13.093,
+   "end": 13.405,
+   "scene": 1
+  },
+  {
+   "text": "gibi",
+   "start": 13.405,
+   "end": 13.63,
+   "scene": 1
+  },
+  {
+   "text": "duruyor.",
+   "start": 13.63,
+   "end": 14.005,
+   "scene": 1
+  },
+  {
+   "text": "İnsanlığın",
+   "start": 15.552,
+   "end": 16.415,
+   "scene": 2
+  },
+  {
+   "text": "bıraktığı",
+   "start": 16.415,
+   "end": 16.927,
+   "scene": 2
+  },
+  {
+   "text": "ilk",
+   "start": 16.939,
+   "end": 17.202,
+   "scene": 2
+  },
+  {
+   "text": "izler",
+   "start": 17.215,
+   "end": 17.577,
+   "scene": 2
+  },
+  {
+   "text": "uzayda",
+   "start": 17.577,
+   "end": 17.989,
+   "scene": 2
+  },
+  {
+   "text": "bile",
+   "start": 17.989,
+   "end": 18.177,
+   "scene": 2
+  },
+  {
+   "text": "kalıcı.",
+   "start": 18.177,
+   "end": 18.652,
+   "scene": 2
+  }
+ ]
+}

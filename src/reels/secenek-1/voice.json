@@ -1,0 +1,121 @@
+{
+ "fake": false,
+ "model": "tr-TR-AhmetNeural",
+ "duration": 11.735,
+ "words": [
+  {
+   "text": "Kodun",
+   "start": 0.1,
+   "end": 0.537,
+   "scene": 0
+  },
+  {
+   "text": "sadece",
+   "start": 0.537,
+   "end": 1.063,
+   "scene": 0
+  },
+  {
+   "text": "ekranda",
+   "start": 1.063,
+   "end": 1.563,
+   "scene": 0
+  },
+  {
+   "text": "değil,",
+   "start": 1.563,
+   "end": 2,
+   "scene": 0
+  },
+  {
+   "text": "her",
+   "start": 2.15,
+   "end": 2.362,
+   "scene": 0
+  },
+  {
+   "text": "saniye",
+   "start": 2.362,
+   "end": 2.813,
+   "scene": 0
+  },
+  {
+   "text": "cebinde",
+   "start": 2.813,
+   "end": 3.212,
+   "scene": 0
+  },
+  {
+   "text": "çalışıyor.",
+   "start": 3.212,
+   "end": 3.813,
+   "scene": 0
+  },
+  {
+   "text": "Tek",
+   "start": 5.366,
+   "end": 5.516,
+   "scene": 1
+  },
+  {
+   "text": "bir",
+   "start": 5.779,
+   "end": 5.991,
+   "scene": 1
+  },
+  {
+   "text": "dokunuşla",
+   "start": 5.991,
+   "end": 6.603,
+   "scene": 1
+  },
+  {
+   "text": "milyonlarca",
+   "start": 6.616,
+   "end": 7.316,
+   "scene": 1
+  },
+  {
+   "text": "satır",
+   "start": 7.316,
+   "end": 7.641,
+   "scene": 1
+  },
+  {
+   "text": "veri",
+   "start": 7.641,
+   "end": 7.854,
+   "scene": 1
+  },
+  {
+   "text": "işleniyor.",
+   "start": 7.854,
+   "end": 8.404,
+   "scene": 1
+  },
+  {
+   "text": "İşte",
+   "start": 9.96,
+   "end": 10.36,
+   "scene": 2
+  },
+  {
+   "text": "modern",
+   "start": 10.422,
+   "end": 10.81,
+   "scene": 2
+  },
+  {
+   "text": "arayüzlerin",
+   "start": 10.81,
+   "end": 11.385,
+   "scene": 2
+  },
+  {
+   "text": "gücü.",
+   "start": 11.385,
+   "end": 11.735,
+   "scene": 2
+  }
+ ]
+}

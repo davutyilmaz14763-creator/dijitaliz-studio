@@ -1,0 +1,301 @@
+{
+ "fake": false,
+ "model": "eleven_multilingual_v2",
+ "duration": 23.823,
+ "words": [
+  {
+   "text": "Kafede",
+   "start": 0,
+   "end": 0.476,
+   "scene": 0
+  },
+  {
+   "text": "ücretsiz",
+   "start": 0.557,
+   "end": 1.196,
+   "scene": 0
+  },
+  {
+   "text": "Wi-Fi'a",
+   "start": 1.521,
+   "end": 2.125,
+   "scene": 0
+  },
+  {
+   "text": "bağlandığın",
+   "start": 2.194,
+   "end": 2.694,
+   "scene": 0
+  },
+  {
+   "text": "an",
+   "start": 2.74,
+   "end": 2.798,
+   "scene": 0
+  },
+  {
+   "text": "aslında",
+   "start": 2.856,
+   "end": 3.181,
+   "scene": 0
+  },
+  {
+   "text": "ne",
+   "start": 3.239,
+   "end": 3.32,
+   "scene": 0
+  },
+  {
+   "text": "olduğunu",
+   "start": 3.379,
+   "end": 3.669,
+   "scene": 0
+  },
+  {
+   "text": "biliyor",
+   "start": 3.704,
+   "end": 3.982,
+   "scene": 0
+  },
+  {
+   "text": "musun?",
+   "start": 4.005,
+   "end": 4.447,
+   "scene": 0
+  },
+  {
+   "text": "Açık",
+   "start": 4.772,
+   "end": 5.074,
+   "scene": 1
+  },
+  {
+   "text": "ağlarda",
+   "start": 5.132,
+   "end": 5.526,
+   "scene": 1
+  },
+  {
+   "text": "verilerin",
+   "start": 5.573,
+   "end": 5.979,
+   "scene": 1
+  },
+  {
+   "text": "şifresiz",
+   "start": 6.037,
+   "end": 6.513,
+   "scene": 1
+  },
+  {
+   "text": "giderse,",
+   "start": 6.56,
+   "end": 7.245,
+   "scene": 1
+  },
+  {
+   "text": "aynı",
+   "start": 7.57,
+   "end": 7.906,
+   "scene": 1
+  },
+  {
+   "text": "ağdaki",
+   "start": 7.964,
+   "end": 8.359,
+   "scene": 1
+  },
+  {
+   "text": "biri",
+   "start": 8.406,
+   "end": 8.568,
+   "scene": 1
+  },
+  {
+   "text": "trafiğini",
+   "start": 8.615,
+   "end": 9.067,
+   "scene": 1
+  },
+  {
+   "text": "izleyebilir.",
+   "start": 9.125,
+   "end": 9.857,
+   "scene": 1
+  },
+  {
+   "text": "Testlerde",
+   "start": 10.461,
+   "end": 11.157,
+   "scene": 1
+  },
+  {
+   "text": "açık",
+   "start": 11.366,
+   "end": 11.656,
+   "scene": 1
+  },
+  {
+   "text": "ağların",
+   "start": 11.714,
+   "end": 12.028,
+   "scene": 1
+  },
+  {
+   "text": "yüzde",
+   "start": 12.063,
+   "end": 12.341,
+   "scene": 1
+  },
+  {
+   "text": "altmış",
+   "start": 12.388,
+   "end": 12.725,
+   "scene": 1
+  },
+  {
+   "text": "sekizi",
+   "start": 12.771,
+   "end": 13.096,
+   "scene": 1
+  },
+  {
+   "text": "riskli",
+   "start": 13.131,
+   "end": 13.433,
+   "scene": 1
+  },
+  {
+   "text": "çıktı.",
+   "start": 13.479,
+   "end": 13.909,
+   "scene": 1
+  },
+  {
+   "text": "Çözüm",
+   "start": 14.234,
+   "end": 14.594,
+   "scene": 2
+  },
+  {
+   "text": "basit:",
+   "start": 14.64,
+   "end": 15.151,
+   "scene": 2
+  },
+  {
+   "text": "bankacılık",
+   "start": 15.395,
+   "end": 15.987,
+   "scene": 2
+  },
+  {
+   "text": "işlerini",
+   "start": 16.045,
+   "end": 16.393,
+   "scene": 2
+  },
+  {
+   "text": "mobil",
+   "start": 16.439,
+   "end": 16.718,
+   "scene": 2
+  },
+  {
+   "text": "veriden",
+   "start": 16.764,
+   "end": 17.136,
+   "scene": 2
+  },
+  {
+   "text": "yap,",
+   "start": 17.206,
+   "end": 17.531,
+   "scene": 2
+  },
+  {
+   "text": "her",
+   "start": 17.74,
+   "end": 17.96,
+   "scene": 2
+  },
+  {
+   "text": "ağa",
+   "start": 18.076,
+   "end": 18.251,
+   "scene": 2
+  },
+  {
+   "text": "güvenme.",
+   "start": 18.32,
+   "end": 18.912,
+   "scene": 2
+  },
+  {
+   "text": "Peki",
+   "start": 19.237,
+   "end": 19.47,
+   "scene": 3
+  },
+  {
+   "text": "sen",
+   "start": 19.528,
+   "end": 19.679,
+   "scene": 3
+  },
+  {
+   "text": "her",
+   "start": 19.771,
+   "end": 19.934,
+   "scene": 3
+  },
+  {
+   "text": "gördüğün",
+   "start": 20.004,
+   "end": 20.34,
+   "scene": 3
+  },
+  {
+   "text": "ücretsiz",
+   "start": 20.422,
+   "end": 20.851,
+   "scene": 3
+  },
+  {
+   "text": "Wi-Fi'a",
+   "start": 20.921,
+   "end": 21.339,
+   "scene": 3
+  },
+  {
+   "text": "bağlanıyor",
+   "start": 21.397,
+   "end": 21.861,
+   "scene": 3
+  },
+  {
+   "text": "musun?",
+   "start": 21.896,
+   "end": 22.279,
+   "scene": 3
+  },
+  {
+   "text": "Yorumda",
+   "start": 22.453,
+   "end": 22.871,
+   "scene": 3
+  },
+  {
+   "text": "itiraf",
+   "start": 22.941,
+   "end": 23.336,
+   "scene": 3
+  },
+  {
+   "text": "et!",
+   "start": 23.405,
+   "end": 23.823,
+   "scene": 3
+  }
+ ]
+}

@@ -1,0 +1,187 @@
+{
+ "fake": true,
+ "model": "eleven_multilingual_v2",
+ "duration": 13.494,
+ "words": [
+  {
+   "text": "Yazılımdaki",
+   "start": 0.15,
+   "end": 0.788,
+   "scene": 0
+  },
+  {
+   "text": "hatalara",
+   "start": 0.846,
+   "end": 1.31,
+   "scene": 0
+  },
+  {
+   "text": "neden",
+   "start": 1.368,
+   "end": 1.658,
+   "scene": 0
+  },
+  {
+   "text": "bug",
+   "start": 1.716,
+   "end": 1.89,
+   "scene": 0
+  },
+  {
+   "text": "dendiğini",
+   "start": 1.948,
+   "end": 2.47,
+   "scene": 0
+  },
+  {
+   "text": "biliyor",
+   "start": 2.528,
+   "end": 2.934,
+   "scene": 0
+  },
+  {
+   "text": "musun?",
+   "start": 2.992,
+   "end": 3.602,
+   "scene": 0
+  },
+  {
+   "text": "1947",
+   "start": 3.66,
+   "end": 3.892,
+   "scene": 1
+  },
+  {
+   "text": "yılında",
+   "start": 3.95,
+   "end": 4.356,
+   "scene": 1
+  },
+  {
+   "text": "dev",
+   "start": 4.414,
+   "end": 4.588,
+   "scene": 1
+  },
+  {
+   "text": "bir",
+   "start": 4.646,
+   "end": 4.82,
+   "scene": 1
+  },
+  {
+   "text": "bilgisayar",
+   "start": 4.878,
+   "end": 5.458,
+   "scene": 1
+  },
+  {
+   "text": "aniden",
+   "start": 5.516,
+   "end": 5.864,
+   "scene": 1
+  },
+  {
+   "text": "durdu.",
+   "start": 5.922,
+   "end": 6.532,
+   "scene": 1
+  },
+  {
+   "text": "İçini",
+   "start": 6.59,
+   "end": 6.88,
+   "scene": 1
+  },
+  {
+   "text": "açtıklarında",
+   "start": 6.938,
+   "end": 7.634,
+   "scene": 1
+  },
+  {
+   "text": "röleye",
+   "start": 7.692,
+   "end": 8.04,
+   "scene": 1
+  },
+  {
+   "text": "sıkışmış",
+   "start": 8.098,
+   "end": 8.562,
+   "scene": 1
+  },
+  {
+   "text": "gerçek",
+   "start": 8.62,
+   "end": 8.968,
+   "scene": 1
+  },
+  {
+   "text": "bir",
+   "start": 9.026,
+   "end": 9.2,
+   "scene": 1
+  },
+  {
+   "text": "güve",
+   "start": 9.258,
+   "end": 9.49,
+   "scene": 1
+  },
+  {
+   "text": "buldular.",
+   "start": 9.548,
+   "end": 10.332,
+   "scene": 1
+  },
+  {
+   "text": "O",
+   "start": 10.39,
+   "end": 10.448,
+   "scene": 2
+  },
+  {
+   "text": "günden",
+   "start": 10.506,
+   "end": 10.854,
+   "scene": 2
+  },
+  {
+   "text": "beri",
+   "start": 10.912,
+   "end": 11.144,
+   "scene": 2
+  },
+  {
+   "text": "yazılımdaki",
+   "start": 11.202,
+   "end": 11.84,
+   "scene": 2
+  },
+  {
+   "text": "her",
+   "start": 11.898,
+   "end": 12.072,
+   "scene": 2
+  },
+  {
+   "text": "hataya",
+   "start": 12.13,
+   "end": 12.478,
+   "scene": 2
+  },
+  {
+   "text": "bug",
+   "start": 12.536,
+   "end": 12.71,
+   "scene": 2
+  },
+  {
+   "text": "diyoruz.",
+   "start": 12.768,
+   "end": 13.494,
+   "scene": 2
+  }
+ ]
+}

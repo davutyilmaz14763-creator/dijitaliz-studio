@@ -1,0 +1,127 @@
+{
+ "fake": false,
+ "model": "tr-TR-AhmetNeural",
+ "duration": 9.485,
+ "words": [
+  {
+   "text": "Bulutlar",
+   "start": 0.1,
+   "end": 0.912,
+   "scene": 0
+  },
+  {
+   "text": "pamuk",
+   "start": 0.938,
+   "end": 1.212,
+   "scene": 0
+  },
+  {
+   "text": "gibi",
+   "start": 1.212,
+   "end": 1.462,
+   "scene": 0
+  },
+  {
+   "text": "hafif",
+   "start": 1.462,
+   "end": 1.8,
+   "scene": 0
+  },
+  {
+   "text": "görünür",
+   "start": 1.8,
+   "end": 2.175,
+   "scene": 0
+  },
+  {
+   "text": "ama",
+   "start": 2.275,
+   "end": 2.5,
+   "scene": 0
+  },
+  {
+   "text": "tek",
+   "start": 2.5,
+   "end": 2.725,
+   "scene": 0
+  },
+  {
+   "text": "bir",
+   "start": 2.737,
+   "end": 2.912,
+   "scene": 0
+  },
+  {
+   "text": "fırtına",
+   "start": 2.913,
+   "end": 3.337,
+   "scene": 0
+  },
+  {
+   "text": "bulutu",
+   "start": 3.337,
+   "end": 3.688,
+   "scene": 0
+  },
+  {
+   "text": "yaklaşık",
+   "start": 3.688,
+   "end": 4.162,
+   "scene": 0
+  },
+  {
+   "text": "500",
+   "start": 4.175,
+   "end": 4.587,
+   "scene": 0
+  },
+  {
+   "text": "ton",
+   "start": 4.588,
+   "end": 4.8,
+   "scene": 0
+  },
+  {
+   "text": "ağırlığındadır.",
+   "start": 4.8,
+   "end": 5.487,
+   "scene": 0
+  },
+  {
+   "text": "Bu,",
+   "start": 7.022,
+   "end": 7.147,
+   "scene": 1
+  },
+  {
+   "text": "gökyüzünde",
+   "start": 7.409,
+   "end": 8.034,
+   "scene": 1
+  },
+  {
+   "text": "süzülen",
+   "start": 8.034,
+   "end": 8.522,
+   "scene": 1
+  },
+  {
+   "text": "100",
+   "start": 8.522,
+   "end": 8.747,
+   "scene": 1
+  },
+  {
+   "text": "fil",
+   "start": 8.747,
+   "end": 8.922,
+   "scene": 1
+  },
+  {
+   "text": "demektir.",
+   "start": 8.922,
+   "end": 9.485,
+   "scene": 1
+  }
+ ]
+}

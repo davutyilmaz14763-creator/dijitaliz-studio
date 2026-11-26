@@ -15,8 +15,8 @@ out
 public/**
 !public/**/
 !public/**/CREDITS.json
+!public/**/voice.mp3
 *.mp4
 *.mov
 *.MOV
-*.mp3
 *.wav

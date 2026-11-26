@@ -1,0 +1,259 @@
+{
+ "fake": false,
+ "model": "eleven_multilingual_v2",
+ "duration": 21.269,
+ "words": [
+  {
+   "text": "Dünyanın",
+   "start": 0,
+   "end": 0.546,
+   "scene": 0
+  },
+  {
+   "text": "en",
+   "start": 0.662,
+   "end": 0.824,
+   "scene": 0
+  },
+  {
+   "text": "hızlı",
+   "start": 0.882,
+   "end": 1.161,
+   "scene": 0
+  },
+  {
+   "text": "süper",
+   "start": 1.219,
+   "end": 1.509,
+   "scene": 0
+  },
+  {
+   "text": "bilgisayarı",
+   "start": 1.579,
+   "end": 2.055,
+   "scene": 0
+  },
+  {
+   "text": "çalışmak",
+   "start": 2.09,
+   "end": 2.485,
+   "scene": 0
+  },
+  {
+   "text": "için",
+   "start": 2.531,
+   "end": 2.786,
+   "scene": 0
+  },
+  {
+   "text": "bir",
+   "start": 3.03,
+   "end": 3.193,
+   "scene": 0
+  },
+  {
+   "text": "kasaba",
+   "start": 3.262,
+   "end": 3.599,
+   "scene": 0
+  },
+  {
+   "text": "kadar",
+   "start": 3.646,
+   "end": 3.878,
+   "scene": 0
+  },
+  {
+   "text": "elektrik",
+   "start": 3.947,
+   "end": 4.342,
+   "scene": 0
+  },
+  {
+   "text": "tüketir.",
+   "start": 4.377,
+   "end": 4.911,
+   "scene": 0
+  },
+  {
+   "text": "Peki",
+   "start": 5.863,
+   "end": 6.142,
+   "scene": 1
+  },
+  {
+   "text": "ya",
+   "start": 6.2,
+   "end": 6.327,
+   "scene": 1
+  },
+  {
+   "text": "insan",
+   "start": 6.42,
+   "end": 6.769,
+   "scene": 1
+  },
+  {
+   "text": "beyni?",
+   "start": 6.827,
+   "end": 7.279,
+   "scene": 1
+  },
+  {
+   "text": "Sadece",
+   "start": 7.883,
+   "end": 8.371,
+   "scene": 1
+  },
+  {
+   "text": "20",
+   "start": 8.545,
+   "end": 8.673,
+   "scene": 1
+  },
+  {
+   "text": "watt,",
+   "start": 8.731,
+   "end": 9.16,
+   "scene": 1
+  },
+  {
+   "text": "yani",
+   "start": 9.311,
+   "end": 9.567,
+   "scene": 1
+  },
+  {
+   "text": "tek",
+   "start": 9.613,
+   "end": 9.764,
+   "scene": 1
+  },
+  {
+   "text": "bir",
+   "start": 9.822,
+   "end": 9.927,
+   "scene": 1
+  },
+  {
+   "text": "ampul",
+   "start": 9.973,
+   "end": 10.275,
+   "scene": 1
+  },
+  {
+   "text": "kadar",
+   "start": 10.333,
+   "end": 10.565,
+   "scene": 1
+  },
+  {
+   "text": "enerji",
+   "start": 10.635,
+   "end": 10.971,
+   "scene": 1
+  },
+  {
+   "text": "harcar.",
+   "start": 11.018,
+   "end": 11.587,
+   "scene": 1
+  },
+  {
+   "text": "Buna",
+   "start": 12.098,
+   "end": 12.353,
+   "scene": 2
+  },
+  {
+   "text": "rağmen",
+   "start": 12.399,
+   "end": 12.725,
+   "scene": 2
+  },
+  {
+   "text": "saniyede",
+   "start": 12.794,
+   "end": 13.363,
+   "scene": 2
+  },
+  {
+   "text": "katrilyonlarca",
+   "start": 13.607,
+   "end": 14.478,
+   "scene": 2
+  },
+  {
+   "text": "işlemi",
+   "start": 14.547,
+   "end": 14.872,
+   "scene": 2
+  },
+  {
+   "text": "sessizce",
+   "start": 14.919,
+   "end": 15.546,
+   "scene": 2
+  },
+  {
+   "text": "ve",
+   "start": 15.79,
+   "end": 15.94,
+   "scene": 2
+  },
+  {
+   "text": "ısınmadan",
+   "start": 15.999,
+   "end": 16.521,
+   "scene": 2
+  },
+  {
+   "text": "yapar.",
+   "start": 16.556,
+   "end": 16.974,
+   "scene": 2
+  },
+  {
+   "text": "Doğanın",
+   "start": 17.786,
+   "end": 18.274,
+   "scene": 3
+  },
+  {
+   "text": "en",
+   "start": 18.39,
+   "end": 18.553,
+   "scene": 3
+  },
+  {
+   "text": "verimli",
+   "start": 18.611,
+   "end": 18.924,
+   "scene": 3
+  },
+  {
+   "text": "bilgisayarı",
+   "start": 18.971,
+   "end": 19.621,
+   "scene": 3
+  },
+  {
+   "text": "tam",
+   "start": 19.83,
+   "end": 20.085,
+   "scene": 3
+  },
+  {
+   "text": "kafanın",
+   "start": 20.155,
+   "end": 20.492,
+   "scene": 3
+  },
+  {
+   "text": "içinde.",
+   "start": 20.538,
+   "end": 21.269,
+   "scene": 3
+  }
+ ]
+}

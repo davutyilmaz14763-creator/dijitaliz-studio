@@ -1,0 +1,319 @@
+{
+ "fake": false,
+ "model": "tr-TR-AhmetNeural",
+ "duration": 28.225,
+ "words": [
+  {
+   "text": "Güneş",
+   "start": 0.1,
+   "end": 0.688,
+   "scene": 0
+  },
+  {
+   "text": "ışığı",
+   "start": 0.7,
+   "end": 0.975,
+   "scene": 0
+  },
+  {
+   "text": "Dünya'ya",
+   "start": 0.975,
+   "end": 1.475,
+   "scene": 0
+  },
+  {
+   "text": "sadece",
+   "start": 1.475,
+   "end": 2.013,
+   "scene": 0
+  },
+  {
+   "text": "8",
+   "start": 2.013,
+   "end": 2.35,
+   "scene": 0
+  },
+  {
+   "text": "dakikada",
+   "start": 2.35,
+   "end": 2.85,
+   "scene": 0
+  },
+  {
+   "text": "ulaşır.",
+   "start": 2.85,
+   "end": 3.313,
+   "scene": 0
+  },
+  {
+   "text": "Peki",
+   "start": 4.487,
+   "end": 4.775,
+   "scene": 0
+  },
+  {
+   "text": "Güneş'in",
+   "start": 4.825,
+   "end": 5.263,
+   "scene": 0
+  },
+  {
+   "text": "içinden",
+   "start": 5.263,
+   "end": 5.713,
+   "scene": 0
+  },
+  {
+   "text": "çıkması",
+   "start": 5.713,
+   "end": 6.163,
+   "scene": 0
+  },
+  {
+   "text": "kaç",
+   "start": 6.162,
+   "end": 6.438,
+   "scene": 0
+  },
+  {
+   "text": "yıl",
+   "start": 6.438,
+   "end": 6.625,
+   "scene": 0
+  },
+  {
+   "text": "sürer?",
+   "start": 6.625,
+   "end": 7.025,
+   "scene": 0
+  },
+  {
+   "text": "Bir",
+   "start": 8.534,
+   "end": 8.771,
+   "scene": 1
+  },
+  {
+   "text": "foton",
+   "start": 9.034,
+   "end": 9.384,
+   "scene": 1
+  },
+  {
+   "text": "çekirdekte",
+   "start": 9.384,
+   "end": 9.984,
+   "scene": 1
+  },
+  {
+   "text": "doğduğunda,",
+   "start": 9.984,
+   "end": 10.572,
+   "scene": 1
+  },
+  {
+   "text": "yoğun",
+   "start": 10.784,
+   "end": 11.121,
+   "scene": 1
+  },
+  {
+   "text": "plazma",
+   "start": 11.121,
+   "end": 11.546,
+   "scene": 1
+  },
+  {
+   "text": "katmanlarına",
+   "start": 11.546,
+   "end": 12.234,
+   "scene": 1
+  },
+  {
+   "text": "milyonlarca",
+   "start": 12.234,
+   "end": 12.871,
+   "scene": 1
+  },
+  {
+   "text": "kez",
+   "start": 12.871,
+   "end": 13.109,
+   "scene": 1
+  },
+  {
+   "text": "çarparak",
+   "start": 13.109,
+   "end": 13.609,
+   "scene": 1
+  },
+  {
+   "text": "ilerler.",
+   "start": 13.621,
+   "end": 14.109,
+   "scene": 1
+  },
+  {
+   "text": "Bu",
+   "start": 15.648,
+   "end": 15.935,
+   "scene": 2
+  },
+  {
+   "text": "yüzden",
+   "start": 16.035,
+   "end": 16.448,
+   "scene": 2
+  },
+  {
+   "text": "yüzeye",
+   "start": 16.448,
+   "end": 16.823,
+   "scene": 2
+  },
+  {
+   "text": "çıkması",
+   "start": 16.823,
+   "end": 17.31,
+   "scene": 2
+  },
+  {
+   "text": "tam",
+   "start": 17.323,
+   "end": 17.573,
+   "scene": 2
+  },
+  {
+   "text": "yüz",
+   "start": 17.573,
+   "end": 17.798,
+   "scene": 2
+  },
+  {
+   "text": "bin",
+   "start": 17.798,
+   "end": 17.96,
+   "scene": 2
+  },
+  {
+   "text": "yıl",
+   "start": 17.96,
+   "end": 18.136,
+   "scene": 2
+  },
+  {
+   "text": "sürer.",
+   "start": 18.135,
+   "end": 18.548,
+   "scene": 2
+  },
+  {
+   "text": "Sonra",
+   "start": 19.673,
+   "end": 20.185,
+   "scene": 2
+  },
+  {
+   "text": "uzayda",
+   "start": 20.223,
+   "end": 20.723,
+   "scene": 2
+  },
+  {
+   "text": "sadece",
+   "start": 20.723,
+   "end": 21.273,
+   "scene": 2
+  },
+  {
+   "text": "8",
+   "start": 21.273,
+   "end": 21.635,
+   "scene": 2
+  },
+  {
+   "text": "dakikada",
+   "start": 21.636,
+   "end": 22.148,
+   "scene": 2
+  },
+  {
+   "text": "bize",
+   "start": 22.148,
+   "end": 22.385,
+   "scene": 2
+  },
+  {
+   "text": "gelir.",
+   "start": 22.386,
+   "end": 22.736,
+   "scene": 2
+  },
+  {
+   "text": "Yani",
+   "start": 24.25,
+   "end": 24.85,
+   "scene": 3
+  },
+  {
+   "text": "bugün",
+   "start": 24.85,
+   "end": 25.187,
+   "scene": 3
+  },
+  {
+   "text": "yüzünü",
+   "start": 25.188,
+   "end": 25.575,
+   "scene": 3
+  },
+  {
+   "text": "ısıtan",
+   "start": 25.575,
+   "end": 26.012,
+   "scene": 3
+  },
+  {
+   "text": "ışık,",
+   "start": 26.012,
+   "end": 26.387,
+   "scene": 3
+  },
+  {
+   "text": "aslında",
+   "start": 26.55,
+   "end": 27.025,
+   "scene": 3
+  },
+  {
+   "text": "yüz",
+   "start": 27.025,
+   "end": 27.262,
+   "scene": 3
+  },
+  {
+   "text": "bin",
+   "start": 27.262,
+   "end": 27.425,
+   "scene": 3
+  },
+  {
+   "text": "yıl",
+   "start": 27.425,
+   "end": 27.6,
+   "scene": 3
+  },
+  {
+   "text": "önce",
+   "start": 27.6,
+   "end": 27.862,
+   "scene": 3
+  },
+  {
+   "text": "doğdu.",
+   "start": 27.862,
+   "end": 28.225,
+   "scene": 3
+  }
+ ]
+}

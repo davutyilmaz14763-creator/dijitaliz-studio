@@ -1,0 +1,139 @@
+{
+ "fake": false,
+ "model": "tr-TR-AhmetNeural",
+ "duration": 10.497,
+ "words": [
+  {
+   "text": "Everest",
+   "start": 0.1,
+   "end": 0.825,
+   "scene": 0
+  },
+  {
+   "text": "Dağı'nı",
+   "start": 0.838,
+   "end": 1.113,
+   "scene": 0
+  },
+  {
+   "text": "ters",
+   "start": 1.125,
+   "end": 1.413,
+   "scene": 0
+  },
+  {
+   "text": "çevirip",
+   "start": 1.413,
+   "end": 1.813,
+   "scene": 0
+  },
+  {
+   "text": "okyanusun",
+   "start": 1.825,
+   "end": 2.475,
+   "scene": 0
+  },
+  {
+   "text": "en",
+   "start": 2.563,
+   "end": 2.75,
+   "scene": 0
+  },
+  {
+   "text": "derin",
+   "start": 2.763,
+   "end": 3,
+   "scene": 0
+  },
+  {
+   "text": "yerine",
+   "start": 3,
+   "end": 3.337,
+   "scene": 0
+  },
+  {
+   "text": "koysan,",
+   "start": 3.337,
+   "end": 3.95,
+   "scene": 0
+  },
+  {
+   "text": "zirvesi",
+   "start": 4.05,
+   "end": 4.55,
+   "scene": 0
+  },
+  {
+   "text": "hâlâ",
+   "start": 4.55,
+   "end": 4.95,
+   "scene": 0
+  },
+  {
+   "text": "2",
+   "start": 4.975,
+   "end": 5.175,
+   "scene": 0
+  },
+  {
+   "text": "kilometre",
+   "start": 5.175,
+   "end": 5.662,
+   "scene": 0
+  },
+  {
+   "text": "suyun",
+   "start": 5.662,
+   "end": 5.938,
+   "scene": 0
+  },
+  {
+   "text": "altında",
+   "start": 5.938,
+   "end": 6.325,
+   "scene": 0
+  },
+  {
+   "text": "kalır.",
+   "start": 6.325,
+   "end": 6.688,
+   "scene": 0
+  },
+  {
+   "text": "Mariana",
+   "start": 8.222,
+   "end": 8.897,
+   "scene": 1
+  },
+  {
+   "text": "Çukuru",
+   "start": 8.897,
+   "end": 9.272,
+   "scene": 1
+  },
+  {
+   "text": "işte",
+   "start": 9.272,
+   "end": 9.597,
+   "scene": 1
+  },
+  {
+   "text": "bu",
+   "start": 9.597,
+   "end": 9.734,
+   "scene": 1
+  },
+  {
+   "text": "kadar",
+   "start": 9.735,
+   "end": 10.11,
+   "scene": 1
+  },
+  {
+   "text": "derin.",
+   "start": 10.11,
+   "end": 10.497,
+   "scene": 1
+  }
+ ]
+}

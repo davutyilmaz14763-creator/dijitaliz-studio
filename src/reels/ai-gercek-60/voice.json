@@ -1,0 +1,661 @@
+{
+ "fake": false,
+ "model": "eleven_multilingual_v2",
+ "duration": 51.409,
+ "words": [
+  {
+   "text": "Az",
+   "start": 0,
+   "end": 0.174,
+   "scene": 0
+  },
+  {
+   "text": "önce",
+   "start": 0.244,
+   "end": 0.43,
+   "scene": 0
+  },
+  {
+   "text": "izlediğin",
+   "start": 0.464,
+   "end": 0.836,
+   "scene": 0
+  },
+  {
+   "text": "o",
+   "start": 0.906,
+   "end": 0.929,
+   "scene": 0
+  },
+  {
+   "text": "sokak",
+   "start": 0.987,
+   "end": 1.277,
+   "scene": 0
+  },
+  {
+   "text": "röportajı",
+   "start": 1.347,
+   "end": 1.823,
+   "scene": 0
+  },
+  {
+   "text": "veya",
+   "start": 1.858,
+   "end": 2.043,
+   "scene": 0
+  },
+  {
+   "text": "kaza",
+   "start": 2.113,
+   "end": 2.392,
+   "scene": 0
+  },
+  {
+   "text": "videosu",
+   "start": 2.461,
+   "end": 2.821,
+   "scene": 0
+  },
+  {
+   "text": "gerçek",
+   "start": 2.879,
+   "end": 3.239,
+   "scene": 0
+  },
+  {
+   "text": "değil,",
+   "start": 3.297,
+   "end": 3.634,
+   "scene": 0
+  },
+  {
+   "text": "tamamen",
+   "start": 3.808,
+   "end": 4.296,
+   "scene": 0
+  },
+  {
+   "text": "yapay",
+   "start": 4.365,
+   "end": 4.621,
+   "scene": 0
+  },
+  {
+   "text": "zeka",
+   "start": 4.667,
+   "end": 4.911,
+   "scene": 0
+  },
+  {
+   "text": "olabilir.",
+   "start": 4.969,
+   "end": 5.55,
+   "scene": 0
+  },
+  {
+   "text": "Son",
+   "start": 5.933,
+   "end": 6.165,
+   "scene": 1
+  },
+  {
+   "text": "aylarda",
+   "start": 6.223,
+   "end": 6.618,
+   "scene": 1
+  },
+  {
+   "text": "Instagram",
+   "start": 6.664,
+   "end": 7.152,
+   "scene": 1
+  },
+  {
+   "text": "ve",
+   "start": 7.198,
+   "end": 7.279,
+   "scene": 1
+  },
+  {
+   "text": "TikTok'ta",
+   "start": 7.314,
+   "end": 7.86,
+   "scene": 1
+  },
+  {
+   "text": "hiper",
+   "start": 8.034,
+   "end": 8.371,
+   "scene": 1
+  },
+  {
+   "text": "gerçekçi",
+   "start": 8.44,
+   "end": 8.882,
+   "scene": 1
+  },
+  {
+   "text": "yapay",
+   "start": 8.94,
+   "end": 9.172,
+   "scene": 1
+  },
+  {
+   "text": "zeka",
+   "start": 9.218,
+   "end": 9.462,
+   "scene": 1
+  },
+  {
+   "text": "videoları",
+   "start": 9.532,
+   "end": 9.938,
+   "scene": 1
+  },
+  {
+   "text": "patladı.",
+   "start": 9.985,
+   "end": 10.53,
+   "scene": 1
+  },
+  {
+   "text": "Artık",
+   "start": 10.913,
+   "end": 11.238,
+   "scene": 1
+  },
+  {
+   "text": "tek",
+   "start": 11.297,
+   "end": 11.459,
+   "scene": 1
+  },
+  {
+   "text": "bir",
+   "start": 11.517,
+   "end": 11.622,
+   "scene": 1
+  },
+  {
+   "text": "fotoğraftan",
+   "start": 11.645,
+   "end": 12.19,
+   "scene": 1
+  },
+  {
+   "text": "konuşan",
+   "start": 12.249,
+   "end": 12.597,
+   "scene": 1
+  },
+  {
+   "text": "insanlar",
+   "start": 12.655,
+   "end": 13.084,
+   "scene": 1
+  },
+  {
+   "text": "bile",
+   "start": 13.131,
+   "end": 13.282,
+   "scene": 1
+  },
+  {
+   "text": "üretiliyor.",
+   "start": 13.34,
+   "end": 13.955,
+   "scene": 1
+  },
+  {
+   "text": "Peki",
+   "start": 14.466,
+   "end": 14.745,
+   "scene": 2
+  },
+  {
+   "text": "gerçeği",
+   "start": 14.815,
+   "end": 15.209,
+   "scene": 2
+  },
+  {
+   "text": "sahtesinden",
+   "start": 15.291,
+   "end": 15.987,
+   "scene": 2
+  },
+  {
+   "text": "nasıl",
+   "start": 16.057,
+   "end": 16.289,
+   "scene": 2
+  },
+  {
+   "text": "ayırırsın?",
+   "start": 16.335,
+   "end": 16.928,
+   "scene": 2
+  },
+  {
+   "text": "İlk",
+   "start": 17.624,
+   "end": 17.88,
+   "scene": 2
+  },
+  {
+   "text": "ipucu:",
+   "start": 17.949,
+   "end": 18.506,
+   "scene": 2
+  },
+  {
+   "text": "arka",
+   "start": 18.832,
+   "end": 19.11,
+   "scene": 2
+  },
+  {
+   "text": "plandaki",
+   "start": 19.145,
+   "end": 19.586,
+   "scene": 2
+  },
+  {
+   "text": "yazılara",
+   "start": 19.633,
+   "end": 20.004,
+   "scene": 2
+  },
+  {
+   "text": "ve",
+   "start": 20.051,
+   "end": 20.155,
+   "scene": 2
+  },
+  {
+   "text": "ellere",
+   "start": 20.225,
+   "end": 20.561,
+   "scene": 2
+  },
+  {
+   "text": "dikkat",
+   "start": 20.608,
+   "end": 20.898,
+   "scene": 2
+  },
+  {
+   "text": "et.",
+   "start": 20.956,
+   "end": 21.235,
+   "scene": 2
+  },
+  {
+   "text": "Yapay",
+   "start": 21.618,
+   "end": 21.966,
+   "scene": 2
+  },
+  {
+   "text": "zeka",
+   "start": 22.001,
+   "end": 22.407,
+   "scene": 2
+  },
+  {
+   "text": "hâlâ",
+   "start": 22.733,
+   "end": 23.116,
+   "scene": 2
+  },
+  {
+   "text": "küçük",
+   "start": 23.174,
+   "end": 23.418,
+   "scene": 2
+  },
+  {
+   "text": "detaylarda",
+   "start": 23.452,
+   "end": 23.975,
+   "scene": 2
+  },
+  {
+   "text": "açık",
+   "start": 24.033,
+   "end": 24.253,
+   "scene": 2
+  },
+  {
+   "text": "veriyor.",
+   "start": 24.3,
+   "end": 24.741,
+   "scene": 2
+  },
+  {
+   "text": "İkinci",
+   "start": 25.438,
+   "end": 25.879,
+   "scene": 3
+  },
+  {
+   "text": "ipucu:",
+   "start": 25.914,
+   "end": 26.459,
+   "scene": 3
+  },
+  {
+   "text": "sese",
+   "start": 26.784,
+   "end": 27.063,
+   "scene": 3
+  },
+  {
+   "text": "ve",
+   "start": 27.109,
+   "end": 27.191,
+   "scene": 3
+  },
+  {
+   "text": "göz",
+   "start": 27.237,
+   "end": 27.423,
+   "scene": 3
+  },
+  {
+   "text": "kırpmaya",
+   "start": 27.481,
+   "end": 27.853,
+   "scene": 3
+  },
+  {
+   "text": "bak.",
+   "start": 27.887,
+   "end": 28.212,
+   "scene": 3
+  },
+  {
+   "text": "Aşırı",
+   "start": 28.596,
+   "end": 28.944,
+   "scene": 3
+  },
+  {
+   "text": "pürüzsüz",
+   "start": 28.99,
+   "end": 29.49,
+   "scene": 3
+  },
+  {
+   "text": "bir",
+   "start": 29.548,
+   "end": 29.687,
+   "scene": 3
+  },
+  {
+   "text": "cilt",
+   "start": 29.733,
+   "end": 29.989,
+   "scene": 3
+  },
+  {
+   "text": "ve",
+   "start": 30.198,
+   "end": 30.325,
+   "scene": 3
+  },
+  {
+   "text": "hiç",
+   "start": 30.36,
+   "end": 30.511,
+   "scene": 3
+  },
+  {
+   "text": "değişmeyen",
+   "start": 30.581,
+   "end": 31.091,
+   "scene": 3
+  },
+  {
+   "text": "bir",
+   "start": 31.15,
+   "end": 31.277,
+   "scene": 3
+  },
+  {
+   "text": "ses",
+   "start": 31.324,
+   "end": 31.498,
+   "scene": 3
+  },
+  {
+   "text": "tonu",
+   "start": 31.556,
+   "end": 31.765,
+   "scene": 3
+  },
+  {
+   "text": "varsa",
+   "start": 31.8,
+   "end": 32.229,
+   "scene": 3
+  },
+  {
+   "text": "büyük",
+   "start": 32.473,
+   "end": 32.74,
+   "scene": 3
+  },
+  {
+   "text": "ihtimalle",
+   "start": 32.81,
+   "end": 33.251,
+   "scene": 3
+  },
+  {
+   "text": "sentetiktir.",
+   "start": 33.309,
+   "end": 34.145,
+   "scene": 3
+  },
+  {
+   "text": "Üçüncü",
+   "start": 35.097,
+   "end": 35.527,
+   "scene": 4
+  },
+  {
+   "text": "ipucu:",
+   "start": 35.585,
+   "end": 36.188,
+   "scene": 4
+  },
+  {
+   "text": "platformlar",
+   "start": 36.467,
+   "end": 37.152,
+   "scene": 4
+  },
+  {
+   "text": "yapay",
+   "start": 37.21,
+   "end": 37.477,
+   "scene": 4
+  },
+  {
+   "text": "zeka",
+   "start": 37.523,
+   "end": 37.837,
+   "scene": 4
+  },
+  {
+   "text": "etiketi",
+   "start": 37.895,
+   "end": 38.278,
+   "scene": 4
+  },
+  {
+   "text": "koyuyor",
+   "start": 38.325,
+   "end": 38.835,
+   "scene": 4
+  },
+  {
+   "text": "ama",
+   "start": 39.079,
+   "end": 39.3,
+   "scene": 4
+  },
+  {
+   "text": "herkes",
+   "start": 39.358,
+   "end": 39.718,
+   "scene": 4
+  },
+  {
+   "text": "bunu",
+   "start": 39.764,
+   "end": 39.927,
+   "scene": 4
+  },
+  {
+   "text": "işaretlemiyor.",
+   "start": 39.95,
+   "end": 40.774,
+   "scene": 4
+  },
+  {
+   "text": "O",
+   "start": 41.378,
+   "end": 41.471,
+   "scene": 4
+  },
+  {
+   "text": "yüzden",
+   "start": 41.54,
+   "end": 41.854,
+   "scene": 4
+  },
+  {
+   "text": "gördüğün",
+   "start": 41.912,
+   "end": 42.272,
+   "scene": 4
+  },
+  {
+   "text": "her",
+   "start": 42.353,
+   "end": 42.492,
+   "scene": 4
+  },
+  {
+   "text": "şoke",
+   "start": 42.574,
+   "end": 42.945,
+   "scene": 4
+  },
+  {
+   "text": "edici",
+   "start": 43.27,
+   "end": 43.584,
+   "scene": 4
+  },
+  {
+   "text": "videoya",
+   "start": 43.63,
+   "end": 44.071,
+   "scene": 4
+  },
+  {
+   "text": "hemen",
+   "start": 44.188,
+   "end": 44.466,
+   "scene": 4
+  },
+  {
+   "text": "inanma.",
+   "start": 44.524,
+   "end": 45.035,
+   "scene": 4
+  },
+  {
+   "text": "Peki",
+   "start": 45.732,
+   "end": 45.987,
+   "scene": 5
+  },
+  {
+   "text": "sence",
+   "start": 46.045,
+   "end": 46.335,
+   "scene": 5
+  },
+  {
+   "text": "sen",
+   "start": 46.405,
+   "end": 46.556,
+   "scene": 5
+  },
+  {
+   "text": "yapay",
+   "start": 46.626,
+   "end": 46.881,
+   "scene": 5
+  },
+  {
+   "text": "zekayı",
+   "start": 46.916,
+   "end": 47.322,
+   "scene": 5
+  },
+  {
+   "text": "ilk",
+   "start": 47.369,
+   "end": 47.52,
+   "scene": 5
+  },
+  {
+   "text": "bakışta",
+   "start": 47.578,
+   "end": 47.926,
+   "scene": 5
+  },
+  {
+   "text": "anlayabiliyor",
+   "start": 47.961,
+   "end": 48.565,
+   "scene": 5
+  },
+  {
+   "text": "musun?",
+   "start": 48.599,
+   "end": 49.006,
+   "scene": 5
+  },
+  {
+   "text": "Yorumlara",
+   "start": 49.447,
+   "end": 49.934,
+   "scene": 5
+  },
+  {
+   "text": "yaz,",
+   "start": 49.981,
+   "end": 50.376,
+   "scene": 5
+  },
+  {
+   "text": "test",
+   "start": 50.492,
+   "end": 50.747,
+   "scene": 5
+  },
+  {
+   "text": "edelim!",
+   "start": 50.805,
+   "end": 51.409,
+   "scene": 5
+  }
+ ]
+}

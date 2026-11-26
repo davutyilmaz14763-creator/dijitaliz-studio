@@ -413,8 +413,8 @@ export const Card: React.FC<{
   children: React.ReactNode;
   from?: "pop" | "left" | "right" | "up";
 }> = ({ x, y, w, at = 0, rot = 0, bg = "#FFFDF7", children, from = "pop" }) => {
-  const p = usePopAt(at, 11, 210);
-  const off = from === "left" ? [-500, 0] : from === "right" ? [500, 0] : from === "up" ? [0, 400] : [0, 0];
+  const p = usePopAt(at, 16, 190);
+  const off = from === "left" ? [-420, 0] : from === "right" ? [420, 0] : from === "up" ? [0, 320] : [0, 0];
   return (
     <div
       style={{
@@ -422,6 +422,7 @@ export const Card: React.FC<{
         left: x,
         top: y,
         width: w,
+        maxWidth: 900,
         background: bg,
         border: `5px solid ${K.ink}`,
         borderRadius: 22,
@@ -431,7 +432,7 @@ export const Card: React.FC<{
         color: K.ink,
         rotate: `${rot}deg`,
         translate: `${off[0] * (1 - p)}px ${off[1] * (1 - p)}px`,
-        scale: from === "pop" ? String(interpolate(p, [0, 1], [0.4, 1])) : "1",
+        scale: from === "pop" ? String(interpolate(p, [0, 1], [0.72, 1])) : "1",
         opacity: Math.min(1, p * 2.5),
       }}
     >
@@ -507,13 +508,15 @@ export const Stamp: React.FC<{ x: number; y: number; at: number; color?: string;
   children,
   size = 70,
 }) => {
-  const p = usePopAt(at, 9, 260);
+  const p = usePopAt(at, 16, 200);
   return (
     <div
       style={{
         position: "absolute",
         left: x,
         top: y,
+        maxWidth: 900,
+        textAlign: "center",
         border: `8px solid ${color}`,
         borderRadius: 18,
         padding: "8px 26px",
@@ -522,10 +525,10 @@ export const Stamp: React.FC<{ x: number; y: number; at: number; color?: string;
         fontWeight: 900,
         fontSize: size,
         letterSpacing: 2,
-        background: "rgba(255,255,255,0.85)",
+        background: "rgba(255,255,255,0.9)",
         rotate: `${rot}deg`,
         opacity: p > 0.02 ? 1 : 0,
-        scale: String(interpolate(p, [0, 1], [2.6, 1])),
+        scale: String(interpolate(p, [0, 1], [1.35, 1])),
       }}
     >
       {children}
@@ -595,6 +598,343 @@ export const FaceSticker: React.FC<{ closed: string; open: string; talk: number;
       }}
     >
       <Img src={src} style={{ width: "100%", height: "100%", objectFit: "cover", clipPath: "ellipse(44% 48% at 50% 50%)" }} />
+    </div>
+  );
+};
+
+/* ---------- OpenMontage-inspired StatBar & ComparisonCard in Cizgi style ---------- */
+export const CizgiStatBar: React.FC<{
+  y?: number;
+  at?: number;
+  label: string;
+  percent: number;
+  suffix?: string;
+  barColor?: string;
+}> = ({ y = 360, at = 0.1, label, percent, suffix = "%", barColor = K.orange }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const p = usePopAt(at, 16, 190);
+  const fill = interpolate(frame / fps - at, [0.1, 0.9], [0, percent], clamp);
+  const shown = Math.round(fill);
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: 90,
+        right: 90,
+        top: y,
+        background: "#FFFDF7",
+        border: `5px solid ${K.ink}`,
+        borderRadius: 24,
+        outline: "8px solid #FFFFFF",
+        boxShadow: "0 12px 0 rgba(0,0,0,0.16)",
+        padding: "24px 30px",
+        fontFamily: sans,
+        color: K.ink,
+        scale: String(interpolate(p, [0, 1], [0.85, 1])),
+        opacity: Math.min(1, p * 2.5),
+      }}
+    >
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 14 }}>
+        <span style={{ fontFamily: slab, fontSize: 34, fontWeight: 800 }}>{label}</span>
+        <span style={{ fontFamily: slab, fontSize: 54, fontWeight: 900, color: barColor }}>
+          {suffix === "%" ? `%${shown}` : `${shown}${suffix}`}
+        </span>
+      </div>
+      <div style={{ height: 32, borderRadius: 16, background: "#E5DEC9", border: `4px solid ${K.ink}`, overflow: "hidden" }}>
+        <div style={{ width: `${Math.min(100, Math.max(0, fill))}%`, height: "100%", background: barColor }} />
+      </div>
+    </div>
+  );
+};
+
+export const CizgiComparisonCard: React.FC<{
+  y?: number;
+  at?: number;
+  title: string;
+  leftLabel: string;
+  leftValue: string;
+  rightLabel: string;
+  rightValue: string;
+  leftColor?: string;
+  rightColor?: string;
+  badge?: string;
+}> = ({
+  y = 350,
+  at = 0.1,
+  title,
+  leftLabel,
+  leftValue,
+  rightLabel,
+  rightValue,
+  leftColor = K.green,
+  rightColor = K.red,
+  badge,
+}) => {
+  const p = usePopAt(at, 16, 190);
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: 90,
+        right: 90,
+        top: y,
+        background: "#FFFDF7",
+        border: `5px solid ${K.ink}`,
+        borderRadius: 26,
+        outline: "8px solid #FFFFFF",
+        boxShadow: "0 12px 0 rgba(0,0,0,0.16)",
+        padding: "22px 26px",
+        fontFamily: sans,
+        color: K.ink,
+        scale: String(interpolate(p, [0, 1], [0.85, 1])),
+        opacity: Math.min(1, p * 2.5),
+      }}
+    >
+      <div style={{ fontFamily: slab, fontSize: 30, fontWeight: 800, textAlign: "center", marginBottom: 16 }}>{title}</div>
+      <div style={{ display: "flex", gap: 18 }}>
+        {[
+          { lbl: leftLabel, val: leftValue, col: leftColor },
+          { lbl: rightLabel, val: rightValue, col: rightColor },
+        ].map((item, idx) => (
+          <div
+            key={idx}
+            style={{
+              flex: 1,
+              background: "#F4ECDC",
+              border: `4px solid ${K.ink}`,
+              borderRadius: 18,
+              padding: "14px 12px",
+              textAlign: "center",
+            }}
+          >
+            <div style={{ fontSize: 24, fontWeight: 800, color: "#5C5346" }}>{item.lbl}</div>
+            <div style={{ fontFamily: slab, fontSize: 52, fontWeight: 900, color: item.col, marginTop: 4 }}>{item.val}</div>
+          </div>
+        ))}
+      </div>
+      {badge && (
+        <div
+          style={{
+            marginTop: 14,
+            textAlign: "center",
+            fontSize: 24,
+            fontWeight: 800,
+            color: K.cream,
+            background: K.ink,
+            borderRadius: 12,
+            padding: "8px 14px",
+          }}
+        >
+          {badge}
+        </div>
+      )}
+    </div>
+  );
+};
+
+/* ---------- Human Host: Arda (#7 Siber Dedektif) & Helper: Elif (#2 Podcast/Bilgi) ---------- */
+type HumanProps = {
+  x: number;
+  y: number;
+  size?: number;
+  face?: Face;
+  armL?: number;
+  armR?: number;
+  hold?: React.ReactNode;
+  flip?: boolean;
+  enterAt?: number;
+  id: string;
+  talk?: number;
+};
+
+const HumanFaceExpr: React.FC<{ face: Face; blink: number; talk?: number; cx?: number; cy?: number }> = ({
+  face,
+  blink,
+  talk,
+  cx = 110,
+  cy = 104,
+}) => {
+  const eyeScaleY = blink > 0 ? 1 - blink * 0.85 : 1;
+  const ex = face === "side" ? cx + 8 : cx;
+  return (
+    <g>
+      {/* Eyes */}
+      {face === "happy" ? (
+        <>
+          <path d={`M ${ex - 26} ${cy} Q ${ex - 18} ${cy - 10} ${ex - 10} ${cy}`} fill="none" stroke={K.ink} strokeWidth={4.5} strokeLinecap="round" />
+          <path d={`M ${ex + 10} ${cy} Q ${ex + 18} ${cy - 10} ${ex + 26} ${cy}`} fill="none" stroke={K.ink} strokeWidth={4.5} strokeLinecap="round" />
+        </>
+      ) : face === "wink" ? (
+        <>
+          <circle cx={ex - 18} cy={cy} r={6} fill={K.ink} stroke="none" />
+          <path d={`M ${ex + 10} ${cy} Q ${ex + 18} ${cy - 10} ${ex + 26} ${cy}`} fill="none" stroke={K.ink} strokeWidth={4.5} strokeLinecap="round" />
+        </>
+      ) : (
+        <>
+          <ellipse cx={ex - 18} cy={cy} rx={6} ry={(face === "shock" ? 8 : 6) * eyeScaleY} fill={K.ink} stroke="none" />
+          <ellipse cx={ex + 18} cy={cy} rx={6} ry={(face === "shock" ? 8 : 6) * eyeScaleY} fill={K.ink} stroke="none" />
+          <circle cx={ex - 16} cy={cy - 2} r={2} fill="#FFF" stroke="none" />
+          <circle cx={ex + 20} cy={cy - 2} r={2} fill="#FFF" stroke="none" />
+        </>
+      )}
+      {/* Eyebrows */}
+      {face === "angry" ? (
+        <>
+          <line x1={ex - 26} y1={cy - 15} x2={ex - 10} y2={cy - 10} stroke={K.ink} strokeWidth={4} strokeLinecap="round" />
+          <line x1={ex + 26} y1={cy - 15} x2={ex + 10} y2={cy - 10} stroke={K.ink} strokeWidth={4} strokeLinecap="round" />
+        </>
+      ) : (
+        <>
+          <path d={`M ${ex - 26} ${cy - 14} Q ${ex - 18} ${cy - 18} ${ex - 10} ${cy - 14}`} fill="none" stroke={K.ink} strokeWidth={3.5} strokeLinecap="round" />
+          <path d={`M ${ex + 10} ${cy - 14} Q ${ex + 18} ${cy - 18} ${ex + 26} ${cy - 14}`} fill="none" stroke={K.ink} strokeWidth={3.5} strokeLinecap="round" />
+        </>
+      )}
+      {/* Mouth */}
+      {talk && talk > 0.2 ? (
+        <ellipse cx={ex} cy={cy + 22} rx={9} ry={4 + talk * 6} fill={K.ink} stroke="none" />
+      ) : face === "shock" ? (
+        <circle cx={ex} cy={cy + 22} r={7} fill={K.ink} stroke="none" />
+      ) : face === "angry" ? (
+        <path d={`M ${ex - 12} ${cy + 24} Q ${ex} ${cy + 16} ${ex + 12} ${cy + 24}`} fill="none" stroke={K.ink} strokeWidth={4} strokeLinecap="round" />
+      ) : (
+        <path d={`M ${ex - 12} ${cy + 18} Q ${ex} ${cy + 29} ${ex + 12} ${cy + 18}`} fill="none" stroke={K.ink} strokeWidth={4} strokeLinecap="round" />
+      )}
+    </g>
+  );
+};
+
+export const Arda: React.FC<HumanProps> = ({ x, y, size = 440, face = "normal", armL = 12, armR = 12, hold, flip, enterAt = 0, id, talk }) => {
+  const frame = useCurrentFrame();
+  const blink = useBlink(id);
+  const p = usePopAt(enterAt, 14, 190);
+  const bob = Math.sin(frame / 9) * 3.5;
+  const W = 220,
+    H = 320;
+  const w = (size * W) / H;
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: x - w / 2,
+        top: y - size,
+        width: w,
+        height: size,
+        transformOrigin: "50% 100%",
+        scale: `${(flip ? -1 : 1) * interpolate(p, [0, 1], [0.5, 1])} ${interpolate(p, [0, 1], [0.5, 1])}`,
+        opacity: Math.min(1, p * 2),
+        filter: shadow,
+      }}
+    >
+      <svg viewBox={`0 0 ${W} ${H}`} width={w} height={size} overflow="visible">
+        <defs>
+          <Sticker id={`stk-arda-${id}`} />
+        </defs>
+        <g filter={`url(#stk-arda-${id})`} stroke={K.ink} strokeWidth={5} strokeLinejoin="round">
+          {/* Legs */}
+          <rect x={80} y={262} width={22} height={42} rx={10} fill="#292524" />
+          <rect x={118} y={262} width={22} height={42} rx={10} fill="#292524" />
+          <ellipse cx={89} cy={306} rx={21} ry={10} fill={K.ink} />
+          <ellipse cx={131} cy={306} rx={21} ry={10} fill={K.ink} />
+          <g transform={`translate(0 ${bob})`}>
+            {/* Arms */}
+            <g transform={`rotate(${armL} 62 190)`}>
+              <rect x={50} y={184} width={22} height={70} rx={11} fill="#785A3C" />
+              <circle cx={61} cy={260} r={14} fill="#E8BA98" />
+            </g>
+            <g transform={`rotate(${-armR} 158 190)`}>
+              <rect x={148} y={184} width={22} height={70} rx={11} fill="#785A3C" />
+              <circle cx={159} cy={260} r={14} fill="#E8BA98" />
+              {hold && <g transform="translate(159 260)">{hold}</g>}
+            </g>
+            {/* Trench coat body */}
+            <path d="M 62 174 L 158 174 L 166 268 L 54 268 Z" fill="#785A3C" />
+            <polygon points="88,174 110,206 132,174" fill="#1E293B" />
+            <line x1={110} y1={206} x2={110} y2={268} strokeWidth={4} />
+            {/* Neck & Head */}
+            <rect x={97} y={154} width={26} height={22} rx={6} fill="#E8BA98" />
+            <circle cx={66} cy={110} r={10} fill="#E8BA98" />
+            <circle cx={154} cy={110} r={10} fill="#E8BA98" />
+            <rect x={68} y={64} width={84} height={92} rx={38} fill="#E8BA98" />
+            {/* Face */}
+            <HumanFaceExpr face={face} blink={blink} talk={talk} cx={110} cy={108} />
+            {/* Square Detective Glasses */}
+            <g fill="rgba(56,189,248,0.18)" stroke={K.ink} strokeWidth={4}>
+              <rect x={76} y={96} width={29} height={22} rx={5} />
+              <rect x={115} y={96} width={29} height={22} rx={5} />
+              <line x1={105} y1={106} x2={115} y2={106} />
+            </g>
+            {/* Detective Fedora Hat */}
+            <path d="M 74 74 L 84 36 L 136 36 L 146 74 Z" fill="#57534E" />
+            <rect x={78} y={64} width={64} height={9} fill="#1E293B" stroke="none" />
+            <ellipse cx={110} cy={74} rx={58} ry={11} fill="#44403C" />
+          </g>
+        </g>
+      </svg>
+    </div>
+  );
+};
+
+export const Elif: React.FC<HumanProps> = ({ x, y, size = 400, face = "normal", armL = 12, armR = 12, hold, flip, enterAt = 0, id, talk }) => {
+  const frame = useCurrentFrame();
+  const blink = useBlink(id);
+  const p = usePopAt(enterAt, 14, 190);
+  const bob = Math.sin(frame / 9 + 1) * 3.5;
+  const W = 220,
+    H = 320;
+  const w = (size * W) / H;
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: x - w / 2,
+        top: y - size,
+        width: w,
+        height: size,
+        transformOrigin: "50% 100%",
+        scale: `${(flip ? -1 : 1) * interpolate(p, [0, 1], [0.5, 1])} ${interpolate(p, [0, 1], [0.5, 1])}`,
+        opacity: Math.min(1, p * 2),
+        filter: shadow,
+      }}
+    >
+      <svg viewBox={`0 0 ${W} ${H}`} width={w} height={size} overflow="visible">
+        <defs>
+          <Sticker id={`stk-elif-${id}`} />
+        </defs>
+        <g filter={`url(#stk-elif-${id})`} stroke={K.ink} strokeWidth={5} strokeLinejoin="round">
+          {/* Legs */}
+          <rect x={80} y={262} width={22} height={42} rx={10} fill="#1E293B" />
+          <rect x={118} y={262} width={22} height={42} rx={10} fill="#1E293B" />
+          <ellipse cx={89} cy={306} rx={21} ry={10} fill={K.ink} />
+          <ellipse cx={131} cy={306} rx={21} ry={10} fill={K.ink} />
+          <g transform={`translate(0 ${bob})`}>
+            {/* Ponytail back */}
+            <path d="M 142 74 Q 182 84 172 136 Q 158 144 148 122 Z" fill="#271C19" />
+            {/* Arms */}
+            <g transform={`rotate(${armL} 62 190)`}>
+              <rect x={50} y={184} width={22} height={70} rx={11} fill="#9F1239" />
+              <circle cx={61} cy={260} r={14} fill="#F7D3BA" />
+            </g>
+            <g transform={`rotate(${-armR} 158 190)`}>
+              <rect x={148} y={184} width={22} height={70} rx={11} fill="#9F1239" />
+              <circle cx={159} cy={260} r={14} fill="#F7D3BA" />
+              {hold && <g transform="translate(159 260)">{hold}</g>}
+            </g>
+            {/* Sweatshirt body */}
+            <rect x={62} y={174} width={96} height={92} rx={24} fill="#9F1239" />
+            {/* Neck & Head */}
+            <rect x={97} y={154} width={26} height={22} rx={6} fill="#F7D3BA" />
+            <rect x={68} y={64} width={84} height={92} rx={38} fill="#F7D3BA" />
+            <HumanFaceExpr face={face} blink={blink} talk={talk} cx={110} cy={108} />
+            {/* Front hair */}
+            <path d="M 66 96 Q 66 56 110 56 Q 154 56 154 96 Q 134 74 110 82 Q 86 74 66 96 Z" fill="#271C19" />
+            {/* Studio Headphones */}
+            <path d="M 62 104 Q 60 44 110 44 Q 160 44 158 104" fill="none" stroke="#1E293B" strokeWidth={9} strokeLinecap="round" />
+            <rect x={52} y={92} width={16} height={32} rx={8} fill="#1E293B" />
+            <rect x={152} y={92} width={16} height={32} rx={8} fill="#1E293B" />
+          </g>
+        </g>
+      </svg>
     </div>
   );
 };

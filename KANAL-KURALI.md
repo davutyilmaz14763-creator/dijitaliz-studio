@@ -1,0 +1,24 @@
+# Kanal Ana Formatı ve Kalıcı Üretim Kuralları
+
+Bu proje için onaylanan kalıcı ana format: **`cizgi` (Ana Sunucu: `Arda` + Robot/İnsan Yardımcılar + Mixkit SFX) + OpenMontage tarzı çizgi sayaç ve karşılaştırma kartları**.
+
+## 0. Kanal Adı ve Karakter Kadrosu (Kalıcı)
+- **Kanal Adı:** `Dijitalİz`
+- **Ana Sunucu (`Arda`):** #7 Siber Dedektif (trençkot, fötr şapka, kare gözlük) — videoların ana yüzü.
+- **Yardımcılar:** Diyalog ve çeşitlilik için gerektiğinde **robot/telefon yardımcılar (`Bit`, `Cep`)** ve **insan yardımcı (`Elif`)** sahnelerde Arda'ya eşlik eder.
+
+## 1. İçerik ve Tempo Kuralları
+- **İlk 2 saniye kancası:** Her video günlük hayattan merak uyandıran kısa bir soru veya şaşırtıcı bir iddiayla başlar (sıkıcı giriş yok).
+- **Samimi ve akıcı dil:** Ansiklopedi gibi değil, arkadaşına ilginç bir şey anlatır gibi kısa, doğal Türkçe cümleler kurulur.
+- **Toplam süre:** **18–30 saniye** arasında kalır.
+- **Sıkmayan görsel tempo:** Her **2–3 saniyede bir** ekranda yeni bir hareket olur (robotun mimik/duygu değişimi, konuşma balonu, arka plan rengi geçişi, animasyonlu `CizgiStatBar` yüzde/sayaç veya `CizgiComparisonCard` / `Card` vurgu kartı).
+- **Kapanış:** Ses bittikten en fazla **0.6–0.8 saniye** sonra video biter (`Math.ceil((voice.duration + 0.7) * FPS)`); sonda gereksiz sessiz bekleme olmaz ve izleyiciyi yoruma çekecek tek cümlelik esprili bir kapanış yapılır.
+
+## 2. Görsel Yerleşim ve Animasyon Kuralları
+- **Test rozeti yok:** Videoların üstünde `2 · SHORTS-SKILSS` gibi test etiketleri bulunmaz.
+- **Taşma (overshoot) kontrolü:** `Card` ve `Stamp` giriş animasyonları yumuşak damping (`16`) kullanır ve `maxWidth: 900` ile ekran dışına taşmaz.
+- **Robot anteni güvenli alanı:** `Bit` (`y={1185}`) karakterinin antenine değmemesi için üstteki büyük vurgu kartları (`Stamp`, `Card`, `CizgiStatBar`, `CizgiComparisonCard`) `y={350..460}` bandına hizalanır.
+- **Altyazı:** `TagCaptions` (Bitter serif, somon etiket) ve ses efektleri (`Sfx` Mixkit) her sahne ve görsel olayda kullanılır.
+
+## 3. Otomatik Gemini Kalite Kontrolü
+- Her render sonrası video dosyası `node scripts/gemini-review.mjs out/<video>.mp4` komutuyla **Gemini'ye** gönderilip görsel yerleşim, ses/telaffuz senkronu, tempo ve kapanış açısından kontrol edilir. Raporda kritik bir sorun çıkarsa düzeltilip yeniden render alınır.

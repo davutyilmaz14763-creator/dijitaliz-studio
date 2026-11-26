@@ -1,0 +1,88 @@
+name: Kanal-Studio Cloud Render
+
+on:
+  workflow_dispatch:
+    inputs:
+      composition:
+        description: "Render alınacak Remotion kompozisyon ID (ör. DijitalizTest)"
+        required: true
+        default: "DijitalizTest"
+      gemini_review:
+        description: "Render sonrası Gemini kalite kontrolü çalışsın mı?"
+        type: boolean
+        default: true
+      publish_ig:
+        description: "Instagram Reels olarak yayınlansın mı?"
+        type: boolean
+        default: false
+      ig_caption:
+        description: "Instagram açıklaması ve etiketler"
+        required: false
+        default: ""
+  push:
+    branches: [main]
+    paths:
+      - "src/reels/**"
+      - "src/Root.tsx"
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    env:
+      COMP: ${{ github.event.inputs.composition || 'DijitalizTest' }}
+    steps:
+      - name: Depoyu çek
+        uses: actions/checkout@v4
+
+      - name: Node.js kur
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Sistem bağımlılıkları (ffmpeg, emoji fontu, Chrome)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-noto-color-emoji libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libasound2t64
+
+      - name: NPM paketlerini kur
+        run: npm ci
+
+      - name: Remotion Chrome Headless Shell hazırla
+        run: npx remotion browser ensure
+
+      - name: Mixkit SFX önbellek / indir
+        id: sfx-cache
+        uses: actions/cache@v4
+        with:
+          path: public/sfx
+          key: mixkit-sfx-v1
+
+      - name: Mixkit ses efektlerini indir
+        if: steps.sfx-cache.outputs.cache-hit != 'true'
+        run: bash scripts/get-mixkit-sfx.sh
+
+      - name: Full HD (1080x1920) Render
+        run: |
+          mkdir -p out
+          npx remotion render "${COMP}" "out/${COMP}.mp4"
+
+      - name: Gemini Kalite Kontrolü
+        if: ${{ github.event.inputs.gemini_review != 'false' && env.GOOGLE_API_KEY != '' }}
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+        run: node scripts/gemini-review.mjs "out/${COMP}.mp4"
+
+      - name: Video Çıktısını Yükle (Artifact)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.COMP }}-fullhd
+          path: out/${{ env.COMP }}.mp4
+          retention-days: 14
+
+      - name: Instagram Reels Yayınla
+        if: ${{ github.event.inputs.publish_ig == 'true' && env.IG_USER_ID != '' && env.IG_ACCESS_TOKEN != '' }}
+        env:
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+        run: node scripts/ig-publish.mjs --file "out/${COMP}.mp4" --caption "${{ github.event.inputs.ig_caption }}"

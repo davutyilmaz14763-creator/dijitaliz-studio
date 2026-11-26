@@ -9,6 +9,7 @@
   },
   "private": true,
   "dependencies": {
+    "@google/genai": "^3.6.1",
     "@remotion/cli": "4.0.543",
     "@remotion/effects": "4.0.543",
     "@remotion/google-fonts": "4.0.543",

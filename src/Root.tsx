@@ -23,6 +23,18 @@ import s2_robot_env from "./reels/deploytv-2/shorts/short-robot.envelope.json";
 import { ProfilFoto, Banner, Kapak } from "./reels/haber/Marka";
 import { Sistem, sistemFrames } from "./reels/sistem/Sistem";
 import { SfxSampler, sfxSamplerDuration } from "./reels/sfx";
+import { HizliTest, HIZLI_TEST_FRAMES } from "./reels/hizli-test/HizliTest";
+import { Test2, TEST2_FRAMES } from "./reels/test-2/Test2";
+import { Secenek1, SECENEK1_FRAMES } from "./reels/secenek-1/Secenek1";
+import { Secenek2, SECENEK2_FRAMES } from "./reels/secenek-2/Secenek2";
+import { Secenek3, SECENEK3_FRAMES } from "./reels/secenek-3/Secenek3";
+import { Secenek4, SECENEK4_FRAMES } from "./reels/secenek-4/Secenek4";
+import { Fullhd30, FULLHD30_FRAMES } from "./reels/fullhd-30/Fullhd30";
+import { KarsilastirmaShorts, SS_TEST_FRAMES } from "./reels/karsilastirma/KarsilastirmaShorts";
+import { SsTrend, SS_TREND_FRAMES } from "./reels/ss-trend/SsTrend";
+import { AiGercek60, AI_GERCEK_60_FRAMES } from "./reels/ai-gercek-60/AiGercek60";
+import { KarakterVitrini } from "./reels/cizgi/KarakterVitrini";
+import { DijitalizTest, DIJITALIZ_TEST_FRAMES } from "./reels/dijitaliz-test/DijitalizTest";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -134,6 +146,18 @@ export const RemotionRoot: React.FC = () => {
       <Composition id="DeployTv-2-Kapak" component={Kapak} durationInFrames={1} fps={30} width={1280} height={720} defaultProps={{ img: "deploytv-2/img/jensen.jpg", face: "hazal/yuz_acik.png", badge: "HAFTALIK #2", line1: "NVIDIA'DA", line2: "DEPREM!" }} />
       <Composition id="Sistem" component={Sistem} durationInFrames={sistemFrames("full")} fps={30} width={1080} height={1920} defaultProps={{ variant: "full" as const }} />
       <Composition id="Sistem-60" component={Sistem} durationInFrames={sistemFrames("60")} fps={30} width={1080} height={1920} defaultProps={{ variant: "60" as const }} />
+      <Composition id="HizliTest" component={HizliTest} durationInFrames={HIZLI_TEST_FRAMES} fps={30} width={1080} height={1920} />
+      <Composition id="Test2" component={Test2} durationInFrames={TEST2_FRAMES} fps={30} width={1080} height={1920} />
+      <Composition id="Secenek1" component={Secenek1} durationInFrames={SECENEK1_FRAMES} fps={30} width={1080} height={1920} />
+      <Composition id="Secenek2" component={Secenek2} durationInFrames={SECENEK2_FRAMES} fps={30} width={1080} height={1920} />
+      <Composition id="Secenek3" component={Secenek3} durationInFrames={SECENEK3_FRAMES} fps={30} width={1080} height={1920} />
+      <Composition id="Secenek4" component={Secenek4} durationInFrames={SECENEK4_FRAMES} fps={30} width={1080} height={1920} />
+      <Composition id="Fullhd30" component={Fullhd30} durationInFrames={FULLHD30_FRAMES} fps={30} width={1080} height={1920} />
+      <Composition id="KarsilastirmaShorts" component={KarsilastirmaShorts} durationInFrames={SS_TEST_FRAMES} fps={30} width={1080} height={1920} />
+      <Composition id="SsTrend" component={SsTrend} durationInFrames={SS_TREND_FRAMES} fps={30} width={1080} height={1920} />
+      <Composition id="AiGercek60" component={AiGercek60} durationInFrames={AI_GERCEK_60_FRAMES} fps={30} width={1080} height={1920} />
+      <Composition id="KarakterVitrini" component={KarakterVitrini} durationInFrames={1} fps={30} width={1600} height={2000} />
+      <Composition id="DijitalizTest" component={DijitalizTest} durationInFrames={DIJITALIZ_TEST_FRAMES} fps={30} width={1080} height={1920} />
     </>
   );
 };
