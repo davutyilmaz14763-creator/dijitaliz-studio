@@ -37,16 +37,17 @@ jobs:
       - name: Node.js kur
         uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "24"
           cache: "npm"
 
       - name: Sistem bağımlılıkları (ffmpeg, emoji fontu, Chrome)
         run: |
           sudo apt-get update
-          sudo apt-get install -y ffmpeg fonts-noto-color-emoji libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libasound2t64
+          sudo apt-get install -y ffmpeg fonts-noto-color-emoji libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1
+          sudo apt-get install -y libasound2t64 || sudo apt-get install -y libasound2 || true
 
       - name: NPM paketlerini kur
-        run: npm ci
+        run: npm install --no-audit --no-fund
 
       - name: Remotion Chrome Headless Shell hazırla
         run: npx remotion browser ensure
@@ -68,10 +69,15 @@ jobs:
           npx remotion render "${COMP}" "out/${COMP}.mp4"
 
       - name: Gemini Kalite Kontrolü
-        if: ${{ github.event.inputs.gemini_review != 'false' && env.GOOGLE_API_KEY != '' }}
+        if: ${{ github.event.inputs.gemini_review != 'false' }}
         env:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
-        run: node scripts/gemini-review.mjs "out/${COMP}.mp4"
+        run: |
+          if [ -n "$GOOGLE_API_KEY" ]; then
+            node scripts/gemini-review.mjs "out/${COMP}.mp4"
+          else
+            echo "GOOGLE_API_KEY secret tanımlı değil, atlandı."
+          fi
 
       - name: Video Çıktısını Yükle (Artifact)
         uses: actions/upload-artifact@v4
@@ -81,8 +87,11 @@ jobs:
           retention-days: 14
 
       - name: Instagram Reels Yayınla
-        if: ${{ github.event.inputs.publish_ig == 'true' && env.IG_USER_ID != '' && env.IG_ACCESS_TOKEN != '' }}
+        if: ${{ github.event.inputs.publish_ig == 'true' }}
         env:
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
-        run: node scripts/ig-publish.mjs --file "out/${COMP}.mp4" --caption "${{ github.event.inputs.ig_caption }}"
+        run: |
+          if [ -n "$IG_USER_ID" ] && [ -n "$IG_ACCESS_TOKEN" ]; then
+            node scripts/ig-publish.mjs --file "out/${COMP}.mp4" --caption "${{ github.event.inputs.ig_caption }}"
+          fi
