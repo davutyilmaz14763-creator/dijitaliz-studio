@@ -34,13 +34,13 @@ if (!reel) throw new Error("kullanım: node scripts/tts-eleven.mjs <reel> [--fak
 const fake = args.includes("--fake");
 const cfg = JSON.parse(fs.readFileSync(path.join(root, "src/reels", reel, "script.json"), "utf8"));
 const sceneTexts = cfg.scenes.map((x) => (typeof x === "string" ? x : x.text));
-const defaultVoice = cfg.voiceId || VOICE_ENV || "IKne3meq5aSn9XLyUdCD";
+const defaultVoice = cfg.voiceId || VOICE_ENV || "bIHbv24MWmeRgasZH58o";
 const sceneVoices = cfg.scenes.map((x) => (typeof x === "object" && x.voiceId ? x.voiceId : defaultVoice));
 const model = cfg.model || "eleven_multilingual_v2";
 const isV3 = model === "eleven_v3";
 const settings = isV3
   ? { stability: 0.5, similarity_boost: 1.0, ...(cfg.voiceSettings ?? {}) }
-  : { stability: 0.4, similarity_boost: 0.85, style: 0.25, use_speaker_boost: true, speed: 1.12, ...(cfg.voiceSettings ?? {}) };
+  : { stability: 0.55, similarity_boost: 0.85, style: 0, use_speaker_boost: true, speed: 1.03, ...(cfg.voiceSettings ?? {}) };
 const outDir = path.join(root, "public", reel);
 fs.mkdirSync(outDir, { recursive: true });
 

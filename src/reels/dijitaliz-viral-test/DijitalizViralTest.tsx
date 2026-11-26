@@ -13,6 +13,7 @@ import {
   Elif,
   K,
   PaperGrain,
+  RealPhotoBg,
   rimGlow,
   SpeedLines,
   Sunburst,
@@ -43,20 +44,21 @@ const SceneWrap: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return <AbsoluteFill style={{ scale: String(interpolate(p, [0, 1], [1.08, 1])), opacity: Math.min(1, p * 3) }}>{children}</AbsoluteFill>;
 };
 
-/* Sahne 0: Gece Atmosferi + Hız Çizgileri + Arda & Cep (1% Panik) */
-const S0: React.FC = () => {
+/* Sahne 0: Gerçek Şarj Fotoğrafı + Gece Atmosferi + Hız Çizgileri + Arda & Cep */
+const S0: React.FC<{ dur: number }> = ({ dur }) => {
   const frame = useCurrentFrame();
   const shock = frame / FPS >= wAt(0, "saatlerce");
   return (
     <AbsoluteFill style={{ background: "radial-gradient(circle at 50% 35%, #1E3A8A 0%, #0F172A 58%, #020617 100%)" }}>
+      <RealPhotoBg src="dijitaliz-viral-test/img/phone.jpg" duration={dur} opacity={0.44} />
       <SpeedLines opacity={0.25} />
       <ChapterHud sub="TEKNOLOJİ · BATARYA" />
       <ViralHeadline line1="ŞARJIN %1'DE" line2="NEDEN BİTMEZ?" y={175} />
       <div style={{ filter: rimGlow }}>
         <Cep id="cep0" x={290} y={1200} size={310} face={shock ? "shock" : "normal"} armL={shock ? 130 : 20} armR={shock ? 130 : 20} enterAt={0.15} />
-        <Arda id="arda0" x={670} y={1220} size={430} face={shock ? "shock" : "normal"} armL={shock ? 120 : 15} armR={shock ? 120 : 15} enterAt={0.08} />
       </div>
-      <SweatDrops x={670} y={790} at={wAt(0, "saatlerce")} />
+      <Arda id="arda0" x={670} y={1220} size={410} face={shock ? "shock" : "normal"} enterAt={0.08} />
+      <SweatDrops x={670} y={810} at={wAt(0, "saatlerce")} />
     </AbsoluteFill>
   );
 };
@@ -78,12 +80,13 @@ const S1: React.FC = () => {
   );
 };
 
-/* Sahne 2: Kırmızı-Koyu Kimyasal Risk + Bit + Karşılaştırma */
-const S2: React.FC = () => {
+/* Sahne 2: Gerçek Lityum Pil Fotoğrafı + Kırmızı-Koyu Kimyasal Risk + Bit */
+const S2: React.FC<{ dur: number }> = ({ dur }) => {
   const frame = useCurrentFrame();
   const safe = frame / FPS >= wAt(2, "gizli");
   return (
     <AbsoluteFill style={{ background: "radial-gradient(circle at 50% 35%, #7F1D1D 0%, #1E1B4B 65%, #090D16 100%)" }}>
+      <RealPhotoBg src="dijitaliz-viral-test/img/battery.jpg" duration={dur} opacity={0.42} tint="rgba(30, 27, 75, 0.58)" />
       <SpeedLines opacity={0.28} />
       <ChapterHud sub="LİTYUM · KİMYASAL RİSK" dotColor="#EF4444" />
       <ViralHeadline line1="SIFIRA İNERSE" line2="PİL ÖLÜR!" color2="#FCA5A5" y={170} />
@@ -143,7 +146,7 @@ export const DijitalizViralTest: React.FC = () => {
     <AbsoluteFill style={{ background: "#020617" }}>
       <Sequence name="Sahne 1" from={s0} durationInFrames={s1 - s0}>
         <SceneWrap>
-          <S0 />
+          <S0 dur={s1 - s0} />
         </SceneWrap>
       </Sequence>
       <Sequence from={s1 - 4} durationInFrames={8}>
@@ -159,7 +162,7 @@ export const DijitalizViralTest: React.FC = () => {
       </Sequence>
       <Sequence name="Sahne 3" from={s2} durationInFrames={s3 - s2}>
         <SceneWrap>
-          <S2 />
+          <S2 dur={s3 - s2} />
         </SceneWrap>
       </Sequence>
       <Sequence from={s3 - 4} durationInFrames={8}>

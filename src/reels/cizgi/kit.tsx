@@ -3,7 +3,7 @@
 // Karakterler bizim: "Bit" (ekran yüzlü robot) ve "Cep" (telefon arkadaşı).
 import React from "react";
 import { loadFont as loadSlab } from "@remotion/google-fonts/Bitter";
-import { AbsoluteFill, Img, interpolate, random, spring, useCurrentFrame, useVideoConfig } from "remotion";
+import { AbsoluteFill, Img, interpolate, random, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { fontFamily as sans } from "../theme";
 
 export const { fontFamily: slab } = loadSlab("normal", { weights: ["800"], subsets: ["latin", "latin-ext"] });
@@ -805,146 +805,37 @@ const HumanFaceExpr: React.FC<{ face: Face; blink: number; talk?: number; cx?: n
   );
 };
 
-const ArdaFaceExpr: React.FC<{ face: Face; blink: number; talk?: number }> = ({ face, blink, talk = 0 }) => {
-  const isBlinking = blink > 0.5;
-  const eyeRy = isBlinking ? 1.2 : face === "shock" ? 7.5 : 6;
-  const mouthOpen = talk > 0.18 ? 4 + talk * 8 : 0;
-  return (
-    <g>
-      {/* Eyebrows */}
-      {face === "angry" ? (
-        <>
-          <path d="M 76 89 L 100 94" stroke={K.ink} strokeWidth={4.5} strokeLinecap="round" fill="none" />
-          <path d="M 144 89 L 120 94" stroke={K.ink} strokeWidth={4.5} strokeLinecap="round" fill="none" />
-        </>
-      ) : face === "shock" ? (
-        <>
-          <path d="M 76 87 Q 88 80 100 86" stroke={K.ink} strokeWidth={4} strokeLinecap="round" fill="none" />
-          <path d="M 120 86 Q 132 80 144 87" stroke={K.ink} strokeWidth={4} strokeLinecap="round" fill="none" />
-        </>
-      ) : (
-        <>
-          <path d="M 76 90 Q 89 85 101 89" stroke={K.ink} strokeWidth={4} strokeLinecap="round" fill="none" />
-          <path d="M 119 89 Q 131 85 144 90" stroke={K.ink} strokeWidth={4} strokeLinecap="round" fill="none" />
-        </>
-      )}
-      {/* Eyes */}
-      {face === "wink" ? (
-        <>
-          <ellipse cx={89} cy={104} rx={7.5} ry={eyeRy} fill="#FFFFFF" stroke="none" />
-          {!isBlinking && <circle cx={90} cy={104} r={4.5} fill="#0F172A" stroke="none" />}
-          {!isBlinking && <circle cx={91.5} cy={102.5} r={1.6} fill="#FFFFFF" stroke="none" />}
-          <path d="M 122 104 Q 131 97 140 104" stroke={K.ink} strokeWidth={4} strokeLinecap="round" fill="none" />
-        </>
-      ) : (
-        <>
-          <ellipse cx={89} cy={104} rx={7.5} ry={eyeRy} fill="#FFFFFF" stroke="none" />
-          <ellipse cx={131} cy={104} rx={7.5} ry={eyeRy} fill="#FFFFFF" stroke="none" />
-          {!isBlinking && (
-            <>
-              <circle cx={90} cy={104} r={4.5} fill="#0F172A" stroke="none" />
-              <circle cx={132} cy={104} r={4.5} fill="#0F172A" stroke="none" />
-              <circle cx={91.5} cy={102.5} r={1.6} fill="#FFFFFF" stroke="none" />
-              <circle cx={133.5} cy={102.5} r={1.6} fill="#FFFFFF" stroke="none" />
-            </>
-          )}
-        </>
-      )}
-      {/* Nose */}
-      <path d="M 109 107 L 106 119 Q 110 122 114 119" stroke={K.ink} strokeWidth={2.8} strokeLinecap="round" fill="none" />
-      {/* Mouth */}
-      {mouthOpen > 0 ? (
-        <ellipse cx={110} cy={133} rx={9} ry={mouthOpen} fill="#1E293B" stroke={K.ink} strokeWidth={3} />
-      ) : face === "shock" ? (
-        <ellipse cx={110} cy={134} rx={7} ry={9} fill="#1E293B" stroke={K.ink} strokeWidth={3} />
-      ) : face === "happy" ? (
-        <path d="M 96 130 Q 110 143 125 129" stroke={K.ink} strokeWidth={3.8} strokeLinecap="round" fill="none" />
-      ) : face === "angry" ? (
-        <path d="M 98 136 Q 110 129 122 136" stroke={K.ink} strokeWidth={3.8} strokeLinecap="round" fill="none" />
-      ) : (
-        <path d="M 99 132 Q 112 138 124 129" stroke={K.ink} strokeWidth={3.5} strokeLinecap="round" fill="none" />
-      )}
-    </g>
-  );
-};
-
-export const Arda: React.FC<HumanProps> = ({ x, y, size = 440, face = "normal", armL = 12, armR = 12, hold, flip, enterAt = 0, id, talk }) => {
+export const Arda: React.FC<HumanProps> = ({ x, y, size = 440, face = "normal", flip, enterAt = 0, talk }) => {
   const frame = useCurrentFrame();
-  const blink = useBlink(id);
   const p = usePopAt(enterAt, 14, 190);
-  const bob = Math.sin(frame / 9) * 3.5;
-  const W = 220,
-    H = 320;
-  const w = (size * W) / H;
+  const bob = Math.sin(frame / 9) * 5;
+  const tilt = face === "shock" ? Math.sin(frame / 2.5) * 2.5 : face === "wink" ? -3 : Math.sin(frame / 18) * 1.5;
+  const pulse = talk ? 1 + talk * 0.04 : 1;
+  const d = size * 0.86;
+  const ring = face === "shock" ? "#FACC15" : "#38BDF8";
   return (
     <div
       style={{
         position: "absolute",
-        left: x - w / 2,
-        top: y - size,
-        width: w,
-        height: size,
-        transformOrigin: "50% 100%",
-        scale: `${(flip ? -1 : 1) * interpolate(p, [0, 1], [0.5, 1])} ${interpolate(p, [0, 1], [0.5, 1])}`,
-        opacity: Math.min(1, p * 2),
-        filter: shadow,
+        left: x - d / 2,
+        top: y - d - 20 + bob,
+        width: d,
+        height: d,
+        borderRadius: "50%",
+        overflow: "hidden",
+        border: `7px solid ${ring}`,
+        outline: "7px solid #FFFFFF",
+        boxShadow: `0 0 34px ${ring}88, 0 16px 32px rgba(0,0,0,0.45)`,
+        transformOrigin: "50% 80%",
+        transform: `scale(${(flip ? -1 : 1) * interpolate(p, [0, 1], [0.45, 1]) * pulse}, ${interpolate(p, [0, 1], [0.45, 1]) * pulse}) rotate(${tilt}deg)`,
+        opacity: Math.min(1, p * 2.2),
+        background: "#050B1E",
       }}
     >
-      <svg viewBox={`0 0 ${W} ${H}`} width={w} height={size} overflow="visible">
-        <defs>
-          <Sticker id={`stk-arda-${id}`} />
-        </defs>
-        <g filter={`url(#stk-arda-${id})`} stroke={K.ink} strokeWidth={5} strokeLinejoin="round">
-          {/* Legs */}
-          <rect x={80} y={262} width={22} height={42} rx={10} fill="#1E293B" />
-          <rect x={118} y={262} width={22} height={42} rx={10} fill="#1E293B" />
-          <ellipse cx={89} cy={306} rx={21} ry={10} fill={K.ink} />
-          <ellipse cx={131} cy={306} rx={21} ry={10} fill={K.ink} />
-          <g transform={`translate(0 ${bob})`}>
-            {/* Arms */}
-            <g transform={`rotate(${armL} 62 190)`}>
-              <rect x={50} y={184} width={22} height={70} rx={11} fill="#2B3445" />
-              <circle cx={61} cy={260} r={14} fill="#F5C29B" />
-            </g>
-            <g transform={`rotate(${-armR} 158 190)`}>
-              <rect x={148} y={184} width={22} height={70} rx={11} fill="#2B3445" />
-              <circle cx={159} cy={260} r={14} fill="#F5C29B" />
-              {hold && <g transform="translate(159 260)">{hold}</g>}
-            </g>
-            {/* Dark Charcoal Trench Coat + Popped Collar */}
-            <path d="M 62 174 L 158 174 L 166 268 L 54 268 Z" fill="#2B3445" />
-            <polygon points="88,174 110,208 132,174" fill="#0F172A" />
-            <path d="M 64 176 L 78 152 L 95 178 Z" fill="#3B4659" />
-            <path d="M 156 176 L 142 152 L 125 178 Z" fill="#3B4659" />
-            <line x1={110} y1={208} x2={110} y2={268} strokeWidth={4} />
-            {/* Neck & Head */}
-            <rect x={97} y={152} width={26} height={24} rx={6} fill="#F5C29B" />
-            <circle cx={66} cy={110} r={10} fill="#F5C29B" />
-            <circle cx={154} cy={110} r={10} fill="#F5C29B" />
-            {/* Side Hair */}
-            <path d="M 68 80 L 68 106 L 76 100 L 76 80 Z" fill="#2D2523" stroke="none" />
-            <path d="M 152 80 L 152 106 L 144 100 L 144 80 Z" fill="#2D2523" stroke="none" />
-            {/* Face Shape */}
-            <path d="M 68 74 Q 68 62 110 62 Q 152 62 152 74 L 150 124 Q 146 156 110 158 Q 74 156 70 124 Z" fill="#F5C29B" />
-            {/* Face */}
-            <ArdaFaceExpr face={face} blink={blink} talk={talk} />
-            {/* Round Detective Glasses with Cyan Glare */}
-            <g stroke={K.ink} strokeWidth={4}>
-              <circle cx={89} cy={104} r={16} fill="rgba(56,189,248,0.22)" />
-              <circle cx={131} cy={104} r={16} fill="rgba(56,189,248,0.22)" />
-              <path d="M 105 103 Q 110 100 115 103" fill="none" />
-              <line x1={69} y1={102} x2={73} y2={103} strokeWidth={3.5} />
-              <line x1={147} y1={103} x2={151} y2={102} strokeWidth={3.5} />
-            </g>
-            <line x1={81} y1={96} x2={88} y2={111} stroke="rgba(255,255,255,0.55)" strokeWidth={2.5} strokeLinecap="round" />
-            <line x1={123} y1={96} x2={130} y2={111} stroke="rgba(255,255,255,0.55)" strokeWidth={2.5} strokeLinecap="round" />
-            {/* Navy Detective Fedora Hat with Cyan Ribbon */}
-            <path d="M 72 72 L 82 32 Q 110 26 138 32 L 148 72 Z" fill="#1D2B4E" />
-            <rect x={74} y={61} width={72} height={9} fill="#38BDF8" stroke="none" />
-            <ellipse cx={110} cy={72} rx={62} ry={11} fill="#131D38" />
-          </g>
-        </g>
-      </svg>
+      <Img
+        src={staticFile("cizgi/arda-profil.jpg")}
+        style={{ width: "100%", height: "100%", objectFit: "cover", transform: "scale(1.06)" }}
+      />
     </div>
   );
 };
@@ -1013,7 +904,26 @@ export const Elif: React.FC<HumanProps> = ({ x, y, size = 400, face = "normal", 
   );
 };
 
-/* ---------- Viral Reels Kit: HUD, Headlines, SpeedLines, SweatDrops, ViralCaptions ---------- */
+/* ---------- Viral Reels Kit: HUD, Headlines, SpeedLines, SweatDrops, ViralCaptions, RealPhotoBg ---------- */
+export const RealPhotoBg: React.FC<{ src: string; duration: number; opacity?: number; tint?: string }> = ({
+  src,
+  duration,
+  opacity = 0.42,
+  tint = "rgba(2, 6, 23, 0.52)",
+}) => {
+  const frame = useCurrentFrame();
+  const s = interpolate(frame, [0, duration], [1.0, 1.14]);
+  return (
+    <AbsoluteFill style={{ overflow: "hidden", pointerEvents: "none" }}>
+      <Img
+        src={staticFile(src)}
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", scale: String(s), opacity }}
+      />
+      <AbsoluteFill style={{ background: `linear-gradient(180deg, ${tint} 0%, rgba(2,6,23,0.18) 45%, ${tint} 100%)` }} />
+    </AbsoluteFill>
+  );
+};
+
 export const rimGlow = "drop-shadow(0 0 5px rgba(255,255,255,0.7)) drop-shadow(0 10px 14px rgba(0,0,0,0.32))";
 
 export const ChapterHud: React.FC<{ channel?: string; sub: string; dotColor?: string }> = ({

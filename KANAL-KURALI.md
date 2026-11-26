@@ -4,12 +4,11 @@ Bu proje için onaylanan kalıcı ana format: **`cizgi` (Ana Sunucu: `Arda` + Ro
 
 ## 0. Kanal Adı ve Karakter Kadrosu (Kalıcı)
 - **Kanal Adı:** `Dijitalİz` (`@dijitaliz.ai`)
-- **Ana Sunucu (`Arda`):** #7 Siber Dedektif (koyu trençkot, lacivert/cyan fötr şapka, yuvarlak gözlük) — videoların ana yüzü.
+- **Ana Sunucu (`Arda`):** #7 Siber Dedektif — Instagram profil fotoğrafının (`public/cizgi/arda-profil.jpg`) birebir animasyonlu hali.
 - **Yardımcılar:** Diyalog ve çeşitlilik için gerektiğinde **robot/telefon yardımcılar (`Bit`, `Cep`)** ve **insan yardımcı (`Elif`)** sahnelerde Arda'ya eşlik eder.
-- **Seslendirme (ElevenLabs):**
-  - **Erkek ses (Arda / Bit / Cep):** **Charlie** (`IKne3meq5aSn9XLyUdCD`) — varsayılan `voiceId`.
-  - **Kadın ses (Elif):** **Jessica** (`cgSgspJ2msm6clMCkdW9`) — `script.json` içinde Elif sahneleri `{ "text": "...", "voiceId": "cgSgspJ2msm6clMCkdW9" }` şeklinde yazılır.
-  - **Akıcı tempo ayarları:** `speed: 1.12`, `stability: 0.4`, `style: 0.25` (`scripts/tts-eleven.mjs` varsayılanı).
+- **Seslendirme (ElevenLabs — Tek Doğal Erkek Ses):**
+  - **Varsayılan ses:** **Will** (`bIHbv24MWmeRgasZH58o`) — tüm videolarda tek erkek ses kullanılır (ses geçişi yapılmaz).
+  - **Doğal ayarlar:** `style: 0`, `speed: 1.03`, `stability: 0.55` (`scripts/tts-eleven.mjs` varsayılanı).
 
 ## 1. İçerik ve Tempo Kuralları
 - **İlk 2 saniye kancası:** Her video günlük hayattan merak uyandıran kısa bir soru veya şaşırtıcı bir iddiayla başlar (sıkıcı giriş yok).

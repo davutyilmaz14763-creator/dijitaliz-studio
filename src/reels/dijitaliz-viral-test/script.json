@@ -1,11 +1,8 @@
 {
-  "voiceId": "IKne3meq5aSn9XLyUdCD",
+  "voiceId": "bIHbv24MWmeRgasZH58o",
   "scenes": [
     "Telefonun yüzde seksenken hızlı düşer ama yüzde birde saatlerce dayanır, hiç fark ettin mi?",
-    {
-      "text": "Aslında pilin tamamen bitmemiştir; sistem seni kandırıp kendini korumaya alır.",
-      "voiceId": "cgSgspJ2msm6clMCkdW9"
-    },
+    "Aslında pilin tamamen bitmemiştir; sistem seni kandırıp kendini korumaya alır.",
     "Çünkü lityum piller sıfıra inerse kimyasal olarak ölür. Yüzde bir gördüğün an gizli yedek devreye girer!",
     "Yani o yüzde bir, telefonun sana verdiği son şans! Sen en uzun yüzde birle kaç dakika dayandın? Yoruma yaz!"
   ]
