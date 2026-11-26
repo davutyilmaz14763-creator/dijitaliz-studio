@@ -805,37 +805,192 @@ const HumanFaceExpr: React.FC<{ face: Face; blink: number; talk?: number; cx?: n
   );
 };
 
-export const Arda: React.FC<HumanProps> = ({ x, y, size = 440, face = "normal", flip, enterAt = 0, talk }) => {
+export const Arda: React.FC<HumanProps> = ({ x, y, size = 440, face = "normal", armL = 12, armR = 12, hold, flip, enterAt = 0, id = "arda", talk = 0 }) => {
   const frame = useCurrentFrame();
+  const blink = useBlink(id);
   const p = usePopAt(enterAt, 14, 190);
-  const bob = Math.sin(frame / 9) * 5;
-  const tilt = face === "shock" ? Math.sin(frame / 2.5) * 2.5 : face === "wink" ? -3 : Math.sin(frame / 18) * 1.5;
-  const pulse = talk ? 1 + talk * 0.04 : 1;
-  const d = size * 0.86;
-  const ring = face === "shock" ? "#FACC15" : "#38BDF8";
+  const bob = Math.sin(frame / 9) * 3.5;
+  const isBlinking = blink > 0.5;
+  const mouthOpen = talk > 0.18 ? 4 + talk * 7 : 0;
+  const W = 240,
+    H = 340;
+  const w = (size * W) / H;
   return (
     <div
       style={{
         position: "absolute",
-        left: x - d / 2,
-        top: y - d - 20 + bob,
-        width: d,
-        height: d,
-        borderRadius: "50%",
-        overflow: "hidden",
-        border: `7px solid ${ring}`,
-        outline: "7px solid #FFFFFF",
-        boxShadow: `0 0 34px ${ring}88, 0 16px 32px rgba(0,0,0,0.45)`,
-        transformOrigin: "50% 80%",
-        transform: `scale(${(flip ? -1 : 1) * interpolate(p, [0, 1], [0.45, 1]) * pulse}, ${interpolate(p, [0, 1], [0.45, 1]) * pulse}) rotate(${tilt}deg)`,
-        opacity: Math.min(1, p * 2.2),
-        background: "#050B1E",
+        left: x - w / 2,
+        top: y - size,
+        width: w,
+        height: size,
+        transformOrigin: "50% 100%",
+        scale: `${(flip ? -1 : 1) * interpolate(p, [0, 1], [0.5, 1])} ${interpolate(p, [0, 1], [0.5, 1])}`,
+        opacity: Math.min(1, p * 2),
+        filter: shadow,
       }}
     >
-      <Img
-        src={staticFile("cizgi/arda-profil.jpg")}
-        style={{ width: "100%", height: "100%", objectFit: "cover", transform: "scale(1.06)" }}
-      />
+      <svg viewBox={`0 0 ${W} ${H}`} width={w} height={size} overflow="visible">
+        <defs>
+          <Sticker id={`stk-arda-${id}`} />
+        </defs>
+        <g filter={`url(#stk-arda-${id})`} stroke={K.ink} strokeWidth={4.5} strokeLinejoin="round">
+          {/* Legs */}
+          <rect x={88} y={278} width={24} height={44} rx={10} fill="#1E293B" />
+          <rect x={128} y={278} width={24} height={44} rx={10} fill="#1E293B" />
+          <ellipse cx={98} cy={324} rx={22} ry={10} fill="#0F172A" />
+          <ellipse cx={142} cy={324} rx={22} ry={10} fill="#0F172A" />
+          <g transform={`translate(0 ${bob})`}>
+            {/* Arms */}
+            <g transform={`rotate(${armL} 68 202)`}>
+              <rect x={54} y={196} width={24} height={74} rx={12} fill="#2B3445" />
+              <circle cx={66} cy={276} r={14} fill="#F4C095" />
+            </g>
+            <g transform={`rotate(${-armR} 172 202)`}>
+              <rect x={162} y={196} width={24} height={74} rx={12} fill="#2B3445" />
+              <circle cx={174} cy={276} r={14} fill="#F4C095" />
+              {hold && <g transform="translate(174 276)">{hold}</g>}
+            </g>
+            {/* Dark Charcoal Trench Coat + Tall Popped Collar (matching profile) */}
+            <path d="M 68 184 L 172 184 L 182 284 L 58 284 Z" fill="#2B3445" />
+            <polygon points="96,184 120,224 144,184" fill="#0B1120" />
+            {/* Left & Right Tall Popped Collar */}
+            <path d="M 66 188 L 74 142 L 100 186 L 90 202 Z" fill="#3B4659" />
+            <path d="M 174 188 L 166 142 L 140 186 L 150 202 Z" fill="#3B4659" />
+            <line x1={120} y1={224} x2={120} y2={284} strokeWidth={4} />
+            {/* Neck & Ear */}
+            <path d="M 105 162 L 135 162 L 135 190 L 105 190 Z" fill="#E6AE82" />
+            <ellipse cx={72} cy={120} rx={10} ry={13} fill="#F4C095" />
+            <ellipse cx={168} cy={120} rx={10} ry={13} fill="#F4C095" />
+            {/* Sculpted Face / Jawline */}
+            <path d="M 74 82 Q 74 66 120 66 Q 166 66 166 82 L 164 132 Q 158 166 120 172 Q 82 166 76 132 Z" fill="#F4C095" />
+            {/* Dark Side Hair */}
+            <path d="M 74 84 L 74 112 Q 81 106 83 92 Z" fill="#27201E" stroke="none" />
+            <path d="M 166 84 L 166 112 Q 159 106 157 92 Z" fill="#27201E" stroke="none" />
+            {/* Expressive Eyebrows */}
+            {face === "shock" ? (
+              <>
+                <path d="M 84 94 Q 96 86 108 92" fill="none" stroke="#1E1B18" strokeWidth={4.5} strokeLinecap="round" />
+                <path d="M 132 92 Q 144 86 156 94" fill="none" stroke="#1E1B18" strokeWidth={4.5} strokeLinecap="round" />
+              </>
+            ) : (
+              <>
+                <path d="M 84 97 Q 98 91 110 96" fill="none" stroke="#1E1B18" strokeWidth={4.8} strokeLinecap="round" />
+                <path d="M 130 96 Q 142 91 156 97" fill="none" stroke="#1E1B18" strokeWidth={4.8} strokeLinecap="round" />
+              </>
+            )}
+            {/* Large Expressive Eyes */}
+            {face === "wink" ? (
+              <>
+                <ellipse cx={97} cy={113} rx={9.5} ry={isBlinking ? 1.5 : 7.5} fill="#FFFFFF" stroke="none" />
+                {!isBlinking && <circle cx={99} cy={113} r={5} fill="#1E3A5F" stroke="none" />}
+                {!isBlinking && <circle cx={100.5} cy={111} r={2} fill="#FFFFFF" stroke="none" />}
+                <path d="M 132 113 Q 143 105 153 113" fill="none" stroke="#1E1B18" strokeWidth={4} strokeLinecap="round" />
+              </>
+            ) : (
+              <>
+                <ellipse cx={97} cy={113} rx={9.5} ry={isBlinking ? 1.5 : face === "shock" ? 9 : 7.5} fill="#FFFFFF" stroke="none" />
+                <ellipse cx={143} cy={113} rx={9.5} ry={isBlinking ? 1.5 : face === "shock" ? 9 : 7.5} fill="#FFFFFF" stroke="none" />
+                {!isBlinking && (
+                  <>
+                    <circle cx={99} cy={113} r={5} fill="#1E3A5F" stroke="none" />
+                    <circle cx={145} cy={113} r={5} fill="#1E3A5F" stroke="none" />
+                    <circle cx={100.5} cy={111} r={2} fill="#FFFFFF" stroke="none" />
+                    <circle cx={146.5} cy={111} r={2} fill="#FFFFFF" stroke="none" />
+                  </>
+                )}
+              </>
+            )}
+            {/* Nose */}
+            <path d="M 119 116 L 116 131 Q 120 134 125 131" fill="none" stroke="#9A6B4C" strokeWidth={3} strokeLinecap="round" />
+            {/* Mouth */}
+            {mouthOpen > 0 ? (
+              <ellipse cx={120} cy={147} rx={9} ry={mouthOpen} fill="#1E293B" stroke={K.ink} strokeWidth={3} />
+            ) : face === "shock" ? (
+              <ellipse cx={120} cy={148} rx={7.5} ry={9.5} fill="#1E293B" stroke={K.ink} strokeWidth={3} />
+            ) : face === "happy" ? (
+              <path d="M 105 144 Q 120 158 136 143" fill="none" stroke="#1E1B18" strokeWidth={3.8} strokeLinecap="round" />
+            ) : (
+              <path d="M 107 146 Q 122 153 135 143" fill="none" stroke="#1E1B18" strokeWidth={3.6} strokeLinecap="round" />
+            )}
+            {/* Round Black Glasses + Cyan Lens Reflection (matching profile) */}
+            <g stroke="#0F172A" strokeWidth={4.2}>
+              <circle cx={97} cy={113} r={18} fill="rgba(56,189,248,0.22)" />
+              <circle cx={143} cy={113} r={18} fill="rgba(56,189,248,0.22)" />
+              <path d="M 115 112 Q 120 108 125 112" fill="none" />
+              <line x1={74} y1={110} x2={79} y2={112} strokeWidth={3.5} />
+              <line x1={161} y1={112} x2={166} y2={110} strokeWidth={3.5} />
+            </g>
+            <line x1={87} y1={103} x2={96} y2={121} stroke="rgba(255,255,255,0.6)" strokeWidth={2.8} strokeLinecap="round" />
+            <line x1={133} y1={103} x2={142} y2={121} stroke="rgba(255,255,255,0.6)" strokeWidth={2.8} strokeLinecap="round" />
+            {/* Curved Navy Fedora Hat with Bright Cyan Band (matching profile) */}
+            <path d="M 76 78 L 88 30 Q 108 24 120 28 Q 132 24 152 30 L 164 78 Z" fill="#1B2A4A" />
+            <path d="M 79 65 Q 120 60 161 65 L 163 75 Q 120 70 77 75 Z" fill="#38BDF8" stroke="none" />
+            <path d="M 48 80 Q 120 66 192 80 Q 120 94 48 80 Z" fill="#111C35" />
+          </g>
+        </g>
+      </svg>
+    </div>
+  );
+};
+
+/* Small Floating Helper Robot Head */
+export const MiniBot: React.FC<{ x: number; y: number; size?: number; color?: string; face?: "normal" | "shock" | "happy"; enterAt?: number; id?: string }> = ({
+  x,
+  y,
+  size = 130,
+  color = "#38BDF8",
+  face = "normal",
+  enterAt = 0.15,
+  id = "mbot",
+}) => {
+  const frame = useCurrentFrame();
+  const p = usePopAt(enterAt, 14, 200);
+  const floatY = Math.sin(frame / 8 + x) * 8;
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: x - size / 2,
+        top: y - size / 2 + floatY,
+        width: size,
+        height: size,
+        transformOrigin: "50% 50%",
+        scale: String(interpolate(p, [0, 1], [0.3, 1])),
+        opacity: Math.min(1, p * 2.5),
+        filter: "drop-shadow(0 0 12px rgba(56,189,248,0.55)) drop-shadow(0 8px 14px rgba(0,0,0,0.35))",
+        zIndex: 14,
+      }}
+    >
+      <svg viewBox="0 0 120 120" width={size} height={size} overflow="visible">
+        <defs>
+          <Sticker id={`stk-mb-${id}`} />
+        </defs>
+        <g filter={`url(#stk-mb-${id})`} stroke={K.ink} strokeWidth={4.5} strokeLinejoin="round">
+          <line x1={60} y1={22} x2={60} y2={8} strokeWidth={4} />
+          <circle cx={60} cy={6} r={5} fill="#FACC15" />
+          <rect x={20} y={24} width={80} height={68} rx={22} fill="#E2E8F0" />
+          <rect x={30} y={36} width={60} height={42} rx={12} fill="#0F172A" />
+          {face === "shock" ? (
+            <>
+              <circle cx={46} cy={54} r={6} fill={color} stroke="none" />
+              <circle cx={74} cy={54} r={6} fill={color} stroke="none" />
+              <circle cx={60} cy={68} r={4.5} fill={color} stroke="none" />
+            </>
+          ) : face === "happy" ? (
+            <>
+              <path d="M 40 56 Q 46 48 52 56" fill="none" stroke={color} strokeWidth={4} strokeLinecap="round" />
+              <path d="M 68 56 Q 74 48 80 56" fill="none" stroke={color} strokeWidth={4} strokeLinecap="round" />
+              <path d="M 50 66 Q 60 74 70 66" fill="none" stroke={color} strokeWidth={3.5} strokeLinecap="round" />
+            </>
+          ) : (
+            <>
+              <circle cx={46} cy={55} r={5} fill={color} stroke="none" />
+              <circle cx={74} cy={55} r={5} fill={color} stroke="none" />
+              <line x1={52} y1={68} x2={68} y2={68} stroke={color} strokeWidth={3.5} strokeLinecap="round" />
+            </>
+          )}
+        </g>
+      </svg>
     </div>
   );
 };

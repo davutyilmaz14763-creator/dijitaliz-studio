@@ -4,8 +4,8 @@ Bu proje için onaylanan kalıcı ana format: **`cizgi` (Ana Sunucu: `Arda` + Ro
 
 ## 0. Kanal Adı ve Karakter Kadrosu (Kalıcı)
 - **Kanal Adı:** `Dijitalİz` (`@dijitaliz.ai`)
-- **Ana Sunucu (`Arda`):** #7 Siber Dedektif — Instagram profil fotoğrafının (`public/cizgi/arda-profil.jpg`) birebir animasyonlu hali.
-- **Yardımcılar:** Diyalog ve çeşitlilik için gerektiğinde **robot/telefon yardımcılar (`Bit`, `Cep`)** ve **insan yardımcı (`Elif`)** sahnelerde Arda'ya eşlik eder.
+- **Ana Sunucu (`Arda`):** #7 Siber Dedektif — Instagram profil fotoğrafından birebir uyarlanmış tam vücut 2D çizgi karakter (koyu yakalı trençkot, lacivert/cyan fötr şapka, yuvarlak gözlük).
+- **Yardımcılar:** Sadece Arda ana insan karakterdir; sahnelerde yanında **küçük yardımcı robot kafalar (`MiniBot`)** eşlik eder. (Başka insan karakter kullanılmaz.)
 - **Seslendirme (ElevenLabs — Tek Doğal Erkek Ses):**
   - **Varsayılan ses:** **Will** (`bIHbv24MWmeRgasZH58o`) — tüm videolarda tek erkek ses kullanılır (ses geçişi yapılmaz).
   - **Doğal ayarlar:** `style: 0`, `speed: 1.03`, `stability: 0.55` (`scripts/tts-eleven.mjs` varsayılanı).

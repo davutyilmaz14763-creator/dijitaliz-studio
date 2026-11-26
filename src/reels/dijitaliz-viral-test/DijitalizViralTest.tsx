@@ -5,13 +5,11 @@ import { Flash } from "../components";
 import { Sfx } from "../sfx";
 import {
   Arda,
-  Bit,
-  Cep,
   ChapterHud,
   CizgiComparisonCard,
   CizgiStatBar,
-  Elif,
   K,
+  MiniBot,
   PaperGrain,
   RealPhotoBg,
   rimGlow,
@@ -44,7 +42,7 @@ const SceneWrap: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return <AbsoluteFill style={{ scale: String(interpolate(p, [0, 1], [1.08, 1])), opacity: Math.min(1, p * 3) }}>{children}</AbsoluteFill>;
 };
 
-/* Sahne 0: Gerçek Şarj Fotoğrafı + Gece Atmosferi + Hız Çizgileri + Arda & Cep */
+/* Sahne 0: Gerçek Şarj Fotoğrafı + Gece Atmosferi + Hız Çizgileri + Arda & MiniBot */
 const S0: React.FC<{ dur: number }> = ({ dur }) => {
   const frame = useCurrentFrame();
   const shock = frame / FPS >= wAt(0, "saatlerce");
@@ -54,16 +52,16 @@ const S0: React.FC<{ dur: number }> = ({ dur }) => {
       <SpeedLines opacity={0.25} />
       <ChapterHud sub="TEKNOLOJİ · BATARYA" />
       <ViralHeadline line1="ŞARJIN %1'DE" line2="NEDEN BİTMEZ?" y={175} />
+      <MiniBot id="mb0" x={265} y={920} size={130} face={shock ? "shock" : "normal"} enterAt={0.2} />
       <div style={{ filter: rimGlow }}>
-        <Cep id="cep0" x={290} y={1200} size={310} face={shock ? "shock" : "normal"} armL={shock ? 130 : 20} armR={shock ? 130 : 20} enterAt={0.15} />
+        <Arda id="arda0" x={580} y={1240} size={440} face={shock ? "shock" : "normal"} armL={shock ? 125 : 15} armR={shock ? 125 : 15} enterAt={0.08} />
       </div>
-      <Arda id="arda0" x={670} y={1220} size={410} face={shock ? "shock" : "normal"} enterAt={0.08} />
-      <SweatDrops x={670} y={810} at={wAt(0, "saatlerce")} />
+      <SweatDrops x={580} y={800} at={wAt(0, "saatlerce")} />
     </AbsoluteFill>
   );
 };
 
-/* Sahne 1: Sıcak Terracotta-Altın 2D Sahne + Elif (Jessica) + Gizli Rezerv */
+/* Sahne 1: Sıcak Terracotta-Altın 2D Sahne + Arda + MiniBot + Gizli Rezerv */
 const S1: React.FC = () => {
   const frame = useCurrentFrame();
   const warn = frame / FPS >= wAt(1, "korumaya");
@@ -73,14 +71,15 @@ const S1: React.FC = () => {
       <ChapterHud sub="SİSTEM · GİZLİ REZERV" />
       <ViralHeadline line1="PİLİN ASLINDA" line2="BİTMEMİŞTİR!" color2="#FDE047" y={170} />
       <CizgiStatBar y={415} at={wAt(1, "kandırıp") - 0.15} label="Gizli Koruma Rezervi" percent={15} suffix="%" barColor="#F59E0B" />
+      <MiniBot id="mb1" x={790} y={945} size={125} color="#FACC15" face={warn ? "happy" : "normal"} enterAt={0.2} />
       <div style={{ filter: rimGlow }}>
-        <Elif id="elif1" x={540} y={1240} size={420} face={warn ? "shock" : "happy"} armL={warn ? 130 : 30} armR={warn ? 130 : 30} enterAt={0.1} />
+        <Arda id="arda1" x={510} y={1250} size={420} face={warn ? "wink" : "normal"} armL={25} armR={warn ? 120 : 25} enterAt={0.1} />
       </div>
     </AbsoluteFill>
   );
 };
 
-/* Sahne 2: Gerçek Lityum Pil Fotoğrafı + Kırmızı-Koyu Kimyasal Risk + Bit */
+/* Sahne 2: Gerçek Lityum Pil Fotoğrafı + Kırmızı-Koyu Kimyasal Risk + Arda + MiniBot */
 const S2: React.FC<{ dur: number }> = ({ dur }) => {
   const frame = useCurrentFrame();
   const safe = frame / FPS >= wAt(2, "gizli");
@@ -101,23 +100,25 @@ const S2: React.FC<{ dur: number }> = ({ dur }) => {
         leftColor={K.red}
         rightColor={K.green}
       />
+      <MiniBot id="mb2" x={250} y={960} size={125} color="#F87171" face={safe ? "happy" : "shock"} enterAt={0.15} />
       <div style={{ filter: rimGlow }}>
-        <Bit id="bit2" x={540} y={1240} size={410} face={safe ? "happy" : "shock"} armL={125} armR={125} enterAt={0.1} />
+        <Arda id="arda2" x={570} y={1250} size={420} face={safe ? "happy" : "shock"} armL={120} armR={120} enterAt={0.1} />
       </div>
-      {!safe && <SweatDrops x={540} y={840} at={wAt(2, "ölür") - 0.1} />}
+      {!safe && <SweatDrops x={570} y={820} at={wAt(2, "ölür") - 0.1} />}
     </AbsoluteFill>
   );
 };
 
-/* Sahne 3: Kapanış — Arda + Elif Yan Yana + Rekor Sorusu */
+/* Sahne 3: Kapanış — Arda + İki Küçük Yardımcı Robot Kafa */
 const S3: React.FC = () => (
   <AbsoluteFill style={{ background: "radial-gradient(circle at 50% 40%, #065F46 0%, #0F172A 70%, #020617 100%)" }}>
     <Sunburst a="rgba(52,211,153,0.14)" b="rgba(167,243,208,0.05)" cy={780} />
     <ChapterHud sub="SONUÇ · SENİN REKORUN?" dotColor="#4ADE80" />
     <ViralHeadline line1="EN UZUN %1" line2="KAÇ DAKİKA?" color2="#4ADE80" y={180} />
+    <MiniBot id="mb3a" x={240} y={960} size={130} color="#4ADE80" face="happy" enterAt={0.15} />
+    <MiniBot id="mb3b" x={840} y={960} size={130} color="#38BDF8" face="happy" enterAt={0.22} />
     <div style={{ filter: rimGlow }}>
-      <Arda id="arda3" x={365} y={1230} size={415} face="wink" armL={135} armR={135} enterAt={0.08} />
-      <Elif id="elif3" x={735} y={1230} size={395} face="happy" armL={120} armR={120} enterAt={0.18} />
+      <Arda id="arda3" x={540} y={1250} size={450} face="wink" armL={135} armR={135} enterAt={0.08} />
     </div>
   </AbsoluteFill>
 );
