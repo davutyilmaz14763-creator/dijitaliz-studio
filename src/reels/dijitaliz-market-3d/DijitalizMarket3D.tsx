@@ -8,8 +8,10 @@ import {
   ChapterHud,
   CizgiStatBar,
   FloatingParticles,
-  InsertCard,
   PaperGrain,
+  sans,
+  slab,
+  usePopAt,
   ViralCaptions,
   ViralHeadline,
   VWord,
@@ -32,7 +34,74 @@ const wAt = (s: number, m: string) => {
   return w.start - sceneStart(s);
 };
 
-/** 3D Sahne + Kamera Kontrolcüsü (S0..S3 arası sürekli akan stilize 3D dünya) */
+/** Sağdaki Referans Tarzı Tırtıklı 2D Market Fişi */
+const MarketReceipt: React.FC<{ at?: number }> = ({ at = 0.8 }) => {
+  const p = usePopAt(at, 15, 200);
+  const rows = [
+    ["SÜT", "45 TL"],
+    ["EKMEK", "15 TL"],
+    ["+ 6 PLANSIZ ÜRÜN", "780 TL"],
+  ];
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: "50%",
+        top: 215,
+        width: 680,
+        transform: `translate(-50%, ${interpolate(p, [0, 1], [80, 0])}px) scale(${interpolate(p, [0, 1], [0.85, 1])})`,
+        opacity: Math.min(1, p * 2.5),
+        background: "#FAF8F5",
+        border: "5px solid #161616",
+        boxShadow: "0 22px 45px rgba(0,0,0,0.45)",
+        padding: "34px 38px 26px",
+        zIndex: 22,
+        clipPath:
+          "polygon(0 0, 100% 0, 100% 96%, 96% 100%, 92% 96%, 88% 100%, 84% 96%, 80% 100%, 76% 96%, 72% 100%, 68% 96%, 64% 100%, 60% 96%, 56% 100%, 52% 96%, 48% 100%, 44% 96%, 40% 100%, 36% 96%, 32% 100%, 28% 96%, 24% 100%, 20% 96%, 16% 100%, 12% 96%, 8% 100%, 4% 96%, 0 100%)",
+      }}
+    >
+      <div style={{ textAlign: "center", fontFamily: slab, fontSize: 38, fontWeight: 900, color: "#161616", letterSpacing: 1 }}>
+        DİJİTALİZ MARKET
+      </div>
+      <div style={{ textAlign: "center", fontFamily: sans, fontSize: 22, fontWeight: 700, color: "#64748B", marginBottom: 18 }}>
+        7/24 · SÜT & EKMEK ROTASI
+      </div>
+      <div style={{ borderTop: "3px dashed #94A3B8", paddingTop: 18, display: "flex", flexDirection: "column", gap: 14 }}>
+        {rows.map(([k, v], i) => (
+          <div key={i} style={{ display: "flex", justifyContent: "space-between", fontFamily: sans, fontSize: 30, fontWeight: 800, color: i === 2 ? "#DC2626" : "#1E293B" }}>
+            <span>{k}</span>
+            <span>{v}</span>
+          </div>
+        ))}
+      </div>
+      <div
+        style={{
+          marginTop: 20,
+          borderTop: "4px solid #161616",
+          paddingTop: 14,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          fontFamily: slab,
+          fontSize: 42,
+          fontWeight: 900,
+          color: "#DC2626",
+        }}
+      >
+        <span>TOPLAM</span>
+        <span style={{ background: "#FEF08A", padding: "4px 14px", borderRadius: 10, border: "3px solid #161616" }}>840 TL</span>
+      </div>
+      {/* Barkod çizgileri */}
+      <div style={{ marginTop: 20, height: 42, display: "flex", justifyContent: "center", gap: 4 }}>
+        {[6, 3, 8, 2, 5, 9, 3, 6, 2, 7, 4, 8, 3, 5, 2, 9, 4, 6, 3, 7, 2, 5, 8, 3].map((w, bi) => (
+          <div key={bi} style={{ width: w, height: "100%", background: "#161616" }} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+/** 3D Sahne + 4 Farklı Kamera Açısı + Asla Kesilmeyen Arda3D */
 const MarketScene3D: React.FC<{
   s0: number;
   s1: number;
@@ -42,78 +111,77 @@ const MarketScene3D: React.FC<{
 }> = ({ s0, s1, s2, s3, s4 }) => {
   const frame = useCurrentFrame();
 
-  // Kamera konumu & hedefi (her sahnede farklı sinematik 3D açı)
-  let camPos: [number, number, number] = [0, 1.9, 8.8];
-  let camTarget: [number, number, number] = [0, 1.1, 4.5];
-  let ardaPos: [number, number, number] = [-0.85, 0, 5.2];
+  let camPos: [number, number, number] = [0, 1.85, 12.2];
+  let camTarget: [number, number, number] = [0, 1.05, 5.2];
+  let ardaPos: [number, number, number] = [-0.65, 0, 5.4];
   let ardaFace: "normal" | "shock" | "happy" | "wink" = "normal";
   let ardaWalking = false;
-  let cartPos: [number, number, number] = [0.75, 0, 5.0];
-  let cartScale = 1.25;
-  let cartFilled = 0;
+  let cartPos: [number, number, number] = [0.68, 0, 5.2];
+  let cartScale = 1.15;
+  let dropProgress = 0;
 
   if (frame < s1) {
-    // S0: Girişten içeri kayarak Arda + dev arabaya yaklaşır
+    // S0 (0-4 sn): Market girişinden içeri doğru süzülüş; Arda + araba tam kadraj
     const p = interpolate(frame, [s0, s1], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    camPos = [interpolate(p, [0, 1], [-0.25, 0.15]), interpolate(p, [0, 1], [1.9, 1.65]), interpolate(p, [0, 1], [8.6, 6.8])];
-    camTarget = [0, 0.95, 4.9];
-    ardaPos = [-0.75, 0, 5.0];
-    cartPos = [0.75, 0, 4.9];
+    camPos = [interpolate(p, [0, 1], [0.1, 0]), interpolate(p, [0, 1], [1.9, 1.65]), interpolate(p, [0, 1], [9.5, 8.2])];
+    camTarget = [0, 1.0, 5.2];
+    ardaPos = [-0.68, 0, 5.4];
+    cartPos = [0.68, 0, 5.2];
     ardaFace = frame / FPS >= wAt(0, "tesadüf") ? "shock" : "normal";
   } else if (frame < s2) {
-    // S1: Koridorda yürüyen Arda + 1937 küçük sepet 2x dev arabaya büyür
+    // S1 (4-11 sn): 45° yan koridor açısı; 1937 küçük sepet 2x dev arabaya büyür
     const p = interpolate(frame, [s1, s2], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    const zWalk = interpolate(p, [0, 1], [4.5, 1.4]);
-    camPos = [0.25, 1.75, zWalk + 3.4];
-    camTarget = [0, 0.95, zWalk - 0.3];
-    ardaPos = [-0.78, 0, zWalk];
-    ardaWalking = true;
-    cartPos = [0.72, 0, zWalk - 0.15];
+    camPos = [interpolate(p, [0, 1], [2.15, 1.85]), 1.9, interpolate(p, [0, 1], [5.8, 4.8])];
+    camTarget = [-0.05, 0.9, 2.3];
+    ardaPos = [-0.72, 0, 2.2];
+    ardaWalking = p < 0.45;
+    cartPos = [0.55, 0, 2.4];
     const growT = sceneStart(1) + wAt(1, "büyütünce");
-    cartScale = interpolate(frame / FPS, [sceneStart(1), growT, growT + 0.8], [0.58, 0.58, 1.32], {
+    cartScale = interpolate(frame / FPS, [sceneStart(1), growT, growT + 0.85], [0.55, 0.55, 1.25], {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
     });
+    ardaFace = frame / FPS >= growT ? "shock" : "normal";
   } else if (frame < s3) {
-    // S2: Close-up! Arda + sepet dolarken %40 artışı
+    // S2 (11-17 sn): Çapraz sepet yakın planı + düşen ürünler; Arda tam kadrajda
     const p = interpolate(frame, [s2, s3], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    camPos = [interpolate(p, [0, 1], [-0.2, 0.1]), 1.4, interpolate(p, [0, 1], [2.4, 1.75])];
-    camTarget = [0, 1.05, -0.4];
-    ardaPos = [-0.7, 0, -0.35];
+    camPos = [interpolate(p, [0, 1], [1.15, 0.95]), interpolate(p, [0, 1], [2.05, 1.8]), interpolate(p, [0, 1], [2.4, 2.0])];
+    camTarget = [-0.18, 0.95, -0.4];
+    ardaPos = [-0.62, 0, -0.5];
     ardaFace = "shock";
-    cartPos = [0.68, 0, -0.4];
-    cartScale = 1.3;
-    cartFilled = Math.min(4, Math.floor(p * 5));
+    cartPos = [0.58, 0, -0.4];
+    cartScale = 1.22;
+    dropProgress = interpolate(p, [0.08, 0.82], [0, 4.2], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   } else {
-    // S3: Koridor içinden en arkadaki ışıklı Süt & Ekmek dolabına uçuş
+    // S3 (17-22 sn): Uzun koridor uçuşu -> parlak SÜT & EKMEK dolabı
     const p = interpolate(frame, [s3, s4], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    camPos = [interpolate(p, [0, 1], [0.15, -0.25]), 1.65, interpolate(p, [0, 1], [-1.2, -5.2])];
-    camTarget = [0, 1.15, -9.2];
-    ardaPos = [-0.85, 0, -8.0];
+    camPos = [0, 1.75, interpolate(p, [0, 1], [-0.5, -5.6])];
+    camTarget = [0, 1.2, -9.8];
+    ardaPos = [-0.75, 0, -8.3];
     ardaFace = "wink";
-    cartPos = [0.85, 0, -8.1];
-    cartScale = 1.25;
-    cartFilled = 4;
+    cartPos = [0.78, 0, -8.4];
+    cartScale = 1.15;
+    dropProgress = 4;
   }
 
   return (
     <ThreeCanvas
       width={1080}
       height={1920}
-      camera={{ position: [0, 1.9, 8.6], fov: 54, aspect: 1080 / 1920 }}
+      camera={{ position: [0, 1.95, 12.4], fov: 54, aspect: 1080 / 1920 }}
       style={{ width: 1080, height: 1920 }}
     >
-      <color attach="background" args={["#0F172A"]} />
-      <fog attach="fog" args={["#0F172A", 14, 28]} />
+      <color attach="background" args={["#EDE4D3"]} />
+      <fog attach="fog" args={["#F4EDE2", 16, 32]} />
       <CameraRig position={camPos} target={camTarget} fov={54} />
       <MarketWorld />
-      <Arda3D position={ardaPos} height={2.05} face={ardaFace} walking={ardaWalking} />
-      <Cart3D position={cartPos} scale={cartScale} rotationY={-0.35} filled={cartFilled} />
+      <Arda3D position={ardaPos} camPos={camPos} height={2.0} face={ardaFace} walking={ardaWalking} talking />
+      <Cart3D position={cartPos} scale={cartScale} rotationY={-0.38} dropProgress={dropProgress} />
     </ThreeCanvas>
   );
 };
 
-/* S4 — Temiz Tam Ekran Bölünmüş İkilem (Ara kare yok, altyazıyla çakışmaz) */
+/* S4 — Temiz Tam Ekran Bölünmüş İkilem */
 const FinalSplit3D: React.FC = () => (
   <AbsoluteFill style={{ display: "flex", flexDirection: "column" }}>
     <div
@@ -124,14 +192,14 @@ const FinalSplit3D: React.FC = () => (
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        borderBottom: "8px solid #0F172A",
+        borderBottom: "8px solid #161616",
       }}
     >
       <div style={{ fontSize: 120, marginBottom: 12 }}>🛒</div>
-      <div style={{ fontFamily: "sans-serif", fontSize: 32, fontWeight: 800, color: "rgba(255,255,255,0.8)", letterSpacing: 1.5 }}>
+      <div style={{ fontFamily: sans, fontSize: 32, fontWeight: 800, color: "rgba(255,255,255,0.8)", letterSpacing: 1.5 }}>
         BÜYÜK SEPET TUZAĞI
       </div>
-      <div style={{ fontFamily: "sans-serif", fontSize: 74, fontWeight: 900, color: "#FFFFFF", marginTop: 8 }}>DEV ARABA</div>
+      <div style={{ fontFamily: slab, fontSize: 74, fontWeight: 900, color: "#FFFFFF", marginTop: 8 }}>DEV ARABA</div>
     </div>
     <div
       style={{
@@ -140,13 +208,13 @@ const FinalSplit3D: React.FC = () => (
         top: "50%",
         transform: "translate(-50%, -50%)",
         background: "#FACC15",
-        color: "#0F172A",
-        fontFamily: "sans-serif",
+        color: "#161616",
+        fontFamily: slab,
         fontSize: 36,
         fontWeight: 900,
         padding: "12px 30px",
         borderRadius: 99,
-        border: "6px solid #0F172A",
+        border: "6px solid #161616",
         zIndex: 20,
       }}
     >
@@ -164,22 +232,24 @@ const FinalSplit3D: React.FC = () => (
       }}
     >
       <div style={{ fontSize: 110, marginBottom: 10 }}>🧺</div>
-      <div style={{ fontFamily: "sans-serif", fontSize: 32, fontWeight: 800, color: "rgba(255,255,255,0.85)", letterSpacing: 1.5 }}>
+      <div style={{ fontFamily: sans, fontSize: 32, fontWeight: 800, color: "rgba(255,255,255,0.85)", letterSpacing: 1.5 }}>
         KONTROL SENDE
       </div>
-      <div style={{ fontFamily: "sans-serif", fontSize: 74, fontWeight: 900, color: "#FDE047", marginTop: 8 }}>EL SEPETİ</div>
+      <div style={{ fontFamily: slab, fontSize: 74, fontWeight: 900, color: "#FDE047", marginTop: 8 }}>EL SEPETİ</div>
     </div>
   </AbsoluteFill>
 );
 
 type Hit = [number, number, string, number, number?];
 const hits = (): Hit[] => [
-  [0, 0.05, "pop_bubble-alert", 0.45],
-  [0, wAt(0, "tesadüf"), "pop_hard", 0.45],
-  [1, wAt(1, "büyütünce"), "pop_message", 0.45],
-  [2, 0.05, "ding_correct-reward", 0.48],
-  [3, 0.1, "pop_bubble-alert", 0.42],
-  [4, 0.05, "pop_message", 0.45],
+  [0, 0.05, "ding_correct-answer", 0.42], // S0 market kapı zili
+  [1, wAt(1, "büyütünce"), "whoosh_short-sweep", 0.42], // S1 araba büyürken whoosh
+  [2, 0.25, "pop_bubble-alert", 0.4], // S2 ürün 1 düşüş
+  [2, 1.0, "pop_message", 0.4], // S2 ürün 2 düşüş
+  [2, 1.75, "pop_bubble-alert", 0.4], // S2 ürün 3 düşüş
+  [2, 2.5, "ding_correct-reward", 0.44], // S2 ürün 4 & %40
+  [3, 0.9, "pop_hard", 0.45], // S3 tırtıklı fiş açılışı
+  [4, 0.05, "pop_message", 0.42],
 ];
 
 export const DijitalizMarket3D: React.FC = () => {
@@ -192,56 +262,36 @@ export const DijitalizMarket3D: React.FC = () => {
   const end = Math.round(sceneEnd(4) * FPS);
 
   return (
-    <AbsoluteFill style={{ background: "#0F172A" }}>
-      {/* S0..S3 Tek Sürekli Stilize 3D Dünya */}
+    <AbsoluteFill style={{ background: "#EDE4D3" }}>
+      {/* S0..S3 Sürekli Canlı 3D Market */}
       <Sequence name="3D_Market" from={s0} durationInFrames={s4 - s0}>
         <MarketScene3D s0={s0} s1={s1} s2={s2} s3={s3} s4={s4} />
       </Sequence>
 
-      {/* S0 Başlık (İlk 0.5 sn) */}
-      <Sequence from={s0} durationInFrames={s1 - s0}>
-        <ChapterHud sub="3D MARKET · PSİKOLOJİ" />
-        <ViralHeadline line1="ARABALAR 2 KAT" line2="BÜYÜDÜ!" y={170} at={-1} />
+      {/* S0 Kanca Başlığı (Sadece ilk 2.5 sn) */}
+      <Sequence from={0} durationInFrames={75}>
+        <ChapterHud sub="MARKET TUZAĞI" />
+        <ViralHeadline line1="ARABALAR 2 KAT" line2="BÜYÜDÜ!" y={155} at={-1} />
       </Sequence>
 
-      {/* S1 Başlık */}
-      <Sequence from={s1} durationInFrames={s2 - s1}>
-        <ChapterHud sub="1937 · BÜYÜME DENEYİ" />
-        <ViralHeadline line1="2 KAT BÜYÜYÜNCE" line2="SATIŞ KAÇ FIRLADI?" color2="#FDE047" y={170} />
-      </Sequence>
-
-      {/* S2 %40 Veri */}
+      {/* S2 Kompakt %40 Satış Barı (Tepe başlık kalabalığı yok) */}
       <Sequence from={s2} durationInFrames={s3 - s2}>
-        <ChapterHud sub="GERÇEK VERİ · ETKİ" dotColor="#4ADE80" />
-        <ViralHeadline line1="TAM YÜZDE 40" line2="SATIŞ ARTIŞI!" color2="#4ADE80" y={165} />
-        <CizgiStatBar y={390} at={0.08} label="Satışlardaki Artış" percent={40} suffix="%" barColor="#22C55E" />
+        <CizgiStatBar y={135} at={0.08} label="Satışlardaki Artış" percent={40} suffix="%" barColor="#16A34A" />
       </Sequence>
 
-      {/* S3 Süt & Ekmek En Arkada */}
+      {/* S3 Tırtıklı 2D Market Fişi */}
       <Sequence from={s3} durationInFrames={s4 - s3}>
-        <ChapterHud sub="TERS KÖŞE · EN ARKA" dotColor="#EF4444" />
-        <ViralHeadline line1="EKMEK VE SÜT" line2="NEDEN EN ARKADA?" color2="#FCA5A5" y={165} />
-        <InsertCard
-          badge="MARKET FİŞİ · ROTA"
-          title="Kasa Yolunda Zorunlu Tur"
-          metric="🥛 SÜT & 🍞 EKMEK"
-          sub="En arkadaki soğutucu dolapta!"
-          icon="🧾"
-          accent="#38BDF8"
-          y={390}
-          at={0.12}
-        />
+        <MarketReceipt at={0.85} />
       </Sequence>
 
-      {/* S4 Keskin Geçişli Temiz Final İkilemi */}
+      {/* S4 Temiz Bölünmüş Final */}
       <Sequence name="Final_Split" from={s4} durationInFrames={end - s4}>
         <FinalSplit3D />
-        <ChapterHud sub="SENİN SEÇİMİN?" dotColor="#FACC15" />
       </Sequence>
 
       {[s1, s2, s3, s4].map((st, i) => (
         <Sequence key={`w${i}`} from={Math.max(0, st - 5)}>
-          <Sfx name="whoosh_short-sweep" volume={0.32} />
+          <Sfx name="whoosh_short-sweep" volume={0.3} />
         </Sequence>
       ))}
       {list.map(([s, t, name, vol, max], i) => (

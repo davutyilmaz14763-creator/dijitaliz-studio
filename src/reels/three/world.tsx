@@ -17,7 +17,7 @@ export const OutlineBox: React.FC<{
   position = [0, 0, 0],
   args,
   color,
-  outlineColor = "#0F172A",
+  outlineColor = "#161616",
   rotation = [0, 0, 0],
   emissive = "#000000",
   emissiveIntensity = 0,
@@ -85,19 +85,22 @@ export const CameraRig: React.FC<{
   return null;
 };
 
-/** 3D Uzayda Yaşayan 2D Arda Aktörü (zemine basan konturlu CanvasTexture billboard) */
+/** 3D Uzayda Yaşayan 2D Arda Aktörü (zemine basan, kameraya dönen, canlı mimikli) */
 export const Arda3D: React.FC<{
   position?: [number, number, number];
+  camPos?: [number, number, number];
   height?: number;
   face?: "normal" | "shock" | "happy" | "wink";
   walking?: boolean;
+  talking?: boolean;
   flip?: boolean;
-}> = ({ position = [0, 0, 0], height = 2.0, face = "normal", walking = false, flip = false }) => {
+}> = ({ position = [0, 0, 0], camPos, height = 2.0, face = "normal", walking = false, talking = false, flip = false }) => {
   const frame = useCurrentFrame();
 
-  const blink = (frame % 95) > 90;
-  const bob = walking ? Math.abs(Math.sin(frame / 4)) * 0.08 : Math.sin(frame / 10) * 0.02;
-  const swing = walking ? Math.sin(frame / 4) * 14 : 0;
+  const blink = (frame % 90) > 85;
+  const bob = walking ? Math.abs(Math.sin(frame / 4)) * 0.09 : talking ? Math.sin(frame / 5) * 0.025 : Math.sin(frame / 11) * 0.015;
+  const swing = walking ? Math.sin(frame / 4) * 16 : 0;
+  const rotY = camPos ? Math.atan2(camPos[0] - position[0], camPos[2] - position[2]) : 0;
 
   const texture = useMemo(() => {
     const canvas = document.createElement("canvas");
@@ -357,7 +360,7 @@ export const Arda3D: React.FC<{
   const w = height * (240 / 340);
 
   return (
-    <group position={[position[0], position[1] + height / 2 + bob, position[2]]}>
+    <group position={[position[0], position[1] + height / 2 + bob, position[2]]} rotation={[0, rotY, 0]}>
       {/* Ground shadow disc */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -height / 2 - bob + 0.015, 0]}>
         <circleGeometry args={[w * 0.42, 24]} />
