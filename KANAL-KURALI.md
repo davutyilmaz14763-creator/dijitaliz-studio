@@ -1,26 +1,21 @@
-# Kanal Ana Formatı ve Kalıcı Üretim Kuralları (v3 — Stilize 3D Dünya + 2D Aktör)
+# Kanal Ana Formatı ve Kalıcı Üretim Kuralları (v4 — 3D Mini Dizi Motoru)
 
-Bu proje için onaylanan kalıcı ana format: **Konturlu Stilize 3D Mekânlar (`src/reels/three/`) + 3D Uzayda Yaşayan 2D `Arda` Aktörü + Kayan 3D Kamera + Viral HUD/Altyazı (`ViralHeadline`, `ViralCaptions`, `BgMusic`, Mixkit `Sfx`)**.
+Bu proje için onaylanan kalıcı ana format: **2. Tekil Şahıs ("Sen") Hikâye Akışlı, Aksiyonlu 3D `Arda` Aktörlü + 6 Farklı Sinema Kamera Açılı Stilize 3D Mini Dizi (`src/reels/three/`)**.
 
-## 0. Kanal Adı, Karakter Kadrosu ve Seslendirme
+## 0. Kanal Adı, Aktör ve Seslendirme
 - **Kanal Adı:** `Dijitalİz` (`@dijitaliz.ai`)
-- **Ana Aktör (`Arda`):** #7 Siber Dedektif — 3D sahnenin zemininde, tezgâh arkasında veya koridor içinde konumlanan, yürüyen ve tepki veren 2D billboard/plane aktörü (`Arda3D`). Havada asılı sticker gibi durmaz.
-- **Yardımcılar:** Küçük yardımcı robot kafalar (`MiniBot`) gerektiğinde sahnede eşlik eder; başka insan karakter kullanılmaz.
-- **Seslendirme (ElevenLabs — Tek Doğal Erkek Ses):**
-  - `.env` içindeki `ELEVEN_VOICE_ID` (**George** `JBFqnCBsd6RMkjVDRZzb`, yedek **Will** `bIHbv24MWmeRgasZH58o`) ve `ELEVEN_MODEL` (`eleven_multilingual_v2` / `eleven_v3`).
-  - Kısa, nefesli, hızlı tempolu cümleler (`23–27 sn`).
+- **Aksiyonlu Ana Aktör (`Arda3D`):** Sabit sticker yasaktır. 3D sahnenin gerçek derinliğinde (otoparkta, araba arkasında, raflar arasında, kasa önünde) yürüyen ve iş yapan **5 aksiyon pozu** kullanılır: `front`, `back`, `pushCart`, `holdReceipt`, `closeupShock`.
+- **Seslendirme & Fon Müziği:**
+  - `.env` içindeki `ELEVEN_VOICE_ID` (**George** `JBFqnCBsd6RMkjVDRZzb`, yedek **Will** `bIHbv24MWmeRgasZH58o`), `speed: 1.06–1.08`.
+  - Konuşma altında net duyulan `BgMusic` (`0.14–0.18`) ve sahneye uygun foley Mixkit `Sfx` (kapı zili, sepet düşüş *pop*, kasa *bip*, fiş açılışı).
 
-## 1. Stilize 3D Dünya ve Stok Fotoğraf Kuralı
-- **Stok Fotoğraf Yok:** Gerçek stok fotoğraflar (`RealPhotoBg`) ana arka plan olarak **kullanılmaz**. Yalnızca gerçek belge/kanıt gereken özel anlarda ekrana inen insert kart (`InsertCard`) içinde kullanılabilir.
-- **Konturlu Stilize 3D Mekân (`@sonpart.dizi` tarzı):** Tüm sahneler konturlu/cel-shaded kutular, zemin karoları, raflar, ışıklar ve 3D nesnelerle (`src/reels/three/`) kurulur.
-- **Kayan 3D Kamera:** Her sahnede `interpolate` tabanlı kayan 3D kamera (`wide`, `corridor fly-through`, `close-up`) ile açı değişir.
+## 1. Anlatım, Kamera ve Tam Ekran Kuralı
+- **2. Tekil Şahıs ("Sen") Mini Dizi:** İzleyiciyi hikâyenin içine çeken *"girdin, baktın, fark ettin"* kurgusu (~28–33 sn).
+- **Üst Başlık Kalabalığı Yok:** Tepede dev başlık veya sabit bilgi kutuları konmaz; ekranın %100'ü 3D mini dizi sahnesine aittir.
+- **En Az 5–6 Farklı Kamera Açısı:** Dış giriş → 45° yan takip → omuz üstü / arkadan koridor → üst çapraz yakın plan → kasa tezgâhı → yakın yüz şoku → temiz tam ekran üst–alt ikilem finali.
+- **Kadraj Kuralı:** `Arda3D` hiçbir karede sol/sağ kenardan kesilmez.
 
-## 2. 6 Vuruşlu Akış, Altyazı ve Kapanış
-- **İlk 0.5 sn Kancası:** Frame 0'dan itibaren 3D mekân + kayan kamera + büyük `ViralHeadline` + `Arda` + kısa `Sfx` başlar.
-- **Altyazı (`ViralCaptions`):** 2–3 kelimelik akıcı gruplar halinde en alt güvenli alanda yer alır; yalnızca 1 anahtar kelime altın renkle (`#FACC15`) vurgulanır ve hiçbir panel başlığıyla çakışmaz.
-- **Final İkilemi & Ses:** Konuşma altında net duyulan `BgMusic` (`0.14–0.18`), bayat CTA olmadan vurucu üst–alt `SplitScreen` finali ve son kelimeden `+0.5 sn` sonra kesilir.
-
-## 3. Doğrulama, Çıktı ve Render
-- `npx tsc --noEmit` + 5 yerel kontrol karesi (0., 6., 13., 19., 24. sn) doğrulaması yapılır.
-- GitHub Actions (`render.yml` `--gl=swiftshader`) üzerinden Full HD `.mp4` Artifact alınır; `publish_ig` onay olmadan `false` kalır.
-- İndirilen/üretilen her `.mp4` mutlaka `C:\Users\Davut Can\Desktop\Kanal-Studio\out\` klasörüne kaydedilir.
+## 2. Altyazı, Doğrulama ve Çıktı
+- **Altyazı (`ViralCaptions`):** En alt güvenli alanda 2–3 kelimelik akıcı gruplar; yalnızca 1 anahtar kelime altın renkte (`#FACC15`).
+- **Stok Fotoğraf Yok:** Tüm sahneler siyah `#161616` konturlu sıcak stilize 3D dünyadır (`EdgesGeometry`).
+- **Doğrulama & Çıktı:** `npx tsc --noEmit` + her sahneden 1 adet olmak üzere 6 kontrol karesi (PNG) doğrulanır → GitHub Actions (`--gl=swangle`, `publish_ig: false`) → `.mp4` mutlaka `C:\Users\Davut Can\Desktop\Kanal-Studio\out\` klasörüne kaydedilir.

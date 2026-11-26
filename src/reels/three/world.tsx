@@ -3,6 +3,8 @@ import * as THREE from "three";
 import { useThree } from "@react-three/fiber";
 import { useCurrentFrame } from "remotion";
 
+export type ArdaPose = "front" | "back" | "pushCart" | "holdReceipt" | "closeupShock";
+
 /** Konturlu stilize 3D kutu (cel-shaded / @sonpart.dizi tarzı) */
 export const OutlineBox: React.FC<{
   position?: [number, number, number];
@@ -50,13 +52,14 @@ export const OutlineBox: React.FC<{
 };
 
 /** 3D Fayans Zemin */
-export const TileFloor: React.FC<{ width?: number; depth?: number; color?: string; gridColor?: string }> = ({
+export const TileFloor: React.FC<{ width?: number; depth?: number; positionZ?: number; color?: string; gridColor?: string }> = ({
   width = 24,
   depth = 28,
-  color = "#E2E8F0",
-  gridColor = "#94A3B8",
+  positionZ = 0,
+  color = "#EDE4D3",
+  gridColor = "#C8BBA6",
 }) => (
-  <group>
+  <group position={[0, 0, positionZ]}>
     <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
       <planeGeometry args={[width, depth]} />
       <meshStandardMaterial color={color} roughness={0.85} />
@@ -70,7 +73,7 @@ export const CameraRig: React.FC<{
   position: [number, number, number];
   target: [number, number, number];
   fov?: number;
-}> = ({ position, target, fov = 46 }) => {
+}> = ({ position, target, fov = 48 }) => {
   const { camera, setSize } = useThree();
   useLayoutEffect(() => {
     setSize(1080, 1920);
@@ -85,22 +88,33 @@ export const CameraRig: React.FC<{
   return null;
 };
 
-/** 3D Uzayda Yaşayan 2D Arda Aktörü (zemine basan, kameraya dönen, canlı mimikli) */
+/** Aksiyonlu 2D Arda Aktörü (5 poz: front, back, pushCart, holdReceipt, closeupShock) */
 export const Arda3D: React.FC<{
   position?: [number, number, number];
   camPos?: [number, number, number];
   height?: number;
+  pose?: ArdaPose;
   face?: "normal" | "shock" | "happy" | "wink";
   walking?: boolean;
   talking?: boolean;
   flip?: boolean;
-}> = ({ position = [0, 0, 0], camPos, height = 2.0, face = "normal", walking = false, talking = false, flip = false }) => {
+}> = ({
+  position = [0, 0, 0],
+  camPos,
+  height = 2.0,
+  pose = "front",
+  face = "normal",
+  walking = false,
+  talking = false,
+  flip = false,
+}) => {
   const frame = useCurrentFrame();
 
   const blink = (frame % 90) > 85;
-  const bob = walking ? Math.abs(Math.sin(frame / 4)) * 0.09 : talking ? Math.sin(frame / 5) * 0.025 : Math.sin(frame / 11) * 0.015;
-  const swing = walking ? Math.sin(frame / 4) * 16 : 0;
+  const bob = walking ? Math.abs(Math.sin(frame / 4)) * 0.09 : talking ? Math.sin(frame / 5) * 0.02 : Math.sin(frame / 11) * 0.015;
+  const swing = walking ? Math.sin(frame / 4) * 18 : 0;
   const rotY = camPos ? Math.atan2(camPos[0] - position[0], camPos[2] - position[2]) : 0;
+  const activeFace = pose === "closeupShock" ? "shock" : face;
 
   const texture = useMemo(() => {
     const canvas = document.createElement("canvas");
@@ -109,26 +123,22 @@ export const Arda3D: React.FC<{
     const ctx = canvas.getContext("2d")!;
     ctx.clearRect(0, 0, 480, 680);
     ctx.save();
-    ctx.scale(2, 2); // 240x340 coordinate space matching kit.tsx Arda
+    ctx.scale(2, 2); // 240x340
 
     const ink = "#0F172A";
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
-
-    // White sticker halo
-    ctx.shadowColor = "rgba(255,255,255,0.95)";
-    ctx.shadowBlur = 0;
-
-    // Legs
-    ctx.fillStyle = "#1E293B";
     ctx.strokeStyle = ink;
     ctx.lineWidth = 5;
+
+    // Legs (with walking swing)
+    ctx.fillStyle = "#1E293B";
     ctx.beginPath();
-    ctx.roundRect(88, 276 + (swing > 0 ? -swing * 0.3 : 0), 24, 44, 10);
+    ctx.roundRect(88, 276 + (swing > 0 ? -swing * 0.35 : 0), 24, 44, 10);
     ctx.fill();
     ctx.stroke();
     ctx.beginPath();
-    ctx.roundRect(128, 276 + (swing < 0 ? swing * 0.3 : 0), 24, 44, 10);
+    ctx.roundRect(128, 276 + (swing < 0 ? swing * 0.35 : 0), 24, 44, 10);
     ctx.fill();
     ctx.stroke();
 
@@ -141,227 +151,315 @@ export const Arda3D: React.FC<{
     ctx.ellipse(142, 322, 22, 10, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    // Arms
-    const drawArm = (x: number, angleDeg: number) => {
+    const drawArm = (x: number, y: number, angleDeg: number, len = 74) => {
       ctx.save();
-      ctx.translate(x, 202);
+      ctx.translate(x, y);
       ctx.rotate((angleDeg * Math.PI) / 180);
       ctx.fillStyle = "#2B3445";
       ctx.beginPath();
-      ctx.roundRect(-12, -6, 24, 74, 12);
+      ctx.roundRect(-12, -6, 24, len, 12);
       ctx.fill();
       ctx.stroke();
       ctx.fillStyle = "#F4C095";
       ctx.beginPath();
-      ctx.arc(0, 74, 14, 0, Math.PI * 2);
+      ctx.arc(0, len, 14, 0, Math.PI * 2);
       ctx.fill();
       ctx.stroke();
       ctx.restore();
     };
-    drawArm(66, 15 + swing);
-    drawArm(174, -15 - swing);
 
-    // Charcoal Trenchcoat
-    ctx.fillStyle = "#2B3445";
-    ctx.beginPath();
-    ctx.moveTo(68, 184);
-    ctx.lineTo(172, 184);
-    ctx.lineTo(182, 284);
-    ctx.lineTo(58, 284);
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke();
+    if (pose === "back") {
+      // Arms behind/sides
+      drawArm(64, 202, 12 + swing * 0.8);
+      drawArm(176, 202, -12 - swing * 0.8);
 
-    // Inner V-neck
-    ctx.fillStyle = "#0B1120";
-    ctx.beginPath();
-    ctx.moveTo(96, 184);
-    ctx.lineTo(120, 224);
-    ctx.lineTo(144, 184);
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke();
-
-    // Popped Collar
-    ctx.fillStyle = "#3B4659";
-    ctx.beginPath();
-    ctx.moveTo(66, 188);
-    ctx.lineTo(74, 142);
-    ctx.lineTo(100, 186);
-    ctx.lineTo(90, 202);
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(174, 188);
-    ctx.lineTo(166, 142);
-    ctx.lineTo(140, 186);
-    ctx.lineTo(150, 202);
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke();
-
-    // Neck & Ears
-    ctx.fillStyle = "#E6AE82";
-    ctx.fillRect(105, 162, 30, 28);
-    ctx.strokeRect(105, 162, 30, 28);
-    ctx.fillStyle = "#F4C095";
-    ctx.beginPath();
-    ctx.ellipse(72, 120, 10, 13, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.ellipse(168, 120, 10, 13, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.stroke();
-
-    // Face
-    ctx.fillStyle = "#F4C095";
-    ctx.beginPath();
-    ctx.moveTo(74, 82);
-    ctx.quadraticCurveTo(74, 66, 120, 66);
-    ctx.quadraticCurveTo(166, 66, 166, 82);
-    ctx.lineTo(164, 132);
-    ctx.quadraticCurveTo(158, 166, 120, 172);
-    ctx.quadraticCurveTo(82, 166, 76, 132);
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke();
-
-    // Eyebrows
-    ctx.strokeStyle = "#1E1B18";
-    ctx.lineWidth = 4.5;
-    ctx.beginPath();
-    if (face === "shock") {
-      ctx.moveTo(84, 94);
-      ctx.quadraticCurveTo(96, 86, 108, 92);
-      ctx.moveTo(132, 92);
-      ctx.quadraticCurveTo(144, 86, 156, 94);
-    } else {
-      ctx.moveTo(84, 97);
-      ctx.quadraticCurveTo(98, 91, 110, 96);
-      ctx.moveTo(130, 96);
-      ctx.quadraticCurveTo(142, 91, 156, 97);
-    }
-    ctx.stroke();
-
-    // Eyes
-    const ry = blink ? 1.5 : face === "shock" ? 9 : 7.5;
-    ctx.fillStyle = "#FFFFFF";
-    ctx.beginPath();
-    ctx.ellipse(97, 113, 9.5, ry, 0, 0, Math.PI * 2);
-    ctx.fill();
-    if (face === "wink") {
-      ctx.strokeStyle = "#1E1B18";
-      ctx.lineWidth = 4;
+      // Back of Charcoal Trenchcoat
+      ctx.fillStyle = "#2B3445";
       ctx.beginPath();
-      ctx.moveTo(132, 113);
-      ctx.quadraticCurveTo(143, 105, 153, 113);
+      ctx.moveTo(68, 184);
+      ctx.lineTo(172, 184);
+      ctx.lineTo(182, 284);
+      ctx.lineTo(58, 284);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Back coat collar & center vent seam
+      ctx.fillStyle = "#3B4659";
+      ctx.fillRect(92, 174, 56, 18);
+      ctx.strokeRect(92, 174, 56, 18);
+      ctx.beginPath();
+      ctx.moveTo(120, 220);
+      ctx.lineTo(120, 284);
+      ctx.stroke();
+
+      // Back of neck & dark hair
+      ctx.fillStyle = "#E6AE82";
+      ctx.fillRect(104, 152, 32, 24);
+      ctx.strokeRect(104, 152, 32, 24);
+      ctx.fillStyle = "#27201E";
+      ctx.beginPath();
+      ctx.roundRect(74, 78, 92, 78, 32);
+      ctx.fill();
+      ctx.stroke();
+
+      // Back of Navy Fedora + Cyan Band
+      ctx.fillStyle = "#1B2A4A";
+      ctx.beginPath();
+      ctx.moveTo(76, 78);
+      ctx.lineTo(88, 30);
+      ctx.quadraticCurveTo(120, 24, 152, 30);
+      ctx.lineTo(164, 78);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = "#38BDF8";
+      ctx.fillRect(78, 63, 84, 10);
+      ctx.fillStyle = "#111C35";
+      ctx.beginPath();
+      ctx.ellipse(120, 80, 72, 12, 0, 0, Math.PI * 2);
+      ctx.fill();
       ctx.stroke();
     } else {
+      // Arms for front / pushCart / holdReceipt / closeupShock
+      if (pose === "pushCart") {
+        // Arms extended forward/right toward cart handle
+        drawArm(76, 200, -52, 72);
+        drawArm(168, 200, -68, 76);
+      } else if (pose === "holdReceipt") {
+        drawArm(66, 202, 18);
+        drawArm(166, 204, 48, 64);
+      } else if (pose === "closeupShock") {
+        drawArm(64, 202, 115);
+        drawArm(176, 202, -115);
+      } else {
+        drawArm(66, 202, 15 + swing);
+        drawArm(174, 202, -15 - swing);
+      }
+
+      // Charcoal Trenchcoat
+      ctx.fillStyle = "#2B3445";
       ctx.beginPath();
-      ctx.ellipse(143, 113, 9.5, ry, 0, 0, Math.PI * 2);
+      ctx.moveTo(68, 184);
+      ctx.lineTo(172, 184);
+      ctx.lineTo(182, 284);
+      ctx.lineTo(58, 284);
+      ctx.closePath();
       ctx.fill();
-    }
-    if (!blink) {
-      ctx.fillStyle = "#1E3A5F";
+      ctx.stroke();
+
+      // Inner V-neck
+      ctx.fillStyle = "#0B1120";
       ctx.beginPath();
-      ctx.arc(99, 113, 5, 0, Math.PI * 2);
+      ctx.moveTo(96, 184);
+      ctx.lineTo(120, 224);
+      ctx.lineTo(144, 184);
+      ctx.closePath();
       ctx.fill();
-      if (face !== "wink") {
+      ctx.stroke();
+
+      // Popped Collar
+      ctx.fillStyle = "#3B4659";
+      ctx.beginPath();
+      ctx.moveTo(66, 188);
+      ctx.lineTo(74, 142);
+      ctx.lineTo(100, 186);
+      ctx.lineTo(90, 202);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(174, 188);
+      ctx.lineTo(166, 142);
+      ctx.lineTo(140, 186);
+      ctx.lineTo(150, 202);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Held white paper receipt in hand
+      if (pose === "holdReceipt") {
+        ctx.fillStyle = "#FAF8F5";
+        ctx.strokeStyle = ink;
+        ctx.lineWidth = 4;
         ctx.beginPath();
-        ctx.arc(145, 113, 5, 0, Math.PI * 2);
+        ctx.roundRect(124, 204, 44, 58, 4);
+        ctx.fill();
+        ctx.stroke();
+        ctx.strokeStyle = "#64748B";
+        ctx.lineWidth = 2.5;
+        for (let ry = 216; ry <= 246; ry += 9) {
+          ctx.beginPath();
+          ctx.moveTo(132, ry);
+          ctx.lineTo(160, ry);
+          ctx.stroke();
+        }
+        ctx.strokeStyle = ink;
+        ctx.lineWidth = 5;
+      }
+
+      // Neck & Ears
+      ctx.fillStyle = "#E6AE82";
+      ctx.fillRect(105, 162, 30, 28);
+      ctx.strokeRect(105, 162, 30, 28);
+      ctx.fillStyle = "#F4C095";
+      ctx.beginPath();
+      ctx.ellipse(72, 120, 10, 13, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.ellipse(168, 120, 10, 13, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Face
+      ctx.fillStyle = "#F4C095";
+      ctx.beginPath();
+      ctx.moveTo(74, 82);
+      ctx.quadraticCurveTo(74, 66, 120, 66);
+      ctx.quadraticCurveTo(166, 66, 166, 82);
+      ctx.lineTo(164, 132);
+      ctx.quadraticCurveTo(158, 166, 120, 172);
+      ctx.quadraticCurveTo(82, 166, 76, 132);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Eyebrows
+      ctx.strokeStyle = "#1E1B18";
+      ctx.lineWidth = 4.5;
+      ctx.beginPath();
+      if (activeFace === "shock") {
+        ctx.moveTo(84, 92);
+        ctx.quadraticCurveTo(96, 84, 108, 90);
+        ctx.moveTo(132, 90);
+        ctx.quadraticCurveTo(144, 84, 156, 92);
+      } else {
+        ctx.moveTo(84, 97);
+        ctx.quadraticCurveTo(98, 91, 110, 96);
+        ctx.moveTo(130, 96);
+        ctx.quadraticCurveTo(142, 91, 156, 97);
+      }
+      ctx.stroke();
+
+      // Eyes
+      const ry = blink ? 1.5 : activeFace === "shock" ? 9 : 7.5;
+      ctx.fillStyle = "#FFFFFF";
+      ctx.beginPath();
+      ctx.ellipse(97, 113, 9.5, ry, 0, 0, Math.PI * 2);
+      ctx.fill();
+      if (activeFace === "wink") {
+        ctx.strokeStyle = "#1E1B18";
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(132, 113);
+        ctx.quadraticCurveTo(143, 105, 153, 113);
+        ctx.stroke();
+      } else {
+        ctx.beginPath();
+        ctx.ellipse(143, 113, 9.5, ry, 0, 0, Math.PI * 2);
         ctx.fill();
       }
-    }
+      if (!blink) {
+        ctx.fillStyle = "#1E3A5F";
+        ctx.beginPath();
+        ctx.arc(99, 113, 5, 0, Math.PI * 2);
+        ctx.fill();
+        if (activeFace !== "wink") {
+          ctx.beginPath();
+          ctx.arc(145, 113, 5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
 
-    // Nose & Mouth
-    ctx.strokeStyle = "#9A6B4C";
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(119, 116);
-    ctx.lineTo(116, 131);
-    ctx.quadraticCurveTo(120, 134, 125, 131);
-    ctx.stroke();
-
-    ctx.strokeStyle = "#1E1B18";
-    ctx.lineWidth = 3.8;
-    if (face === "shock") {
-      ctx.fillStyle = "#1E293B";
+      // Nose & Mouth
+      ctx.strokeStyle = "#9A6B4C";
+      ctx.lineWidth = 3;
       ctx.beginPath();
-      ctx.ellipse(120, 148, 7.5, 9.5, 0, 0, Math.PI * 2);
+      ctx.moveTo(119, 116);
+      ctx.lineTo(116, 131);
+      ctx.quadraticCurveTo(120, 134, 125, 131);
+      ctx.stroke();
+
+      ctx.strokeStyle = "#1E1B18";
+      ctx.lineWidth = 3.8;
+      if (activeFace === "shock") {
+        ctx.fillStyle = "#1E293B";
+        ctx.beginPath();
+        ctx.ellipse(120, 148, 8, 10, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+      } else if (activeFace === "happy") {
+        ctx.beginPath();
+        ctx.moveTo(105, 144);
+        ctx.quadraticCurveTo(120, 158, 136, 143);
+        ctx.stroke();
+      } else {
+        ctx.beginPath();
+        ctx.moveTo(107, 146);
+        ctx.quadraticCurveTo(122, 153, 135, 143);
+        ctx.stroke();
+      }
+
+      // Round Glasses
+      ctx.strokeStyle = ink;
+      ctx.lineWidth = 4.2;
+      ctx.fillStyle = "rgba(56,189,248,0.22)";
+      ctx.beginPath();
+      ctx.arc(97, 113, 18, 0, Math.PI * 2);
       ctx.fill();
       ctx.stroke();
-    } else if (face === "happy") {
       ctx.beginPath();
-      ctx.moveTo(105, 144);
-      ctx.quadraticCurveTo(120, 158, 136, 143);
+      ctx.arc(143, 113, 18, 0, Math.PI * 2);
+      ctx.fill();
       ctx.stroke();
-    } else {
       ctx.beginPath();
-      ctx.moveTo(107, 146);
-      ctx.quadraticCurveTo(122, 153, 135, 143);
+      ctx.moveTo(115, 112);
+      ctx.quadraticCurveTo(120, 108, 125, 112);
+      ctx.stroke();
+
+      // Navy Fedora with Cyan Band
+      ctx.fillStyle = "#1B2A4A";
+      ctx.beginPath();
+      ctx.moveTo(76, 78);
+      ctx.lineTo(88, 30);
+      ctx.quadraticCurveTo(120, 24, 152, 30);
+      ctx.lineTo(164, 78);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = "#38BDF8";
+      ctx.beginPath();
+      ctx.moveTo(79, 65);
+      ctx.quadraticCurveTo(120, 60, 161, 65);
+      ctx.lineTo(163, 75);
+      ctx.quadraticCurveTo(120, 70, 77, 75);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.fillStyle = "#111C35";
+      ctx.beginPath();
+      ctx.moveTo(48, 80);
+      ctx.quadraticCurveTo(120, 66, 192, 80);
+      ctx.quadraticCurveTo(120, 94, 48, 80);
+      ctx.closePath();
+      ctx.fill();
       ctx.stroke();
     }
-
-    // Round Glasses with Cyan Tint
-    ctx.strokeStyle = ink;
-    ctx.lineWidth = 4.2;
-    ctx.fillStyle = "rgba(56,189,248,0.22)";
-    ctx.beginPath();
-    ctx.arc(97, 113, 18, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(143, 113, 18, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(115, 112);
-    ctx.quadraticCurveTo(120, 108, 125, 112);
-    ctx.stroke();
-
-    // Navy Fedora with Cyan Band
-    ctx.fillStyle = "#1B2A4A";
-    ctx.beginPath();
-    ctx.moveTo(76, 78);
-    ctx.lineTo(88, 30);
-    ctx.quadraticCurveTo(120, 24, 152, 30);
-    ctx.lineTo(164, 78);
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke();
-
-    ctx.fillStyle = "#38BDF8";
-    ctx.beginPath();
-    ctx.moveTo(79, 65);
-    ctx.quadraticCurveTo(120, 60, 161, 65);
-    ctx.lineTo(163, 75);
-    ctx.quadraticCurveTo(120, 70, 77, 75);
-    ctx.closePath();
-    ctx.fill();
-
-    ctx.fillStyle = "#111C35";
-    ctx.beginPath();
-    ctx.moveTo(48, 80);
-    ctx.quadraticCurveTo(120, 66, 192, 80);
-    ctx.quadraticCurveTo(120, 94, 48, 80);
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke();
 
     ctx.restore();
     const tex = new THREE.CanvasTexture(canvas);
     tex.colorSpace = THREE.SRGBColorSpace;
     tex.needsUpdate = true;
     return tex;
-  }, [face, blink, Math.round(swing / 4)]);
+  }, [pose, activeFace, blink, Math.round(swing / 4)]);
 
   const w = height * (240 / 340);
 
   return (
     <group position={[position[0], position[1] + height / 2 + bob, position[2]]} rotation={[0, rotY, 0]}>
-      {/* Ground shadow disc */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -height / 2 - bob + 0.015, 0]}>
         <circleGeometry args={[w * 0.42, 24]} />
         <meshBasicMaterial color="#020617" transparent opacity={0.28} />
