@@ -72,7 +72,8 @@ echo "$LIST" | while read -r id name; do
   [ -z "$id" ] && continue
   dst="$OUT/$name.wav"; [ -f "$dst" ] && continue
   url=$(curl -sL -A "Mozilla/5.0" "https://mixkit.co/free-sound-effects/download/$id/?context=item+grid" \
-        | grep -oE "https://assets\.mixkit\.co/active_storage/sfx/$id/$id\.(wav|mp3)" | head -1)
+        | grep -oE "https://assets\.mixkit\.co/active_storage/sfx/$id/$id\.(wav|mp3)" | head -1 || true)
+  [ -z "$url" ] && { sleep 1; url=$(curl -sL -A "Mozilla/5.0" "https://mixkit.co/free-sound-effects/download/$id/?context=item+grid" | grep -oE "https://assets\.mixkit\.co/active_storage/sfx/$id/$id\.(wav|mp3)" | head -1 || true); }
   [ -z "$url" ] && { echo "FAIL $id $name (no link)"; continue; }
   src="$TMP/src_$id.${url##*.}"
   curl -sfL -A "Mozilla/5.0" -o "$src" "$url" || { echo "FAIL $id $name"; continue; }
