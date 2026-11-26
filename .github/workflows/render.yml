@@ -39,7 +39,7 @@ jobs:
       - name: Sistem bağımlılıkları (ffmpeg, emoji fontu, Chrome)
         run: |
           sudo apt-get update
-          sudo apt-get install -y ffmpeg fonts-noto-color-emoji libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1
+          sudo apt-get install -y ffmpeg fonts-noto-color-emoji libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libgl1 libegl1 libgles2 libgl1-mesa-dri
           sudo apt-get install -y libasound2t64 || sudo apt-get install -y libasound2 || true
 
       - name: NPM paketlerini kur
@@ -62,7 +62,7 @@ jobs:
       - name: Full HD (1080x1920) Render
         run: |
           mkdir -p out
-          npx remotion render "${COMP}" "out/${COMP}.mp4" --gl=angle
+          npx remotion render "${COMP}" "out/${COMP}.mp4" --gl=swangle
 
       - name: Video Çıktısını Yükle (Artifact)
         uses: actions/upload-artifact@v4
