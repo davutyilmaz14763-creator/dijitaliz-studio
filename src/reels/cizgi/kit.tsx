@@ -1012,3 +1012,185 @@ export const Elif: React.FC<HumanProps> = ({ x, y, size = 400, face = "normal", 
     </div>
   );
 };
+
+/* ---------- Viral Reels Kit: HUD, Headlines, SpeedLines, SweatDrops, ViralCaptions ---------- */
+export const rimGlow = "drop-shadow(0 0 5px rgba(255,255,255,0.7)) drop-shadow(0 10px 14px rgba(0,0,0,0.32))";
+
+export const ChapterHud: React.FC<{ channel?: string; sub: string; dotColor?: string }> = ({
+  channel = "DİJİTALİZ",
+  sub,
+  dotColor = "#FACC15",
+}) => (
+  <div
+    style={{
+      position: "absolute",
+      left: 54,
+      top: 66,
+      display: "flex",
+      flexDirection: "column",
+      gap: 4,
+      zIndex: 20,
+      textShadow: "0 3px 10px rgba(0,0,0,0.7)",
+    }}
+  >
+    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+      <div style={{ width: 14, height: 14, borderRadius: 99, background: dotColor, boxShadow: `0 0 12px ${dotColor}` }} />
+      <span style={{ fontFamily: slab, fontSize: 28, fontWeight: 900, letterSpacing: 1.5, color: "#FEF08A" }}>{channel}</span>
+    </div>
+    <div style={{ fontFamily: sans, fontSize: 21, fontWeight: 800, letterSpacing: 2, color: "rgba(255,255,255,0.86)", paddingLeft: 24 }}>{sub}</div>
+  </div>
+);
+
+export const ViralHeadline: React.FC<{
+  line1: string;
+  line2?: string;
+  color1?: string;
+  color2?: string;
+  y?: number;
+  at?: number;
+}> = ({ line1, line2, color1 = "#FFFFFF", color2 = "#FACC15", y = 175, at = 0.08 }) => {
+  const p = usePopAt(at, 15, 210);
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: 50,
+        right: 50,
+        top: y,
+        textAlign: "center",
+        transformOrigin: "50% 50%",
+        scale: String(interpolate(p, [0, 1], [0.84, 1])),
+        opacity: Math.min(1, p * 2.5),
+        zIndex: 18,
+      }}
+    >
+      <div
+        style={{
+          fontFamily: slab,
+          fontSize: 74,
+          fontWeight: 900,
+          lineHeight: 1.02,
+          letterSpacing: 1,
+          color: color1,
+          WebkitTextStroke: "4px #0F172A",
+          paintOrder: "stroke fill",
+          textShadow: "0 8px 24px rgba(0,0,0,0.65)",
+        }}
+      >
+        {line1}
+      </div>
+      {line2 && (
+        <div
+          style={{
+            fontFamily: slab,
+            fontSize: 64,
+            fontWeight: 900,
+            lineHeight: 1.08,
+            letterSpacing: 1,
+            color: color2,
+            WebkitTextStroke: "4px #0F172A",
+            paintOrder: "stroke fill",
+            textShadow: "0 8px 24px rgba(0,0,0,0.65)",
+            marginTop: 6,
+          }}
+        >
+          {line2}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export const SpeedLines: React.FC<{ opacity?: number }> = ({ opacity = 0.22 }) => {
+  const frame = useCurrentFrame();
+  const rows = [140, 260, 410, 560, 720, 880, 1050, 1240, 1460];
+  return (
+    <AbsoluteFill style={{ pointerEvents: "none", opacity }}>
+      {rows.map((ry, i) => {
+        const w = 180 + ((i * 97) % 240);
+        const speed = 28 + (i % 3) * 14;
+        const x = ((frame * speed + i * 230) % 1400) - 320;
+        return (
+          <div
+            key={i}
+            style={{
+              position: "absolute",
+              left: x,
+              top: ry,
+              width: w,
+              height: i % 2 === 0 ? 5 : 3,
+              borderRadius: 99,
+              background: "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.9) 50%, rgba(255,255,255,0) 100%)",
+            }}
+          />
+        );
+      })}
+    </AbsoluteFill>
+  );
+};
+
+export const SweatDrops: React.FC<{ x: number; y: number; at?: number }> = ({ x, y, at = 0.2 }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  if (frame / fps < at) return null;
+  const dy = ((frame % 18) / 18) * 18;
+  const op = interpolate(frame % 18, [0, 4, 14, 18], [0, 1, 1, 0]);
+  return (
+    <svg
+      width={180}
+      height={90}
+      viewBox="0 0 180 90"
+      style={{ position: "absolute", left: x - 90, top: y - 45, opacity: op, pointerEvents: "none", zIndex: 15 }}
+    >
+      <path d={`M 24 ${18 + dy} Q 14 ${34 + dy} 24 ${42 + dy} Q 34 ${34 + dy} 24 ${18 + dy} Z`} fill="#38BDF8" stroke="#0F172A" strokeWidth={3} />
+      <path d={`M 156 ${12 + dy} Q 146 ${28 + dy} 156 ${36 + dy} Q 166 ${28 + dy} 156 ${12 + dy} Z`} fill="#38BDF8" stroke="#0F172A" strokeWidth={3} />
+    </svg>
+  );
+};
+
+export const ViralCaptions: React.FC<{ words: VWord[]; y?: number; highlight?: string[] }> = ({
+  words,
+  y = 1480,
+  highlight = [],
+}) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const t = frame / fps;
+  const idx = words.findIndex((w) => t >= w.start && t <= w.end + 0.14);
+  if (idx === -1) return null;
+  const w = words[idx];
+  const age = Math.max(0, t - w.start);
+  const scale = interpolate(age, [0, 0.08], [1.18, 1], clamp);
+  const clean = w.text.replace(/[.,!?;:]/g, "").toLocaleLowerCase("tr");
+  const isHot = highlight.some((h) => clean.startsWith(h.toLocaleLowerCase("tr")));
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: 60,
+        right: 60,
+        top: y,
+        textAlign: "center",
+        transform: `scale(${scale})`,
+        zIndex: 30,
+        pointerEvents: "none",
+      }}
+    >
+      <span
+        style={{
+          fontFamily: sans,
+          fontSize: 78,
+          fontWeight: 900,
+          textTransform: "uppercase",
+          letterSpacing: 1,
+          color: isHot ? "#FACC15" : "#FFFFFF",
+          WebkitTextStroke: "14px #0F172A",
+          paintOrder: "stroke fill",
+          textShadow: "0 10px 24px rgba(0,0,0,0.75)",
+        }}
+      >
+        {w.text}
+      </span>
+    </div>
+  );
+};

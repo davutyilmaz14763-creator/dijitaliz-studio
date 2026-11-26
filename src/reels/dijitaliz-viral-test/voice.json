@@ -1,0 +1,361 @@
+{
+ "fake": false,
+ "model": "eleven_multilingual_v2",
+ "duration": 24.556,
+ "words": [
+  {
+   "text": "Telefonun",
+   "start": 0,
+   "end": 0.488,
+   "scene": 0
+  },
+  {
+   "text": "yüzde",
+   "start": 0.534,
+   "end": 0.813,
+   "scene": 0
+  },
+  {
+   "text": "seksenken",
+   "start": 0.859,
+   "end": 1.3,
+   "scene": 0
+  },
+  {
+   "text": "hızlı",
+   "start": 1.347,
+   "end": 1.556,
+   "scene": 0
+  },
+  {
+   "text": "düşer",
+   "start": 1.602,
+   "end": 1.858,
+   "scene": 0
+  },
+  {
+   "text": "ama",
+   "start": 2.101,
+   "end": 2.438,
+   "scene": 0
+  },
+  {
+   "text": "yüzde",
+   "start": 2.543,
+   "end": 2.844,
+   "scene": 0
+  },
+  {
+   "text": "birde",
+   "start": 2.891,
+   "end": 3.111,
+   "scene": 0
+  },
+  {
+   "text": "saatlerce",
+   "start": 3.17,
+   "end": 3.704,
+   "scene": 0
+  },
+  {
+   "text": "dayanır,",
+   "start": 3.75,
+   "end": 4.145,
+   "scene": 0
+  },
+  {
+   "text": "hiç",
+   "start": 4.249,
+   "end": 4.389,
+   "scene": 0
+  },
+  {
+   "text": "fark",
+   "start": 4.435,
+   "end": 4.598,
+   "scene": 0
+  },
+  {
+   "text": "ettin",
+   "start": 4.644,
+   "end": 4.818,
+   "scene": 0
+  },
+  {
+   "text": "mi?",
+   "start": 4.865,
+   "end": 5.573,
+   "scene": 0
+  },
+  {
+   "text": "Aslında",
+   "start": 5.823,
+   "end": 6.253,
+   "scene": 1
+  },
+  {
+   "text": "pilin",
+   "start": 6.299,
+   "end": 6.496,
+   "scene": 1
+  },
+  {
+   "text": "tamamen",
+   "start": 6.543,
+   "end": 6.891,
+   "scene": 1
+  },
+  {
+   "text": "bitmemiştir;",
+   "start": 6.938,
+   "end": 7.681,
+   "scene": 1
+  },
+  {
+   "text": "sistem",
+   "start": 7.924,
+   "end": 8.284,
+   "scene": 1
+  },
+  {
+   "text": "seni",
+   "start": 8.342,
+   "end": 8.505,
+   "scene": 1
+  },
+  {
+   "text": "kandırıp",
+   "start": 8.54,
+   "end": 8.876,
+   "scene": 1
+  },
+  {
+   "text": "kendini",
+   "start": 8.934,
+   "end": 9.236,
+   "scene": 1
+  },
+  {
+   "text": "korumaya",
+   "start": 9.26,
+   "end": 9.608,
+   "scene": 1
+  },
+  {
+   "text": "alır.",
+   "start": 9.631,
+   "end": 10.374,
+   "scene": 1
+  },
+  {
+   "text": "Çünkü",
+   "start": 10.624,
+   "end": 10.972,
+   "scene": 2
+  },
+  {
+   "text": "lityum",
+   "start": 11.019,
+   "end": 11.332,
+   "scene": 2
+  },
+  {
+   "text": "piller",
+   "start": 11.39,
+   "end": 11.692,
+   "scene": 2
+  },
+  {
+   "text": "sıfıra",
+   "start": 11.762,
+   "end": 12.087,
+   "scene": 2
+  },
+  {
+   "text": "inerse",
+   "start": 12.133,
+   "end": 12.574,
+   "scene": 2
+  },
+  {
+   "text": "kimyasal",
+   "start": 12.795,
+   "end": 13.41,
+   "scene": 2
+  },
+  {
+   "text": "olarak",
+   "start": 13.457,
+   "end": 13.712,
+   "scene": 2
+  },
+  {
+   "text": "ölür.",
+   "start": 13.77,
+   "end": 14.072,
+   "scene": 2
+  },
+  {
+   "text": "Yüzde",
+   "start": 14.467,
+   "end": 14.862,
+   "scene": 2
+  },
+  {
+   "text": "bir",
+   "start": 14.908,
+   "end": 15.071,
+   "scene": 2
+  },
+  {
+   "text": "gördüğün",
+   "start": 15.117,
+   "end": 15.523,
+   "scene": 2
+  },
+  {
+   "text": "an",
+   "start": 15.57,
+   "end": 15.698,
+   "scene": 2
+  },
+  {
+   "text": "gizli",
+   "start": 15.918,
+   "end": 16.348,
+   "scene": 2
+  },
+  {
+   "text": "yedek",
+   "start": 16.371,
+   "end": 16.592,
+   "scene": 2
+  },
+  {
+   "text": "devreye",
+   "start": 16.638,
+   "end": 16.963,
+   "scene": 2
+  },
+  {
+   "text": "girer!",
+   "start": 17.009,
+   "end": 17.439,
+   "scene": 2
+  },
+  {
+   "text": "Yani",
+   "start": 17.776,
+   "end": 18.124,
+   "scene": 3
+  },
+  {
+   "text": "o",
+   "start": 18.345,
+   "end": 18.461,
+   "scene": 3
+  },
+  {
+   "text": "yüzde",
+   "start": 18.484,
+   "end": 18.786,
+   "scene": 3
+  },
+  {
+   "text": "bir,",
+   "start": 18.844,
+   "end": 19.181,
+   "scene": 3
+  },
+  {
+   "text": "telefonun",
+   "start": 19.32,
+   "end": 19.738,
+   "scene": 3
+  },
+  {
+   "text": "sana",
+   "start": 19.784,
+   "end": 19.97,
+   "scene": 3
+  },
+  {
+   "text": "verdiği",
+   "start": 20.016,
+   "end": 20.342,
+   "scene": 3
+  },
+  {
+   "text": "son",
+   "start": 20.388,
+   "end": 20.574,
+   "scene": 3
+  },
+  {
+   "text": "şans!",
+   "start": 20.62,
+   "end": 21.015,
+   "scene": 3
+  },
+  {
+   "text": "Sen",
+   "start": 21.352,
+   "end": 21.549,
+   "scene": 3
+  },
+  {
+   "text": "en",
+   "start": 21.607,
+   "end": 21.665,
+   "scene": 3
+  },
+  {
+   "text": "uzun",
+   "start": 21.712,
+   "end": 21.897,
+   "scene": 3
+  },
+  {
+   "text": "yüzde",
+   "start": 21.944,
+   "end": 22.176,
+   "scene": 3
+  },
+  {
+   "text": "birle",
+   "start": 22.222,
+   "end": 22.478,
+   "scene": 3
+  },
+  {
+   "text": "kaç",
+   "start": 22.536,
+   "end": 22.722,
+   "scene": 3
+  },
+  {
+   "text": "dakika",
+   "start": 22.78,
+   "end": 23.07,
+   "scene": 3
+  },
+  {
+   "text": "dayandın?",
+   "start": 23.105,
+   "end": 23.523,
+   "scene": 3
+  },
+  {
+   "text": "Yoruma",
+   "start": 23.674,
+   "end": 23.987,
+   "scene": 3
+  },
+  {
+   "text": "yaz!",
+   "start": 24.034,
+   "end": 24.556,
+   "scene": 3
+  }
+ ]
+}
