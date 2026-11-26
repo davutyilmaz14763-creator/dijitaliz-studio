@@ -37,6 +37,7 @@ import { KarakterVitrini } from "./reels/cizgi/KarakterVitrini";
 import { DijitalizTest, DIJITALIZ_TEST_FRAMES } from "./reels/dijitaliz-test/DijitalizTest";
 import { DijitalizZengin, DIJITALIZ_ZENGIN_FRAMES } from "./reels/dijitaliz-zengin/DijitalizZengin";
 import { DijitalizViralTest, DIJITALIZ_VIRAL_TEST_FRAMES } from "./reels/dijitaliz-viral-test/DijitalizViralTest";
+import { DijitalizMarket, DIJITALIZ_MARKET_FRAMES } from "./reels/dijitaliz-market/DijitalizMarket";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -162,6 +163,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition id="DijitalizTest" component={DijitalizTest} durationInFrames={DIJITALIZ_TEST_FRAMES} fps={30} width={1080} height={1920} />
       <Composition id="DijitalizZengin" component={DijitalizZengin} durationInFrames={DIJITALIZ_ZENGIN_FRAMES} fps={30} width={1080} height={1920} />
       <Composition id="DijitalizViralTest" component={DijitalizViralTest} durationInFrames={DIJITALIZ_VIRAL_TEST_FRAMES} fps={30} width={1080} height={1920} />
+      <Composition id="DijitalizMarket" component={DijitalizMarket} durationInFrames={DIJITALIZ_MARKET_FRAMES} fps={30} width={1080} height={1920} />
     </>
   );
 };

@@ -1,0 +1,11 @@
+{
+  "topic": "Süpermarketlerdeki Dev Alışveriş Arabaları Neden Bu Kadar Büyük?",
+  "beats": [
+    { "beat": "HOOK", "scene": 0, "shot": "wide", "note": "Frame 0 = Kapak + somut olay + RealPhotoBg + Arda + ViralHeadline" },
+    { "beat": "SETUP", "scene": 1, "shot": "insert", "note": "1937 deneyi belgesi InsertCard" },
+    { "beat": "QUIZ", "scene": 2, "shot": "closeup", "note": "Arda close-up mini merak sorusu" },
+    { "beat": "REVEAL", "scene": 3, "shot": "wide", "note": "%40 satış artışı CizgiStatBar + MiniBot" },
+    { "beat": "TWIST", "scene": 4, "shot": "closeup", "note": "Tekerleklerin sola çekme sırrı + InsertCard" },
+    { "beat": "SEAMLESS_LOOP", "scene": 5, "shot": "split", "note": "SplitScreen ikilem + final ≈ Frame 0" }
+  ]
+}

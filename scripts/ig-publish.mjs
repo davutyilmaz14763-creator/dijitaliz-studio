@@ -54,7 +54,8 @@ const uploadTemp = (localPath) => {
   const abs = path.isAbsolute(localPath) ? localPath : path.join(root, localPath);
   if (!fs.existsSync(abs)) throw new Error(`Dosya bulunamadı: ${abs}`);
   console.log(`0/3 Geçici HTTPS sunucusuna yükleniyor (${path.basename(abs)})...`);
-  const url = execFileSync("curl.exe", [
+  const curlBin = process.platform === "win32" ? "curl.exe" : "curl";
+  const url = execFileSync(curlBin, [
     "-sL",
     "-F", "reqtype=fileupload",
     "-F", "time=24h",

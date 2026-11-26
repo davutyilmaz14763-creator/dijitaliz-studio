@@ -1,0 +1,469 @@
+{
+ "fake": false,
+ "model": "eleven_v3",
+ "duration": 39.766,
+ "words": [
+  {
+   "text": "Markette",
+   "start": 0.256,
+   "end": 0.56,
+   "scene": 0
+  },
+  {
+   "text": "sepetin",
+   "start": 0.613,
+   "end": 1.04,
+   "scene": 0
+  },
+  {
+   "text": "neden",
+   "start": 1.107,
+   "end": 1.44,
+   "scene": 0
+  },
+  {
+   "text": "hep...",
+   "start": 1.5,
+   "end": 2.16,
+   "scene": 0
+  },
+  {
+   "text": "ağzına",
+   "start": 2.213,
+   "end": 2.56,
+   "scene": 0
+  },
+  {
+   "text": "kadar",
+   "start": 2.613,
+   "end": 2.88,
+   "scene": 0
+  },
+  {
+   "text": "dolar?",
+   "start": 2.947,
+   "end": 3.88,
+   "scene": 0
+  },
+  {
+   "text": "Sebebi",
+   "start": 4.08,
+   "end": 4.72,
+   "scene": 0
+  },
+  {
+   "text": "senin",
+   "start": 4.787,
+   "end": 5.12,
+   "scene": 0
+  },
+  {
+   "text": "iraden",
+   "start": 5.173,
+   "end": 5.6,
+   "scene": 0
+  },
+  {
+   "text": "değil,",
+   "start": 5.653,
+   "end": 6.24,
+   "scene": 0
+  },
+  {
+   "text": "tam",
+   "start": 6.32,
+   "end": 6.56,
+   "scene": 0
+  },
+  {
+   "text": "altındaki",
+   "start": 6.62,
+   "end": 7.12,
+   "scene": 0
+  },
+  {
+   "text": "demir",
+   "start": 7.173,
+   "end": 7.44,
+   "scene": 0
+  },
+  {
+   "text": "yığını!",
+   "start": 7.48,
+   "end": 7.92,
+   "scene": 0
+  },
+  {
+   "text": "1937'de",
+   "start": 8.72,
+   "end": 10.16,
+   "scene": 1
+  },
+  {
+   "text": "market",
+   "start": 10.206,
+   "end": 10.48,
+   "scene": 1
+  },
+  {
+   "text": "arabaları",
+   "start": 10.528,
+   "end": 10.96,
+   "scene": 1
+  },
+  {
+   "text": "icat",
+   "start": 11.067,
+   "end": 11.36,
+   "scene": 1
+  },
+  {
+   "text": "edildiğinde...",
+   "start": 11.417,
+   "end": 12.48,
+   "scene": 1
+  },
+  {
+   "text": "kimse",
+   "start": 12.547,
+   "end": 12.88,
+   "scene": 1
+  },
+  {
+   "text": "kullanmak",
+   "start": 12.937,
+   "end": 13.36,
+   "scene": 1
+  },
+  {
+   "text": "istemedi,",
+   "start": 13.42,
+   "end": 14.28,
+   "scene": 1
+  },
+  {
+   "text": "çünkü",
+   "start": 14.34,
+   "end": 14.64,
+   "scene": 1
+  },
+  {
+   "text": "çok",
+   "start": 14.7,
+   "end": 14.88,
+   "scene": 1
+  },
+  {
+   "text": "küçüktü.",
+   "start": 14.933,
+   "end": 15.84,
+   "scene": 1
+  },
+  {
+   "text": "Peki",
+   "start": 16.39,
+   "end": 16.56,
+   "scene": 2
+  },
+  {
+   "text": "mühendisler",
+   "start": 16.6,
+   "end": 17.2,
+   "scene": 2
+  },
+  {
+   "text": "bu",
+   "start": 17.253,
+   "end": 17.36,
+   "scene": 2
+  },
+  {
+   "text": "arabaları",
+   "start": 17.408,
+   "end": 17.84,
+   "scene": 2
+  },
+  {
+   "text": "iki",
+   "start": 17.9,
+   "end": 18.08,
+   "scene": 2
+  },
+  {
+   "text": "kat",
+   "start": 18.14,
+   "end": 18.32,
+   "scene": 2
+  },
+  {
+   "text": "büyütünce...",
+   "start": 18.36,
+   "end": 19.2,
+   "scene": 2
+  },
+  {
+   "text": "sence",
+   "start": 19.32,
+   "end": 19.68,
+   "scene": 2
+  },
+  {
+   "text": "satışlar",
+   "start": 19.747,
+   "end": 20.16,
+   "scene": 2
+  },
+  {
+   "text": "yüzde",
+   "start": 20.213,
+   "end": 20.48,
+   "scene": 2
+  },
+  {
+   "text": "kaç",
+   "start": 20.54,
+   "end": 20.72,
+   "scene": 2
+  },
+  {
+   "text": "arttı?",
+   "start": 20.78,
+   "end": 21.56,
+   "scene": 2
+  },
+  {
+   "text": "Tam",
+   "start": 21.67,
+   "end": 22,
+   "scene": 3
+  },
+  {
+   "text": "yüzde",
+   "start": 22.067,
+   "end": 22.4,
+   "scene": 3
+  },
+  {
+   "text": "kırk!",
+   "start": 22.46,
+   "end": 23.24,
+   "scene": 3
+  },
+  {
+   "text": "Büyük",
+   "start": 23.327,
+   "end": 23.76,
+   "scene": 3
+  },
+  {
+   "text": "sepet",
+   "start": 23.84,
+   "end": 24.16,
+   "scene": 3
+  },
+  {
+   "text": "boş",
+   "start": 24.22,
+   "end": 24.4,
+   "scene": 3
+  },
+  {
+   "text": "göründükçe,",
+   "start": 24.44,
+   "end": 25.2,
+   "scene": 3
+  },
+  {
+   "text": "beynin...",
+   "start": 25.333,
+   "end": 26.24,
+   "scene": 3
+  },
+  {
+   "text": "daha",
+   "start": 26.288,
+   "end": 26.48,
+   "scene": 3
+  },
+  {
+   "text": "fazla",
+   "start": 26.547,
+   "end": 26.88,
+   "scene": 3
+  },
+  {
+   "text": "ürün",
+   "start": 26.912,
+   "end": 27.04,
+   "scene": 3
+  },
+  {
+   "text": "atmaya",
+   "start": 27.12,
+   "end": 27.44,
+   "scene": 3
+  },
+  {
+   "text": "zorlanıyor.",
+   "start": 27.5,
+   "end": 28.52,
+   "scene": 3
+  },
+  {
+   "text": "Üstelik",
+   "start": 29.116,
+   "end": 29.366,
+   "scene": 4
+  },
+  {
+   "text": "tekerlekler",
+   "start": 29.419,
+   "end": 30.086,
+   "scene": 4
+  },
+  {
+   "text": "bile",
+   "start": 30.118,
+   "end": 30.246,
+   "scene": 4
+  },
+  {
+   "text": "bilerek",
+   "start": 30.306,
+   "end": 30.646,
+   "scene": 4
+  },
+  {
+   "text": "hafifçe",
+   "start": 30.713,
+   "end": 31.126,
+   "scene": 4
+  },
+  {
+   "text": "sola",
+   "start": 31.19,
+   "end": 31.446,
+   "scene": 4
+  },
+  {
+   "text": "çeker...",
+   "start": 31.486,
+   "end": 31.926,
+   "scene": 4
+  },
+  {
+   "text": "ki",
+   "start": 32.113,
+   "end": 32.486,
+   "scene": 4
+  },
+  {
+   "text": "raflara",
+   "start": 32.539,
+   "end": 32.886,
+   "scene": 4
+  },
+  {
+   "text": "daha",
+   "start": 32.934,
+   "end": 33.126,
+   "scene": 4
+  },
+  {
+   "text": "uzun",
+   "start": 33.19,
+   "end": 33.446,
+   "scene": 4
+  },
+  {
+   "text": "süre",
+   "start": 33.494,
+   "end": 33.686,
+   "scene": 4
+  },
+  {
+   "text": "bakasın.",
+   "start": 33.726,
+   "end": 34.566,
+   "scene": 4
+  },
+  {
+   "text": "Bir",
+   "start": 34.666,
+   "end": 34.966,
+   "scene": 5
+  },
+  {
+   "text": "dahaki",
+   "start": 35.006,
+   "end": 35.286,
+   "scene": 5
+  },
+  {
+   "text": "sefere",
+   "start": 35.339,
+   "end": 35.686,
+   "scene": 5
+  },
+  {
+   "text": "büyük",
+   "start": 35.726,
+   "end": 35.926,
+   "scene": 5
+  },
+  {
+   "text": "araba",
+   "start": 35.979,
+   "end": 36.246,
+   "scene": 5
+  },
+  {
+   "text": "mı",
+   "start": 36.273,
+   "end": 36.326,
+   "scene": 5
+  },
+  {
+   "text": "alırsın...",
+   "start": 36.379,
+   "end": 36.966,
+   "scene": 5
+  },
+  {
+   "text": "yoksa",
+   "start": 37.099,
+   "end": 37.766,
+   "scene": 5
+  },
+  {
+   "text": "el",
+   "start": 37.846,
+   "end": 38.006,
+   "scene": 5
+  },
+  {
+   "text": "sepeti",
+   "start": 38.059,
+   "end": 38.406,
+   "scene": 5
+  },
+  {
+   "text": "mi?",
+   "start": 38.486,
+   "end": 38.886,
+   "scene": 5
+  },
+  {
+   "text": "Yoruma",
+   "start": 39.006,
+   "end": 39.366,
+   "scene": 5
+  },
+  {
+   "text": "yaz!",
+   "start": 39.466,
+   "end": 39.766,
+   "scene": 5
+  }
+ ]
+}

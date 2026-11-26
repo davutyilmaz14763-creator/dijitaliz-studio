@@ -1,30 +1,38 @@
-# Kanal Ana Formatı ve Kalıcı Üretim Kuralları
+# Kanal Ana Formatı ve Kalıcı Üretim Kuralları (v2)
 
-Bu proje için onaylanan kalıcı ana format: **`cizgi` (Ana Sunucu: `Arda` + Robot/İnsan Yardımcılar + Mixkit SFX) + OpenMontage tarzı çizgi sayaç ve karşılaştırma kartları**.
+Bu proje için onaylanan kalıcı ana format: **`cizgi` v2 (Ana Sunucu: `Arda` + Küçük Yardımcı Robot Kafalar `MiniBot` + Gerçek Fotoğraflar `RealPhotoBg` + Viral Grafikler `ChapterHud`, `ViralHeadline`, `ViralCaptions`, `SplitScreen`, `InsertCard`, `BgMusic`, `FloatingParticles`, Mixkit `Sfx`)**.
 
-## 0. Kanal Adı ve Karakter Kadrosu (Kalıcı)
+## 0. Kanal Adı, Karakter Kadrosu ve Seslendirme
 - **Kanal Adı:** `Dijitalİz` (`@dijitaliz.ai`)
-- **Ana Sunucu (`Arda`):** #7 Siber Dedektif — Instagram profil fotoğrafından birebir uyarlanmış tam vücut 2D çizgi karakter (koyu yakalı trençkot, lacivert/cyan fötr şapka, yuvarlak gözlük).
-- **Yardımcılar:** Sadece Arda ana insan karakterdir; sahnelerde yanında **küçük yardımcı robot kafalar (`MiniBot`)** eşlik eder. (Başka insan karakter kullanılmaz.)
+- **Ana Sunucu (`Arda`):** #7 Siber Dedektif — Instagram profil fotoğrafından uyarlanmış tam vücut 2D çizgi karakter (`shot="wide" | "closeup"` destekli; Faz 2 için opsiyonel `public/arda/<pose>.png` + `lipsync.json` hazır).
+- **Yardımcılar (`MiniBot`):** Sahnelerde Arda'ya eşlik eden küçük, yüzen yardımcı robot kafalar. Başka insan karakter kullanılmaz.
 - **Seslendirme (ElevenLabs — Tek Doğal Erkek Ses):**
-  - **Varsayılan ses:** **Will** (`bIHbv24MWmeRgasZH58o`) — tüm videolarda tek erkek ses kullanılır (ses geçişi yapılmaz).
-  - **Doğal ayarlar:** `style: 0`, `speed: 1.03`, `stability: 0.55` (`scripts/tts-eleven.mjs` varsayılanı).
+  - `.env` içindeki `ELEVEN_VOICE_ID` (ve `ELEVEN_MODEL`) önceliklidir.
+  - **Varsayılan Ses:** **George** (`JBFqnCBsd6RMkjVDRZzb`), yedek: **Will** (`bIHbv24MWmeRgasZH58o`).
+  - **Model:** `eleven_v3` (duygu etiketli `[curious]`, `[chuckles]`, `[whispers]`, `[sighs]` destekli) veya yedek `eleven_multilingual_v2` (`stability: 0.40`, `similarity_boost: 0.80`, `style: 0.25`, `speed: 1.02`).
+  - **Metin Yazımı:** Kısa, nefesli cümleler; vurgu öncesi `,` / `...` duraklamaları.
 
-## 1. İçerik ve Tempo Kuralları
-- **İlk 2 saniye kancası:** Her video günlük hayattan merak uyandıran kısa bir soru veya şaşırtıcı bir iddiayla başlar (sıkıcı giriş yok).
-- **Samimi ve akıcı dil:** Ansiklopedi gibi değil, arkadaşına ilginç bir şey anlatır gibi kısa, doğal Türkçe cümleler kurulur.
-- **Toplam süre:** **18–30 saniye** arasında kalır.
-- **Sıkmayan görsel tempo:** Her **2–3 saniyede bir** ekranda yeni bir hareket olur (robotun/insanın mimik/duygu değişimi, konuşma balonu, arka plan rengi geçişi, animasyonlu `CizgiStatBar` yüzde/sayaç veya `CizgiComparisonCard` / `Card` vurgu kartı).
-- **Görsel Zenginlik ve Çeşitlilik:** Videolar sade kalmaz; sahnelerde **gerçek fotoğraflar** (Wikimedia Commons / Ken Burns yavaş zoom), **karakter değişimleri** (`Arda`, `Elif`, `Bit`, `Cep` dönüşümlü), `Sunburst` ışınları, `Flash` geçişleri ve `Stamp` damgaları harmanlanır.
-- **Kapanış:** Ses bittikten en fazla **0.6–0.8 saniye** sonra video biter (`Math.ceil((voice.duration + 0.7) * FPS)`); sonda gereksiz sessiz bekleme olmaz ve izleyiciyi yoruma çekecek tek cümlelik esprili bir kapanış yapılır.
+## 1. 6 Vuruşlu Senaryo Akışı & İlk 3 Saniye Kuralı
+- **6 Vuruşlu Akış (`beats.json` mantığı):** `HOOK (Frame 0 = Kapak)` → `SETUP` → `QUIZ (mini merak sorusu)` → `REVEAL` → `TWIST (ters köşe)` → `SEAMLESS LOOP` (`frame 0 ≈ last frame`).
+- **İlk 3 Saniye (Hedef %65+ Tutma):** Klişe *"X neden böyle?"* sorusuyla değil; somut olay, rakam veya ters köşe iddiayla girilir. **Frame 0'da** `RealPhotoBg` + büyük `ViralHeadline` + hareketli `Arda` + kısa Mixkit `Sfx` ilk `0.5 sn` içinde devreye girer.
+- **Konu Seçimi:** Herkesin bildiği klişe genel kültür yerine, günlük hayatta yaşanıp sistemi bilinmeyen konular veya yanlış bilinen gerçekler seçilir.
+- **Toplam Süre:** **18–30 saniye**.
 
-## 2. Görsel Yerleşim ve Animasyon Kuralları
-- **Test rozeti yok:** Videoların üstünde `2 · SHORTS-SKILSS` gibi test etiketleri bulunmaz.
-- **Taşma (overshoot) kontrolü:** `Card` ve `Stamp` giriş animasyonları yumuşak damping (`16`) kullanır ve `maxWidth: 900` ile ekran dışına taşmaz.
-- **Robot anteni güvenli alanı:** `Bit` (`y={1185}`) karakterinin antenine değmemesi için üstteki büyük vurgu kartları (`Stamp`, `Card`, `CizgiStatBar`, `CizgiComparisonCard`) `y={350..460}` bandına hizalanır.
-- **Altyazı:** `TagCaptions` (Bitter serif, somon etiket) ve ses efektleri (`Sfx` Mixkit) her sahne ve görsel olayda kullanılır.
+## 2. Çekim Çeşitliliği, İmza Sahne ve Atmosfer
+- **4 Çekim Çeşitliliği (Shot Variety):** Her **2–4 saniyede** bir açı değişir:
+  1. `Wide` (geniş plan + `RealPhotoBg`)
+  2. `Close-Up` (`Arda` yakın yüz `shot="closeup"`)
+  3. `Insert Shot` (`InsertCard` — telefon bildirimi, pil/fatura/deney belgesi)
+  4. `Split-Screen` (`SplitScreen` — üst–alt karşılaştırma / ikilem)
+- **Bölüm Başına 1 İmza Görsel Sahne:** Soyut bilgiyi tek bakışta anlatan bir görsel metafor (bölünmüş ekran, inen belge, ışık/atmosfer değişimi).
+- **Derinlik & Ses Miksajı:** `PaperGrain` + `FloatingParticles` atmosfer katmanı ve konuşmayı bastırmayan `-18 dB` / `-22 dB` ducked `BgMusic` altlığı kullanılır.
 
-## 3. İş Bölümü ve Kalite Kontrolü
-- **Antigravity (Ben):** Konu araştırması, senaryo, ElevenLabs seslendirme, sahne kodlama, yerel kontrol kareleriyle hızlı görsel doğrulama ve GitHub'a pushlama.
-- **GitHub Actions:** Yalnızca `1080×1920 Full HD` render alıp indirilebilir Artifact (ve hazır olduğunda Instagram paylaşımı) üretir; bulutta Gemini API kontrolü çalıştırılmaz.
-- **Gemini Masaüstü Uygulaması:** İndirilen `.mp4` videosunu kendi PC'ndeki `Gemini` uygulamasındaki *"github deposu analizi"* sohbetine sürükleyip son gözle kontrol ettirebilirsin.
+## 3. Altyazı, Kapanış ve Yerel Kare Kontrolü (Frame QA)
+- **Seçici `ViralCaptions`:** Kalın siyah konturlu beyaz/altın altyazıda yalnızca cümlenin can alıcı **1–2 kelimesi** altın renkle (`#FACC15`) vurgulanır.
+- **Kapanış:** *"Beğenip takip et"* gibi bayat CTA konmaz. Son 2 sn'de vurucu tek cümle veya üst–alt `SplitScreen` ikilem sorusu bırakılır ve ses bitiminden **+0.5–0.7 sn** sonra kesilir.
+- **Yerel Kare Kontrolü (Frame QA):** `git push` öncesi **4–5 kritik kare** (Frame 0, 2. sn, orta, final) PNG olarak çıkarılıp yazı taşması ve Instagram Reels güvenli alanları doğrulanır.
+
+## 4. İş Bölümü ve Güvenlik
+- **Antigravity:** Konu, 6 vuruşlu senaryo, TTS, sahne kodlama, Frame QA, GitHub'a push.
+- **GitHub Actions:** Yalnızca `1080×1920 Full HD` render alır (`publish_ig` manuel onay olmadıkça `false`; bulutta Gemini API çalıştırılmaz).
+- **Gemini Masaüstü / Web:** İndirilen `.mp4` videosu son göz kontrolü için incelenir.

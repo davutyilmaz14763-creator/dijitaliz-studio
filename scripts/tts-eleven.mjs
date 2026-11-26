@@ -18,7 +18,9 @@ const env = Object.fromEntries(
     .map((l) => [l.slice(0, l.indexOf("=")).trim(), l.slice(l.indexOf("=") + 1).trim().replace(/^["']|["']$/g, "")]),
 );
 const KEY = process.env.ELEVENLABS_API_KEY || env.ELEVENLABS_API_KEY;
+const ELEVEN_VOICE = process.env.ELEVEN_VOICE_ID || env.ELEVEN_VOICE_ID;
 const VOICE_ENV = process.env.ELEVENLABS_VOICE_ID || env.ELEVENLABS_VOICE_ID;
+const MODEL_ENV = process.env.ELEVEN_MODEL || env.ELEVEN_MODEL;
 const args = process.argv.slice(2);
 
 if (args[0] === "--voices") {
@@ -34,13 +36,11 @@ if (!reel) throw new Error("kullanım: node scripts/tts-eleven.mjs <reel> [--fak
 const fake = args.includes("--fake");
 const cfg = JSON.parse(fs.readFileSync(path.join(root, "src/reels", reel, "script.json"), "utf8"));
 const sceneTexts = cfg.scenes.map((x) => (typeof x === "string" ? x : x.text));
-const defaultVoice = cfg.voiceId || VOICE_ENV || "bIHbv24MWmeRgasZH58o";
+const defaultVoice = ELEVEN_VOICE || cfg.voiceId || VOICE_ENV || "bIHbv24MWmeRgasZH58o";
 const sceneVoices = cfg.scenes.map((x) => (typeof x === "object" && x.voiceId ? x.voiceId : defaultVoice));
-const model = cfg.model || "eleven_multilingual_v2";
-const isV3 = model === "eleven_v3";
-const settings = isV3
-  ? { stability: 0.5, similarity_boost: 1.0, ...(cfg.voiceSettings ?? {}) }
-  : { stability: 0.55, similarity_boost: 0.85, style: 0, use_speaker_boost: true, speed: 1.03, ...(cfg.voiceSettings ?? {}) };
+let model = MODEL_ENV || cfg.model || "eleven_multilingual_v2";
+const v2Settings = { stability: 0.4, similarity_boost: 0.8, style: 0.25, use_speaker_boost: true, speed: 1.02, ...(cfg.voiceSettings ?? {}) };
+const v3Settings = { stability: 0.5, similarity_boost: 0.85, ...(cfg.voiceSettings ?? {}) };
 const outDir = path.join(root, "public", reel);
 fs.mkdirSync(outDir, { recursive: true });
 
@@ -66,7 +66,7 @@ const toWords = (chars, starts, ends, sceneOfChar, offset) => {
 };
 
 // chunk scenes (split on character limit OR voiceId change)
-const LIMIT = isV3 ? 2400 : 4500;
+const LIMIT = model === "eleven_v3" ? 2400 : 4500;
 const chunks = [];
 let curChunk = [];
 let len = 0;
@@ -107,21 +107,37 @@ for (const [ci, idxs] of chunks.entries()) {
   } else {
     if (!KEY) throw new Error("ELEVENLABS_API_KEY yok — reels-studio/.env dosyasına ekle (ya da --fake ile önizle)");
     const chunkVoice = sceneVoices[idxs[0]];
-    const body = { text, model_id: model, voice_settings: settings, ...(cfg.language ? { language_code: cfg.language } : {}) };
-    if (!isV3) {
-      const prev = chunks[ci - 1]?.map((i) => sceneTexts[i]).join(" ");
-      const next = chunks[ci + 1]?.map((i) => sceneTexts[i]).join(" ");
-      if (prev) body.previous_text = prev.slice(-600);
-      if (next) body.next_text = next.slice(0, 600);
-    }
-    let r;
-    for (let attempt = 0; attempt < 3; attempt++) {
-      r = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${chunkVoice}/with-timestamps?output_format=mp3_44100_128`, {
+    const callTts = async (useModel, useText) => {
+      const useV3 = useModel === "eleven_v3";
+      const body = {
+        text: useText,
+        model_id: useModel,
+        voice_settings: useV3 ? v3Settings : v2Settings,
+        ...(cfg.language ? { language_code: cfg.language } : {}),
+      };
+      if (!useV3) {
+        const prev = chunks[ci - 1]?.map((i) => sceneTexts[i]).join(" ");
+        const next = chunks[ci + 1]?.map((i) => sceneTexts[i]).join(" ");
+        if (prev) body.previous_text = prev.slice(-600);
+        if (next) body.next_text = next.slice(0, 600);
+      }
+      return fetch(`https://api.elevenlabs.io/v1/text-to-speech/${chunkVoice}/with-timestamps?output_format=mp3_44100_128`, {
         method: "POST",
         headers: { "xi-api-key": KEY, "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
+    };
+    let r;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      r = await callTts(model, text);
       if (r.ok) break;
+      if (model === "eleven_v3" && (r.status === 400 || r.status === 422)) {
+        console.log(`parça ${ci + 1}: eleven_v3 (${r.status}), eleven_multilingual_v2 yedeğine geçiliyor…`);
+        model = "eleven_multilingual_v2";
+        const cleanText = text.replace(/\[[^\]]+\]\s*/g, "");
+        r = await callTts(model, cleanText);
+        if (r.ok) break;
+      }
       console.log(`parça ${ci + 1}: ${r.status}, tekrar deneniyor…`);
       await new Promise((res) => setTimeout(res, 4000));
     }

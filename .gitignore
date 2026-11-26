@@ -22,4 +22,5 @@ public/**
 *.MOV
 *.wav
 !public/sfx/*.wav
+!public/sfx/*.mp3
 !public/cizgi/*.jpg

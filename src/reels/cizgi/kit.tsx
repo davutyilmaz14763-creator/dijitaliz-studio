@@ -2,6 +2,7 @@
 // kağıt doku, bantlı başlık etiketi, kelime kelime biriken etiket altyazılar.
 // Karakterler bizim: "Bit" (ekran yüzlü robot) ve "Cep" (telefon arkadaşı).
 import React from "react";
+import { Audio } from "@remotion/media";
 import { loadFont as loadSlab } from "@remotion/google-fonts/Bitter";
 import { AbsoluteFill, Img, interpolate, random, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { fontFamily as sans } from "../theme";
@@ -747,6 +748,9 @@ type HumanProps = {
   enterAt?: number;
   id: string;
   talk?: number;
+  shot?: "wide" | "closeup";
+  pose?: string;
+  lipsync?: { start: number; end: number; value: string }[];
 };
 
 const HumanFaceExpr: React.FC<{ face: Face; blink: number; talk?: number; cx?: number; cy?: number }> = ({
@@ -805,26 +809,51 @@ const HumanFaceExpr: React.FC<{ face: Face; blink: number; talk?: number; cx?: n
   );
 };
 
-export const Arda: React.FC<HumanProps> = ({ x, y, size = 440, face = "normal", armL = 12, armR = 12, hold, flip, enterAt = 0, id = "arda", talk = 0 }) => {
+export const Arda: React.FC<HumanProps> = ({ x, y, size = 440, face = "normal", armL = 12, armR = 12, hold, flip, enterAt = 0, id = "arda", talk = 0, shot = "wide", pose, lipsync }) => {
   const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
   const blink = useBlink(id);
   const p = usePopAt(enterAt, 14, 190);
   const bob = Math.sin(frame / 9) * 3.5;
   const isBlinking = blink > 0.5;
-  const mouthOpen = talk > 0.18 ? 4 + talk * 7 : 0;
+  const tSec = frame / fps;
+  const syncOpen = lipsync?.some((c) => tSec >= c.start && tSec <= c.end && c.value !== "X") ? 0.55 : 0;
+  const activeTalk = Math.max(talk, syncOpen);
+  const mouthOpen = activeTalk > 0.18 ? 4 + activeTalk * 7 : 0;
+  const shotScale = shot === "closeup" ? 1.55 : 1;
+  const shotOffsetY = shot === "closeup" ? size * 0.22 : 0;
   const W = 240,
     H = 340;
   const w = (size * W) / H;
+  if (pose) {
+    return (
+      <div
+        style={{
+          position: "absolute",
+          left: x - w / 2,
+          top: y - size + shotOffsetY,
+          width: w,
+          height: size,
+          transformOrigin: "50% 80%",
+          scale: `${(flip ? -1 : 1) * interpolate(p, [0, 1], [0.5, 1]) * shotScale} ${interpolate(p, [0, 1], [0.5, 1]) * shotScale}`,
+          opacity: Math.min(1, p * 2),
+          filter: shadow,
+        }}
+      >
+        <Img src={staticFile(`arda/${pose}.png`)} style={{ width: "100%", height: "100%", objectFit: "contain", transform: `translateY(${bob}px)` }} />
+      </div>
+    );
+  }
   return (
     <div
       style={{
         position: "absolute",
         left: x - w / 2,
-        top: y - size,
+        top: y - size + shotOffsetY,
         width: w,
         height: size,
-        transformOrigin: "50% 100%",
-        scale: `${(flip ? -1 : 1) * interpolate(p, [0, 1], [0.5, 1])} ${interpolate(p, [0, 1], [0.5, 1])}`,
+        transformOrigin: "50% 80%",
+        scale: `${(flip ? -1 : 1) * interpolate(p, [0, 1], [0.5, 1]) * shotScale} ${interpolate(p, [0, 1], [0.5, 1]) * shotScale}`,
         opacity: Math.min(1, p * 2),
         filter: shadow,
       }}
@@ -1257,5 +1286,171 @@ export const ViralCaptions: React.FC<{ words: VWord[]; y?: number; highlight?: s
         {w.text}
       </span>
     </div>
+  );
+};
+
+/* ---------- v2 Components: SplitScreen, InsertCard, FloatingParticles, BgMusic ---------- */
+export const SplitScreen: React.FC<{
+  topLabel: string;
+  topValue: string;
+  topBg?: string;
+  bottomLabel: string;
+  bottomValue: string;
+  bottomBg?: string;
+  dividerText?: string;
+  at?: number;
+}> = ({
+  topLabel,
+  topValue,
+  topBg = "linear-gradient(135deg, #1E293B 0%, #0F172A 100%)",
+  bottomLabel,
+  bottomValue,
+  bottomBg = "linear-gradient(135deg, #065F46 0%, #064E3B 100%)",
+  dividerText = "VS",
+  at = 0.08,
+}) => {
+  const p = usePopAt(at, 15, 200);
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: 70,
+        right: 70,
+        top: 370,
+        height: 620,
+        borderRadius: 28,
+        overflow: "hidden",
+        border: "6px solid #0F172A",
+        outline: "7px solid #FFFFFF",
+        boxShadow: "0 18px 36px rgba(0,0,0,0.45)",
+        display: "flex",
+        flexDirection: "column",
+        scale: String(interpolate(p, [0, 1], [0.86, 1])),
+        opacity: Math.min(1, p * 2.5),
+        zIndex: 16,
+      }}
+    >
+      <div style={{ flex: 1, background: topBg, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: 24, borderBottom: "5px solid #0F172A" }}>
+        <div style={{ fontFamily: sans, fontSize: 30, fontWeight: 800, color: "rgba(255,255,255,0.8)", letterSpacing: 1 }}>{topLabel}</div>
+        <div style={{ fontFamily: slab, fontSize: 54, fontWeight: 900, color: "#FFFFFF", marginTop: 8, textAlign: "center" }}>{topValue}</div>
+      </div>
+      <div
+        style={{
+          position: "absolute",
+          left: "50%",
+          top: "50%",
+          transform: "translate(-50%, -50%)",
+          background: "#FACC15",
+          color: "#0F172A",
+          fontFamily: slab,
+          fontSize: 30,
+          fontWeight: 900,
+          padding: "10px 24px",
+          borderRadius: 99,
+          border: "5px solid #0F172A",
+          boxShadow: "0 6px 14px rgba(0,0,0,0.35)",
+        }}
+      >
+        {dividerText}
+      </div>
+      <div style={{ flex: 1, background: bottomBg, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: 24 }}>
+        <div style={{ fontFamily: sans, fontSize: 30, fontWeight: 800, color: "rgba(255,255,255,0.85)", letterSpacing: 1 }}>{bottomLabel}</div>
+        <div style={{ fontFamily: slab, fontSize: 54, fontWeight: 900, color: "#FDE047", marginTop: 8, textAlign: "center" }}>{bottomValue}</div>
+      </div>
+    </div>
+  );
+};
+
+export const InsertCard: React.FC<{
+  badge: string;
+  title: string;
+  metric: string;
+  sub?: string;
+  icon?: string;
+  accent?: string;
+  y?: number;
+  at?: number;
+}> = ({ badge, title, metric, sub, icon = "📄", accent = "#38BDF8", y = 380, at = 0.1 }) => {
+  const p = usePopAt(at, 15, 200);
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: 90,
+        right: 90,
+        top: y,
+        background: "#FFFDF7",
+        border: "5px solid #0F172A",
+        borderRadius: 26,
+        outline: "7px solid #FFFFFF",
+        boxShadow: "0 16px 32px rgba(0,0,0,0.35)",
+        padding: "26px 32px",
+        transform: `translateY(${interpolate(p, [0, 1], [-55, 0])}px) rotate(${interpolate(p, [0, 1], [-3, -1])}deg)`,
+        opacity: Math.min(1, p * 2.5),
+        zIndex: 17,
+      }}
+    >
+      <div style={{ display: "inline-block", background: accent, color: "#0F172A", fontFamily: sans, fontSize: 22, fontWeight: 900, padding: "5px 16px", borderRadius: 99, border: "3px solid #0F172A", marginBottom: 12 }}>
+        {badge}
+      </div>
+      <div style={{ display: "flex", alignItems: "center", gap: 22 }}>
+        <div style={{ fontSize: 72 }}>{icon}</div>
+        <div>
+          <div style={{ fontFamily: sans, fontSize: 28, fontWeight: 800, color: "#475569" }}>{title}</div>
+          <div style={{ fontFamily: slab, fontSize: 56, fontWeight: 900, color: "#0F172A", lineHeight: 1.05 }}>{metric}</div>
+          {sub && <div style={{ fontFamily: sans, fontSize: 25, fontWeight: 700, color: "#DC2626", marginTop: 4 }}>{sub}</div>}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const FloatingParticles: React.FC<{ count?: number; color?: string }> = ({ count = 16, color = "rgba(255,255,255,0.45)" }) => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{ pointerEvents: "none", zIndex: 5 }}>
+      {Array.from({ length: count }).map((_, i) => {
+        const bx = ((i * 173) % 980) + 50;
+        const speed = 0.7 + (i % 4) * 0.4;
+        const y = 1920 - ((frame * speed * 1.8 + i * 130) % 1980);
+        const x = bx + Math.sin(frame / 22 + i) * 18;
+        const sz = 4 + (i % 4) * 2.5;
+        return (
+          <div
+            key={i}
+            style={{
+              position: "absolute",
+              left: x,
+              top: y,
+              width: sz,
+              height: sz,
+              borderRadius: "50%",
+              background: color,
+              boxShadow: `0 0 ${sz * 2}px ${color}`,
+            }}
+          />
+        );
+      })}
+    </AbsoluteFill>
+  );
+};
+
+export const BgMusic: React.FC<{ src?: string; words: VWord[]; baseVol?: number; duckVol?: number }> = ({
+  src = "sfx/bgm-curious.mp3",
+  words,
+  baseVol = 0.12,
+  duckVol = 0.08,
+}) => {
+  const { fps } = useVideoConfig();
+  return (
+    <Audio
+      src={staticFile(src)}
+      loop
+      volume={(f) => {
+        const t = f / fps;
+        const speaking = words.some((w) => t >= w.start - 0.1 && t <= w.end + 0.15);
+        return speaking ? duckVol : baseVol;
+      }}
+    />
   );
 };
