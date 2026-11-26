@@ -47,20 +47,28 @@ const getArg = (flag) => {
 
 let videoUrl = getArg("--url");
 const fileArg = getArg("--file");
+const coverArg = getArg("--cover");
 const caption = getArg("--caption") ?? "";
 
-if (!videoUrl && fileArg) {
-  const absFile = path.isAbsolute(fileArg) ? fileArg : path.join(root, fileArg);
-  if (!fs.existsSync(absFile)) throw new Error(`Dosya bulunamadı: ${absFile}`);
-  console.log(`0/3 Video geçici HTTPS sunucusuna yükleniyor (${path.basename(absFile)})...`);
-  const out = execFileSync("curl.exe", ["-sL", "-F", `file=@${absFile}`, "https://tmpfiles.org/api/v1/upload"]).toString();
+const uploadTemp = (localPath) => {
+  const abs = path.isAbsolute(localPath) ? localPath : path.join(root, localPath);
+  if (!fs.existsSync(abs)) throw new Error(`Dosya bulunamadı: ${abs}`);
+  console.log(`0/3 Geçici HTTPS sunucusuna yükleniyor (${path.basename(abs)})...`);
+  const out = execFileSync("curl.exe", ["-sL", "-F", `file=@${abs}`, "https://tmpfiles.org/api/v1/upload"]).toString();
   const parsed = JSON.parse(out);
   if (parsed.status !== "success" || !parsed.data?.url) {
     throw new Error(`Geçici yükleme hatası: ${out}`);
   }
-  videoUrl = parsed.data.url.replace("https://tmpfiles.org/", "https://tmpfiles.org/dl/");
-  console.log(`   Geçici URL: ${videoUrl}`);
+  return parsed.data.url.replace("https://tmpfiles.org/", "https://tmpfiles.org/dl/");
+};
+
+if (!videoUrl && fileArg) {
+  videoUrl = uploadTemp(fileArg);
+  console.log(`   Video URL: ${videoUrl}`);
 }
+
+const coverUrl = coverArg ? (coverArg.startsWith("http") ? coverArg : uploadTemp(coverArg)) : undefined;
+if (coverUrl) console.log(`   Kapak URL: ${coverUrl}`);
 
 if (!videoUrl) {
   throw new Error('Kullanım: node scripts/ig-publish.mjs --file out/video.mp4 --caption "..."');
@@ -74,6 +82,7 @@ const createRes = await fetch(`${GRAPH}/${IG_USER_ID}/media`, {
   body: JSON.stringify({
     media_type: "REELS",
     video_url: videoUrl,
+    ...(coverUrl ? { cover_url: coverUrl } : {}),
     caption,
     share_to_feed: true,
     access_token: IG_ACCESS_TOKEN,

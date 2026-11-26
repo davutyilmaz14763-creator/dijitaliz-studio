@@ -1,354 +1,354 @@
 {
  "fake": false,
  "model": "eleven_multilingual_v2",
- "duration": 26.61,
+ "duration": 27.307,
  "words": [
   {
    "text": "Uçak",
    "start": 0,
-   "end": 0.313,
+   "end": 0.325,
    "scene": 0
   },
   {
    "text": "pencerelerinin",
-   "start": 0.372,
-   "end": 1.01,
+   "start": 0.383,
+   "end": 1.057,
    "scene": 0
   },
   {
    "text": "neden",
-   "start": 1.057,
-   "end": 1.358,
+   "start": 1.103,
+   "end": 1.37,
    "scene": 0
   },
   {
    "text": "köşeli",
-   "start": 1.416,
-   "end": 1.765,
+   "start": 1.428,
+   "end": 1.741,
    "scene": 0
   },
   {
    "text": "değil",
-   "start": 1.823,
-   "end": 2.055,
+   "start": 1.8,
+   "end": 2.02,
    "scene": 0
   },
   {
    "text": "de",
-   "start": 2.113,
-   "end": 2.299,
+   "start": 2.09,
+   "end": 2.264,
    "scene": 0
   },
   {
    "text": "hep",
-   "start": 2.543,
-   "end": 2.717,
+   "start": 2.508,
+   "end": 2.705,
    "scene": 0
   },
   {
    "text": "yuvarlak",
-   "start": 2.786,
+   "start": 2.775,
    "end": 3.216,
    "scene": 0
   },
   {
    "text": "olduğunu",
-   "start": 3.286,
-   "end": 3.553,
+   "start": 3.297,
+   "end": 3.587,
    "scene": 0
   },
   {
    "text": "hiç",
-   "start": 3.576,
-   "end": 3.727,
+   "start": 3.611,
+   "end": 3.75,
    "scene": 0
   },
   {
    "text": "merak",
-   "start": 3.808,
-   "end": 4.087,
+   "start": 3.82,
+   "end": 4.063,
    "scene": 0
   },
   {
    "text": "ettin",
-   "start": 4.168,
-   "end": 4.389,
+   "start": 4.133,
+   "end": 4.342,
    "scene": 0
   },
   {
    "text": "mi?",
-   "start": 4.447,
-   "end": 4.702,
+   "start": 4.389,
+   "end": 4.679,
    "scene": 0
   },
   {
    "text": "1950'lerde",
-   "start": 5.399,
-   "end": 6.571,
+   "start": 5.375,
+   "end": 6.536,
    "scene": 1
   },
   {
    "text": "ilk",
    "start": 6.653,
-   "end": 6.769,
+   "end": 6.803,
    "scene": 1
   },
   {
    "text": "jet",
-   "start": 6.838,
-   "end": 6.966,
+   "start": 6.885,
+   "end": 7.036,
    "scene": 1
   },
   {
    "text": "uçaklarının",
-   "start": 7.024,
-   "end": 7.558,
+   "start": 7.094,
+   "end": 7.616,
    "scene": 1
   },
   {
    "text": "pencereleri",
-   "start": 7.605,
-   "end": 8.173,
+   "start": 7.663,
+   "end": 8.22,
    "scene": 1
   },
   {
    "text": "kareydi.",
-   "start": 8.208,
-   "end": 8.754,
+   "start": 8.255,
+   "end": 8.789,
    "scene": 1
   },
   {
    "text": "Ama",
-   "start": 9.195,
-   "end": 9.439,
+   "start": 9.23,
+   "end": 9.462,
    "scene": 1
   },
   {
    "text": "kare",
-   "start": 9.509,
+   "start": 9.52,
    "end": 9.706,
    "scene": 1
   },
   {
    "text": "köşelerde",
    "start": 9.752,
-   "end": 10.275,
+   "end": 10.379,
    "scene": 1
   },
   {
    "text": "basınç",
-   "start": 10.344,
-   "end": 10.67,
+   "start": 10.623,
+   "end": 11.018,
    "scene": 1
   },
   {
    "text": "üç",
-   "start": 10.762,
-   "end": 10.879,
+   "start": 11.111,
+   "end": 11.238,
    "scene": 1
   },
   {
    "text": "kat",
-   "start": 10.948,
-   "end": 11.099,
+   "start": 11.308,
+   "end": 11.447,
    "scene": 1
   },
   {
    "text": "fazla",
-   "start": 11.146,
-   "end": 11.459,
+   "start": 11.505,
+   "end": 11.796,
    "scene": 1
   },
   {
    "text": "birikiyordu.",
-   "start": 11.505,
-   "end": 12.121,
+   "start": 11.842,
+   "end": 12.481,
    "scene": 1
   },
   {
    "text": "Bu",
-   "start": 12.725,
-   "end": 12.875,
+   "start": 13.084,
+   "end": 13.224,
    "scene": 2
   },
   {
    "text": "yüzden",
-   "start": 12.91,
-   "end": 13.317,
+   "start": 13.259,
+   "end": 13.572,
    "scene": 2
   },
   {
    "text": "metal",
-   "start": 13.56,
-   "end": 13.92,
+   "start": 13.642,
+   "end": 13.967,
    "scene": 2
   },
   {
    "text": "yorulup",
-   "start": 13.978,
-   "end": 14.269,
+   "start": 14.025,
+   "end": 14.315,
    "scene": 2
   },
   {
    "text": "çatlamaya",
-   "start": 14.315,
-   "end": 14.756,
+   "start": 14.362,
+   "end": 14.791,
    "scene": 2
   },
   {
    "text": "başladı.",
-   "start": 14.802,
-   "end": 15.348,
+   "start": 14.838,
+   "end": 15.418,
    "scene": 2
   },
   {
    "text": "Mühendisler",
-   "start": 16.045,
-   "end": 16.695,
+   "start": 16.115,
+   "end": 16.869,
    "scene": 2
   },
   {
    "text": "köşeleri",
-   "start": 16.753,
-   "end": 17.159,
+   "start": 16.939,
+   "end": 17.369,
    "scene": 2
   },
   {
    "text": "yuvarlayınca",
-   "start": 17.194,
-   "end": 17.798,
+   "start": 17.403,
+   "end": 18.019,
    "scene": 2
   },
   {
    "text": "basınç",
-   "start": 17.856,
-   "end": 18.181,
-   "scene": 2
-  },
-  {
-   "text": "tüm",
-   "start": 18.239,
+   "start": 18.088,
    "end": 18.46,
    "scene": 2
   },
   {
-   "text": "cama",
+   "text": "tüm",
    "start": 18.518,
-   "end": 18.738,
+   "end": 18.727,
+   "scene": 2
+  },
+  {
+   "text": "cama",
+   "start": 18.773,
+   "end": 19.006,
    "scene": 2
   },
   {
    "text": "eşit",
-   "start": 18.796,
-   "end": 19.04,
+   "start": 19.064,
+   "end": 19.319,
    "scene": 2
   },
   {
    "text": "dağıldı.",
-   "start": 19.098,
-   "end": 19.563,
+   "start": 19.377,
+   "end": 19.865,
    "scene": 2
   },
   {
    "text": "Yani",
-   "start": 19.806,
-   "end": 20.201,
+   "start": 20.248,
+   "end": 20.619,
    "scene": 3
   },
   {
    "text": "o",
-   "start": 20.352,
-   "end": 20.468,
+   "start": 20.794,
+   "end": 20.945,
    "scene": 3
   },
   {
    "text": "yuvarlak",
-   "start": 20.526,
-   "end": 20.979,
+   "start": 21.003,
+   "end": 21.467,
    "scene": 3
   },
   {
    "text": "cam",
-   "start": 21.037,
-   "end": 21.211,
+   "start": 21.537,
+   "end": 21.711,
    "scene": 3
   },
   {
    "text": "aslında",
-   "start": 21.281,
-   "end": 21.629,
+   "start": 21.792,
+   "end": 22.164,
    "scene": 3
   },
   {
    "text": "seni",
-   "start": 21.664,
-   "end": 21.861,
+   "start": 22.21,
+   "end": 22.407,
    "scene": 3
   },
   {
    "text": "koruyor.",
-   "start": 21.896,
-   "end": 22.395,
+   "start": 22.442,
+   "end": 22.953,
    "scene": 3
   },
   {
    "text": "Peki",
-   "start": 23.092,
-   "end": 23.336,
+   "start": 23.336,
+   "end": 23.638,
    "scene": 3
   },
   {
    "text": "sen",
-   "start": 23.382,
-   "end": 23.556,
+   "start": 23.708,
+   "end": 23.905,
    "scene": 3
   },
   {
    "text": "cam",
-   "start": 23.614,
-   "end": 23.777,
+   "start": 23.975,
+   "end": 24.149,
    "scene": 3
   },
   {
    "text": "kenarı",
-   "start": 23.835,
-   "end": 24.09,
+   "start": 24.219,
+   "end": 24.497,
    "scene": 3
   },
   {
    "text": "mı,",
-   "start": 24.125,
-   "end": 24.23,
+   "start": 24.532,
+   "end": 24.799,
    "scene": 3
   },
   {
    "text": "koridor",
-   "start": 24.253,
-   "end": 24.613,
+   "start": 24.915,
+   "end": 25.321,
    "scene": 3
   },
   {
    "text": "mu",
-   "start": 24.659,
-   "end": 24.717,
+   "start": 25.38,
+   "end": 25.438,
    "scene": 3
   },
   {
    "text": "seçersin?",
-   "start": 24.752,
-   "end": 25.379,
+   "start": 25.472,
+   "end": 26.111,
    "scene": 3
   },
   {
-   "text": "Yorumda",
-   "start": 25.623,
-   "end": 26.006,
+   "text": "Yoruma",
+   "start": 26.32,
+   "end": 26.691,
    "scene": 3
   },
   {
    "text": "yaz!",
-   "start": 26.041,
-   "end": 26.61,
+   "start": 26.738,
+   "end": 27.307,
    "scene": 3
   }
  ]

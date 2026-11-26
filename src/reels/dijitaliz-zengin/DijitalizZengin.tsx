@@ -74,7 +74,7 @@ const S1: React.FC<{ dur: number }> = ({ dur }) => (
   <Room wall={K.wall.beige} pattern="none">
     <PhotoBackdrop src="dijitaliz-zengin/img/comet.jpg" duration={dur} opacity={0.35} />
     <TapeLabel text="1950'LER · KARE PENCERE" />
-    <CizgiStatBar y={360} at={wAt(1, "üç") - 0.3} label="Köşede Biriken Basınç" percent={100} suffix="×3 KAT" barColor={K.red} />
+    <CizgiStatBar y={360} at={wAt(1, "üç") - 0.3} label="Köşede Biriken Basınç" percent={100} targetValue={3} suffix=" KAT" barColor={K.red} />
     <Elif id="elif1" x={540} y={1185} size={400} face="shock" armL={130} armR={130} enterAt={0.1} />
   </Room>
 );
@@ -119,7 +119,7 @@ const S3: React.FC = () => (
       rightValue="GÜVENLİ ✓"
       leftColor={K.red}
       rightColor={K.green}
-      badge="Cam kenarı mı, koridor mu? Yorumda yaz! 👇"
+      badge="Cam kenarı mı, koridor mu? Yoruma yaz! 👇"
     />
     <Arda id="arda3" x={370} y={1185} size={405} face="wink" armL={135} armR={135} enterAt={0.1} />
     <Elif id="elif3" x={740} y={1185} size={380} face="happy" armL={120} armR={120} enterAt={0.2} />
@@ -135,7 +135,7 @@ const hits = (): Hit[] => [
   [2, wAt(2, "çatlamaya"), "fail_wrong-answer", 0.4],
   [2, wAt(2, "yuvarlayınca"), "ding_correct-answer", 0.45],
   [3, 0.15, "pop_message", 0.45],
-  [3, wAt(3, "yorumda"), "ding_correct-reward", 0.45],
+  [3, wAt(3, "yoruma"), "ding_correct-reward", 0.45],
 ];
 
 export const DijitalizZengin: React.FC = () => {
