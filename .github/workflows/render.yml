@@ -7,10 +7,6 @@ on:
         description: "Render alınacak Remotion kompozisyon ID (ör. DijitalizTest)"
         required: true
         default: "DijitalizZengin"
-      gemini_review:
-        description: "Render sonrası Gemini kalite kontrolü çalışsın mı?"
-        type: boolean
-        default: true
       publish_ig:
         description: "Instagram Reels olarak yayınlansın mı?"
         type: boolean
@@ -74,18 +70,6 @@ jobs:
           name: ${{ env.COMP }}-fullhd
           path: out/${{ env.COMP }}.mp4
           retention-days: 14
-
-      - name: Gemini Kalite Kontrolü
-        if: ${{ github.event.inputs.gemini_review != 'false' }}
-        continue-on-error: true
-        env:
-          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
-        run: |
-          if [ -n "$GOOGLE_API_KEY" ]; then
-            node scripts/gemini-review.mjs "out/${COMP}.mp4"
-          else
-            echo "GOOGLE_API_KEY secret tanımlı değil, atlandı."
-          fi
 
       - name: Instagram Reels Yayınla
         if: ${{ github.event.inputs.publish_ig == 'true' }}

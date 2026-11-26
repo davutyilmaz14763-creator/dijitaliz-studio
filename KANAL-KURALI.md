@@ -21,5 +21,7 @@ Bu proje için onaylanan kalıcı ana format: **`cizgi` (Ana Sunucu: `Arda` + Ro
 - **Robot anteni güvenli alanı:** `Bit` (`y={1185}`) karakterinin antenine değmemesi için üstteki büyük vurgu kartları (`Stamp`, `Card`, `CizgiStatBar`, `CizgiComparisonCard`) `y={350..460}` bandına hizalanır.
 - **Altyazı:** `TagCaptions` (Bitter serif, somon etiket) ve ses efektleri (`Sfx` Mixkit) her sahne ve görsel olayda kullanılır.
 
-## 3. Otomatik Gemini Kalite Kontrolü
-- Her render sonrası video dosyası `node scripts/gemini-review.mjs out/<video>.mp4` komutuyla **Gemini'ye** gönderilip görsel yerleşim, ses/telaffuz senkronu, tempo ve kapanış açısından kontrol edilir. Raporda kritik bir sorun çıkarsa düzeltilip yeniden render alınır.
+## 3. İş Bölümü ve Kalite Kontrolü
+- **Antigravity (Ben):** Konu araştırması, senaryo, ElevenLabs seslendirme, sahne kodlama, yerel kontrol kareleriyle hızlı görsel doğrulama ve GitHub'a pushlama.
+- **GitHub Actions:** Yalnızca `1080×1920 Full HD` render alıp indirilebilir Artifact (ve hazır olduğunda Instagram paylaşımı) üretir; bulutta Gemini API kontrolü çalıştırılmaz.
+- **Gemini Masaüstü Uygulaması:** İndirilen `.mp4` videosunu kendi PC'ndeki `Gemini` uygulamasındaki *"github deposu analizi"* sohbetine sürükleyip son gözle kontrol ettirebilirsin.
