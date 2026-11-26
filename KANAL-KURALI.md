@@ -11,7 +11,8 @@ Bu proje için onaylanan kalıcı ana format: **`cizgi` (Ana Sunucu: `Arda` + Ro
 - **İlk 2 saniye kancası:** Her video günlük hayattan merak uyandıran kısa bir soru veya şaşırtıcı bir iddiayla başlar (sıkıcı giriş yok).
 - **Samimi ve akıcı dil:** Ansiklopedi gibi değil, arkadaşına ilginç bir şey anlatır gibi kısa, doğal Türkçe cümleler kurulur.
 - **Toplam süre:** **18–30 saniye** arasında kalır.
-- **Sıkmayan görsel tempo:** Her **2–3 saniyede bir** ekranda yeni bir hareket olur (robotun mimik/duygu değişimi, konuşma balonu, arka plan rengi geçişi, animasyonlu `CizgiStatBar` yüzde/sayaç veya `CizgiComparisonCard` / `Card` vurgu kartı).
+- **Sıkmayan görsel tempo:** Her **2–3 saniyede bir** ekranda yeni bir hareket olur (robotun/insanın mimik/duygu değişimi, konuşma balonu, arka plan rengi geçişi, animasyonlu `CizgiStatBar` yüzde/sayaç veya `CizgiComparisonCard` / `Card` vurgu kartı).
+- **Görsel Zenginlik ve Çeşitlilik:** Videolar sade kalmaz; sahnelerde **gerçek fotoğraflar** (Wikimedia Commons / Ken Burns yavaş zoom), **karakter değişimleri** (`Arda`, `Elif`, `Bit`, `Cep` dönüşümlü), `Sunburst` ışınları, `Flash` geçişleri ve `Stamp` damgaları harmanlanır.
 - **Kapanış:** Ses bittikten en fazla **0.6–0.8 saniye** sonra video biter (`Math.ceil((voice.duration + 0.7) * FPS)`); sonda gereksiz sessiz bekleme olmaz ve izleyiciyi yoruma çekecek tek cümlelik esprili bir kapanış yapılır.
 
 ## 2. Görsel Yerleşim ve Animasyon Kuralları
