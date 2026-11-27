@@ -54,22 +54,43 @@ export const OutlineBox: React.FC<{
   );
 };
 
-/** 3D Fayans Zemin */
-export const TileFloor: React.FC<{ width?: number; depth?: number; positionZ?: number; color?: string; gridColor?: string }> = ({
+/** İnce Derz Çizgili Açık Bej Kare Fayans Zemin (Canvas Texture) */
+export const TileFloor: React.FC<{ width?: number; depth?: number; positionZ?: number }> = ({
   width = 24,
   depth = 28,
   positionZ = 0,
-  color = "#EDE4D3",
-  gridColor = "#C8BBA6",
-}) => (
-  <group position={[0, 0, positionZ]}>
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
+}) => {
+  const tileTex = useMemo(() => {
+    const c = document.createElement("canvas");
+    c.width = 256;
+    c.height = 256;
+    const ctx = c.getContext("2d")!;
+    ctx.fillStyle = "#EFE6D5";
+    ctx.fillRect(0, 0, 256, 256);
+    ctx.fillStyle = "#E8DEC9";
+    ctx.fillRect(0, 0, 128, 128);
+    ctx.fillRect(128, 128, 128, 128);
+    ctx.strokeStyle = "#C9BCA6";
+    ctx.lineWidth = 4;
+    ctx.strokeRect(0, 0, 128, 128);
+    ctx.strokeRect(128, 0, 128, 128);
+    ctx.strokeRect(0, 128, 128, 128);
+    ctx.strokeRect(128, 128, 128, 128);
+    const t = new THREE.CanvasTexture(c);
+    t.colorSpace = THREE.SRGBColorSpace;
+    t.wrapS = THREE.RepeatWrapping;
+    t.wrapT = THREE.RepeatWrapping;
+    t.repeat.set(width / 1.6, depth / 1.6);
+    return t;
+  }, [width, depth]);
+
+  return (
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, positionZ]}>
       <planeGeometry args={[width, depth]} />
-      <meshStandardMaterial color={color} roughness={0.85} />
+      <meshStandardMaterial map={tileTex} roughness={0.82} />
     </mesh>
-    <gridHelper args={[Math.max(width, depth), 24, gridColor, gridColor]} position={[0, 0.006, 0]} />
-  </group>
-);
+  );
+};
 
 /** Deterministik Remotion Frame tabanlı Kayan 3D Kamera */
 export const CameraRig: React.FC<{
@@ -91,7 +112,7 @@ export const CameraRig: React.FC<{
   return null;
 };
 
-/** Aksiyonlu 2D Arda Aktörü (dururken sabit basar, yürürken doğal adım atar) */
+/** Aksiyonlu 2D Arda Aktörü (zıplamasız sağlam duruş, belirgin adım yürüyüşü, yanak hizası ter) */
 export const Arda3D: React.FC<{
   position?: [number, number, number];
   camPos?: [number, number, number];
@@ -116,15 +137,16 @@ export const Arda3D: React.FC<{
   const frame = useCurrentFrame();
 
   const blink = (frame % 90) > 85;
-  // Dururken zıplama YOK! Yalnızca yürürken çok hafif doğal adım yaylanması
-  const bob = walking ? Math.abs(Math.sin(frame / 4)) * 0.032 : 0;
-  const breath = !walking ? Math.sin(frame / 14) * 0.012 : 0;
-  const swing = walking ? Math.sin(frame / 4) * 20 : 0;
+  // Zıplama yok! Yalnızca yürürken çok hafif adım ritmi, dururken sağlam zemin teması
+  const bob = walking ? Math.abs(Math.sin(frame / 4)) * 0.018 : 0;
+  const breath = !walking ? Math.sin(frame / 14) * 0.01 : 0;
+  const stridePhase = walking ? Math.sin(frame / 4) : 0; // -1..+1
   const mouthTalk = talking ? (Math.sin(frame / 2.2) > 0.2 ? 1 : 0) : 0;
   const rotY = camPos ? Math.atan2(camPos[0] - position[0], camPos[2] - position[2]) : 0;
   const activeFace = pose === "closeupShock" ? "shock" : face;
   const showSweat = sweating || pose === "closeupShock";
   const sweatStep = Math.floor((frame % 18) / 6);
+  const strideBucket = walking ? Math.round(stridePhase * 5) : 0;
 
   const texture = useMemo(() => {
     const canvas = document.createElement("canvas");
@@ -141,28 +163,36 @@ export const Arda3D: React.FC<{
     ctx.strokeStyle = ink;
     ctx.lineWidth = 4.5;
 
-    // Legs (only alternate stride when walking; planted firmly when standing)
-    const legL = walking ? Math.sin((swing * Math.PI) / 180) * 10 : 0;
-    const legR = -legL;
+    // Belirgin sol-sağ bacak adım salınımı ve ayakkabı hareketi (yalnızca yürürken)
+    const s = strideBucket / 5;
+    const liftL = walking ? Math.max(0, s) * 16 : 0;
+    const liftR = walking ? Math.max(0, -s) * 16 : 0;
+    const shiftL = walking ? s * 6 : 0;
+    const shiftR = walking ? -s * 6 : 0;
+
+    // Left leg & shoe
     ctx.fillStyle = "#1E293B";
     ctx.beginPath();
-    ctx.roundRect(90, 274 + legL * 0.4, 22, 46, 9);
+    ctx.roundRect(88 + shiftL * 0.4, 272 - liftL * 0.5, 22, 48 - liftL * 0.3, 9);
     ctx.fill();
     ctx.stroke();
-    ctx.beginPath();
-    ctx.roundRect(128, 274 + legR * 0.4, 22, 46, 9);
-    ctx.fill();
-    ctx.stroke();
-
-    // Shoes
     ctx.fillStyle = ink;
     ctx.beginPath();
-    ctx.ellipse(99, 323 + legL * 0.35, 20, 9, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.ellipse(141, 323 + legR * 0.35, 20, 9, 0, 0, Math.PI * 2);
+    ctx.ellipse(98 + shiftL * 0.5, 323 - liftL, 21, 9, 0, 0, Math.PI * 2);
     ctx.fill();
 
+    // Right leg & shoe
+    ctx.fillStyle = "#1E293B";
+    ctx.beginPath();
+    ctx.roundRect(130 + shiftR * 0.4, 272 - liftR * 0.5, 22, 48 - liftR * 0.3, 9);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = ink;
+    ctx.beginPath();
+    ctx.ellipse(142 + shiftR * 0.5, 323 - liftR, 21, 9, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    const armSwing = s * 24;
     const drawArm = (x: number, y: number, angleDeg: number, len = 72) => {
       ctx.save();
       ctx.translate(x, y);
@@ -172,11 +202,9 @@ export const Arda3D: React.FC<{
       ctx.roundRect(-11, -6, 22, len, 11);
       ctx.fill();
       ctx.stroke();
-      // Sleeve cuff
       ctx.fillStyle = "#3B4659";
       ctx.fillRect(-11, len - 18, 22, 10);
       ctx.strokeRect(-11, len - 18, 22, 10);
-      // Hand
       ctx.fillStyle = "#F4C095";
       ctx.beginPath();
       ctx.arc(0, len + 2, 12, 0, Math.PI * 2);
@@ -186,10 +214,9 @@ export const Arda3D: React.FC<{
     };
 
     if (pose === "back") {
-      drawArm(65, 200, 10 + swing * 0.7);
-      drawArm(175, 200, -10 - swing * 0.7);
+      drawArm(65, 200, 10 + armSwing);
+      drawArm(175, 200, -10 - armSwing);
 
-      // Back of Charcoal Trenchcoat + belt & vent
       ctx.fillStyle = "#2B3445";
       ctx.beginPath();
       ctx.moveTo(70, 182);
@@ -221,7 +248,6 @@ export const Arda3D: React.FC<{
       ctx.fill();
       ctx.stroke();
 
-      // Back of Fedora
       ctx.fillStyle = "#1B2A4A";
       ctx.beginPath();
       ctx.moveTo(78, 78);
@@ -249,11 +275,10 @@ export const Arda3D: React.FC<{
         drawArm(64, 200, 112);
         drawArm(176, 200, -112);
       } else {
-        drawArm(65, 200, 12 + swing * 0.7);
-        drawArm(175, 200, -12 - swing * 0.7);
+        drawArm(65, 200, 12 + armSwing);
+        drawArm(175, 200, -12 - armSwing);
       }
 
-      // Charcoal Trenchcoat + Belt + Lapels
       ctx.fillStyle = "#2B3445";
       ctx.beginPath();
       ctx.moveTo(70, 182);
@@ -264,7 +289,6 @@ export const Arda3D: React.FC<{
       ctx.fill();
       ctx.stroke();
 
-      // Inner V-neck
       ctx.fillStyle = "#0B1120";
       ctx.beginPath();
       ctx.moveTo(98, 182);
@@ -274,7 +298,6 @@ export const Arda3D: React.FC<{
       ctx.fill();
       ctx.stroke();
 
-      // Coat belt
       ctx.fillStyle = "#1E293B";
       ctx.fillRect(65, 226, 110, 11);
       ctx.strokeRect(65, 226, 110, 11);
@@ -282,7 +305,6 @@ export const Arda3D: React.FC<{
       ctx.fillRect(113, 225, 14, 13);
       ctx.strokeRect(113, 225, 14, 13);
 
-      // Popped Collar
       ctx.fillStyle = "#3B4659";
       ctx.beginPath();
       ctx.moveTo(68, 186);
@@ -301,7 +323,6 @@ export const Arda3D: React.FC<{
       ctx.fill();
       ctx.stroke();
 
-      // Small receipt aligned in Arda's right hand (not glued to chest!)
       if (pose === "holdReceipt") {
         ctx.save();
         ctx.translate(216, 228);
@@ -326,7 +347,6 @@ export const Arda3D: React.FC<{
         ctx.lineWidth = 4.5;
       }
 
-      // Neck & Ears
       ctx.fillStyle = "#E6AE82";
       ctx.fillRect(106, 160, 28, 26);
       ctx.strokeRect(106, 160, 28, 26);
@@ -340,7 +360,6 @@ export const Arda3D: React.FC<{
       ctx.fill();
       ctx.stroke();
 
-      // Face
       ctx.fillStyle = "#F4C095";
       ctx.beginPath();
       ctx.moveTo(76, 82);
@@ -353,7 +372,6 @@ export const Arda3D: React.FC<{
       ctx.fill();
       ctx.stroke();
 
-      // Eyebrows
       ctx.strokeStyle = "#1E1B18";
       ctx.lineWidth = 4.2;
       ctx.beginPath();
@@ -370,7 +388,6 @@ export const Arda3D: React.FC<{
       }
       ctx.stroke();
 
-      // Eyes
       const ry = blink ? 1.5 : activeFace === "shock" ? 8.5 : 7.2;
       ctx.fillStyle = "#FFFFFF";
       ctx.beginPath();
@@ -400,7 +417,6 @@ export const Arda3D: React.FC<{
         }
       }
 
-      // Nose & Mouth
       ctx.strokeStyle = "#9A6B4C";
       ctx.lineWidth = 2.8;
       ctx.beginPath();
@@ -435,7 +451,6 @@ export const Arda3D: React.FC<{
         ctx.stroke();
       }
 
-      // Round Glasses
       ctx.strokeStyle = ink;
       ctx.lineWidth = 4;
       ctx.fillStyle = "rgba(56,189,248,0.2)";
@@ -452,7 +467,6 @@ export const Arda3D: React.FC<{
       ctx.quadraticCurveTo(120, 108, 125, 112);
       ctx.stroke();
 
-      // Navy Fedora
       ctx.fillStyle = "#1B2A4A";
       ctx.beginPath();
       ctx.moveTo(78, 78);
@@ -475,17 +489,17 @@ export const Arda3D: React.FC<{
       ctx.fill();
       ctx.stroke();
 
-      // Sweat drops when shocked / sweating
+      // Ter damlaları şakak/yanak hizasında (şapka üstünde değil!)
       if (showSweat) {
-        const dy = sweatStep * 4;
+        const dy = sweatStep * 5;
         ctx.fillStyle = "#38BDF8";
         ctx.strokeStyle = ink;
-        ctx.lineWidth = 2.5;
-        for (const sx of [52, 188]) {
+        ctx.lineWidth = 2.4;
+        for (const sx of [66, 174]) {
           ctx.beginPath();
-          ctx.moveTo(sx, 48 + dy);
-          ctx.quadraticCurveTo(sx - 8, 62 + dy, sx, 68 + dy);
-          ctx.quadraticCurveTo(sx + 8, 62 + dy, sx, 48 + dy);
+          ctx.moveTo(sx, 102 + dy);
+          ctx.quadraticCurveTo(sx - 6, 114 + dy, sx, 119 + dy);
+          ctx.quadraticCurveTo(sx + 6, 114 + dy, sx, 102 + dy);
           ctx.fill();
           ctx.stroke();
         }
@@ -497,14 +511,14 @@ export const Arda3D: React.FC<{
     tex.colorSpace = THREE.SRGBColorSpace;
     tex.needsUpdate = true;
     return tex;
-  }, [pose, activeFace, blink, mouthTalk, showSweat, sweatStep, Math.round(swing / 6)]);
+  }, [pose, activeFace, blink, mouthTalk, showSweat, sweatStep, strideBucket]);
 
   const w = height * (240 / 340);
 
   return (
     <group
       position={[position[0], position[1] + height / 2 + bob, position[2]]}
-      rotation={[pose === "pushCart" ? -0.06 : 0, rotY, 0]}
+      rotation={[pose === "pushCart" ? -0.05 : 0, rotY, 0]}
       scale={[1, 1 + breath, 1]}
     >
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -height / 2 - bob + 0.015, 0]}>

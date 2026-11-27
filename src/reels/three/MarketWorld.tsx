@@ -12,9 +12,9 @@ function makeLabelTex(bg: string, stripe: string, label: string, fg = "#FFFFFF")
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, 256, 256);
   ctx.fillStyle = stripe;
-  ctx.fillRect(0, 88, 256, 80);
+  ctx.fillRect(0, 86, 256, 84);
   ctx.fillStyle = fg;
-  ctx.font = "900 58px sans-serif";
+  ctx.font = "900 54px sans-serif";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillText(label, 128, 130);
@@ -98,30 +98,29 @@ const GroceryProduct3D: React.FC<{ kind: "milk" | "chips" | "cola" | "choco" | "
   if (kind === "milk") {
     return (
       <group position={position}>
-        <OutlineBox args={[0.22, 0.34, 0.22]} position={[0, 0, 0]} color="#FFFFFF" map={tex} />
-        <OutlineBox args={[0.22, 0.1, 0.14]} position={[0, 0.2, 0]} color="#2563EB" rotation={[0.45, 0, 0]} />
+        <OutlineBox args={[0.18, 0.28, 0.18]} position={[0, 0, 0]} color="#FFFFFF" map={tex} />
+        <OutlineBox args={[0.18, 0.08, 0.12]} position={[0, 0.17, 0]} color="#2563EB" rotation={[0.45, 0, 0]} />
       </group>
     );
   }
   if (kind === "cola") {
-    return <OutlineCylinder position={position} radius={0.11} height={0.3} color="#DC2626" map={tex} />;
+    return <OutlineCylinder position={position} radius={0.09} height={0.25} color="#DC2626" map={tex} />;
   }
   if (kind === "chips") {
-    return <OutlineBox args={[0.26, 0.36, 0.14]} position={position} color="#FACC15" map={tex} />;
+    return <OutlineBox args={[0.21, 0.29, 0.12]} position={position} color="#FACC15" map={tex} />;
   }
   if (kind === "choco") {
-    return <OutlineBox args={[0.3, 0.22, 0.18]} position={position} color="#78350F" map={tex} />;
+    return <OutlineBox args={[0.24, 0.18, 0.15]} position={position} color="#78350F" map={tex} />;
   }
-  // bread
   return (
     <group position={position}>
-      <OutlineBox args={[0.34, 0.2, 0.2]} position={[0, 0, 0]} color="#D97706" map={tex} />
-      <OutlineBox args={[0.3, 0.08, 0.16]} position={[0, 0.12, 0]} color="#F59E0B" />
+      <OutlineBox args={[0.3, 0.18, 0.18]} position={[0, 0, 0]} color="#D97706" map={tex} />
+      <OutlineBox args={[0.26, 0.07, 0.14]} position={[0, 0.11, 0]} color="#F59E0B" />
     </group>
   );
 };
 
-/** Etiket Şeritli Kutu & Şişelerle Çeşitlendirilmiş 4 Katlı 3D Market Rafı */
+/** 3D Raf Tahtalı & Tam Türkçe Etiketli 4 Katlı Market Rafı */
 const MarketShelf: React.FC<{ position: [number, number, number]; length?: number; side?: "left" | "right" }> = ({
   position,
   length = 6.0,
@@ -131,59 +130,67 @@ const MarketShelf: React.FC<{ position: [number, number, number]; length?: numbe
   const dir = side === "left" ? 1 : -1;
   const palette = useMemo(
     () => [
-      makeLabelTex("#E63946", "#FFFFFF", "SOS", "#161616"),
-      makeLabelTex("#2563EB", "#FACC15", "MAKA", "#161616"),
+      makeLabelTex("#FFFFFF", "#2563EB", "SÜT", "#FFFFFF"),
       makeLabelTex("#16A34A", "#FFFFFF", "ÇAY", "#161616"),
-      makeLabelTex("#F97316", "#161616", "CİPS", "#FACC15"),
+      makeLabelTex("#FACC15", "#DC2626", "CİPS", "#FFFFFF"),
+      makeLabelTex("#E63946", "#FFFFFF", "SOS", "#161616"),
+      makeLabelTex("#78350F", "#F59E0B", "KAHVE", "#161616"),
+      makeLabelTex("#F8FAFC", "#DC2626", "UN", "#FFFFFF"),
     ],
     [],
   );
 
   return (
     <group position={position}>
-      <OutlineBox args={[0.95, 3.1, length]} position={[0, 1.55, 0]} color="#E5DED0" outlineColor="#161616" />
-      {[0.55, 1.25, 1.95, 2.65].map((ry, row) =>
-        Array.from({ length: items }).map((_, i) => {
-          const z = -length / 2 + 0.4 + i * ((length - 0.8) / (items - 1));
-          if ((row + i) % 3 === 1) {
+      {/* Arka raf gövdesi */}
+      <OutlineBox args={[0.72, 3.15, length]} position={[-dir * 0.12, 1.575, 0]} color="#E5DED0" outlineColor="#161616" />
+      {[0.55, 1.25, 1.95, 2.65].map((ry, row) => (
+        <group key={`row-${row}`}>
+          {/* Siyah konturlu 3D raf tahtası (ürünler havada veya duvara yapışık durmaz!) */}
+          <OutlineBox args={[0.56, 0.06, length + 0.04]} position={[dir * 0.34, ry - 0.21, 0]} color="#D6CEC0" outlineColor="#161616" />
+          {Array.from({ length: items }).map((_, i) => {
+            const z = -length / 2 + 0.4 + i * ((length - 0.8) / (items - 1));
+            if ((row + i) % 3 === 1) {
+              return (
+                <OutlineCylinder
+                  key={`${row}-${i}`}
+                  position={[dir * 0.36, ry, z]}
+                  radius={0.13}
+                  height={0.36}
+                  color={i % 2 === 0 ? "#DC2626" : "#2563EB"}
+                />
+              );
+            }
+            const h = 0.34;
             return (
-              <OutlineCylinder
+              <OutlineBox
                 key={`${row}-${i}`}
-                position={[dir * 0.34, ry, z]}
-                radius={0.14}
-                height={0.38}
-                color={i % 2 === 0 ? "#DC2626" : "#2563EB"}
+                args={[0.38, h, 0.44]}
+                position={[dir * 0.36, ry, z]}
+                color="#FFFFFF"
+                map={palette[(row * 2 + i) % palette.length]}
               />
             );
-          }
-          const h = 0.34 + ((i + row) % 2) * 0.08;
-          return (
-            <OutlineBox
-              key={`${row}-${i}`}
-              args={[0.42, h, 0.44]}
-              position={[dir * 0.34, ry, z]}
-              color="#FFFFFF"
-              map={palette[(row + i) % palette.length]}
-            />
-          );
-        }),
-      )}
+          })}
+        </group>
+      ))}
     </group>
   );
 };
 
-/** Metal Kafesli 3D Market Arabası + Gerçekçi Düşen Market Ürünleri */
+/** Metal Kafesli 3D Market Arabası (Ürünler kafes merkezine tam oturur) */
 export const Cart3D: React.FC<{
   position?: [number, number, number];
   scale?: number;
   rotationY?: number;
   dropProgress?: number;
 }> = ({ position = [0, 0, 0], scale = 1, rotationY = 0, dropProgress = 0 }) => {
+  // Sepet içi net koordinatlar: X [-0.15, +0.15], Z [-0.20, +0.14], targetY = 0.67
   const dropItems: { kind: "milk" | "chips" | "cola" | "choco"; x: number; z: number; targetY: number }[] = [
-    { kind: "milk", x: -0.17, z: -0.2, targetY: 0.72 },
-    { kind: "chips", x: 0.16, z: -0.14, targetY: 0.74 },
-    { kind: "cola", x: -0.14, z: 0.18, targetY: 0.7 },
-    { kind: "choco", x: 0.16, z: 0.2, targetY: 0.68 },
+    { kind: "milk", x: -0.14, z: -0.18, targetY: 0.66 },
+    { kind: "chips", x: 0.13, z: -0.16, targetY: 0.67 },
+    { kind: "cola", x: -0.13, z: 0.12, targetY: 0.64 },
+    { kind: "choco", x: 0.14, z: 0.13, targetY: 0.62 },
   ];
 
   return (
@@ -223,17 +230,20 @@ export const Cart3D: React.FC<{
       {dropItems.map((it, idx) => {
         const p = Math.min(1, Math.max(0, dropProgress - idx));
         if (p <= 0) return null;
-        const y = interpolate(p, [0, 1], [2.4, it.targetY]);
+        const y = interpolate(p, [0, 1], [2.3, it.targetY]);
         return <GroceryProduct3D key={idx} kind={it.kind} position={[it.x, y, it.z]} />;
       })}
     </group>
   );
 };
 
-/** Gece Dış Otopark + Sıcak Krem Market İçi + 840 TL Kasa Tezgâhı */
-export const MarketWorld: React.FC = () => {
+/** Gece Dış Otopark + Sıcak Krem Market İçi + Dinamik Kasa Ekranı */
+export const MarketWorld: React.FC<{ checkoutText?: string; checkoutBg?: string }> = ({
+  checkoutText = "840,00 ₺",
+  checkoutBg = "#DC2626",
+}) => {
   const frame = useCurrentFrame();
-  const doorSlide = Math.min(1, Math.max(0, (frame - 16) / 36)) * 1.15;
+  const doorSlide = Math.min(1, Math.max(0, (frame - 14) / 34)) * 1.15;
 
   return (
     <group>
@@ -241,7 +251,6 @@ export const MarketWorld: React.FC = () => {
       <directionalLight position={[4, 10, 8]} intensity={1.15} color="#FFFBEB" />
       <pointLight position={[0, 3.6, -7.5]} intensity={2.0} color="#BAE6FD" distance={12} />
 
-      {/* DIŞ MEKÂN: Çizgili Asfalt Otopark (z = 10..26) */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.01, 18]}>
         <planeGeometry args={[28, 18]} />
         <meshStandardMaterial color="#1E293B" roughness={0.9} />
@@ -250,15 +259,14 @@ export const MarketWorld: React.FC = () => {
         <OutlineBox key={`park-${i}`} args={[0.14, 0.02, 4.5]} position={[px, 0.01, 15.2]} color="#E2E8F0" outlineColor="#1E293B" />
       ))}
 
-      {/* İÇ MEKÂN: Krem Fayans Zemin & Parlak Tavan */}
-      <TileFloor width={12} depth={22} positionZ={-0.8} color="#EDE4D3" gridColor="#C8BBA6" />
+      {/* İnce derz çizgili kare fayans zemin */}
+      <TileFloor width={12} depth={22} positionZ={-0.8} />
       <OutlineBox args={[12, 0.2, 22]} position={[0, 4.5, -0.8]} color="#FAF6F0" outlineColor="#161616" />
 
       {[-7, -2.5, 2, 6.5].map((lz, i) => (
         <OutlineBox key={i} args={[3.0, 0.1, 0.5]} position={[0, 4.35, lz]} color="#FFFFFF" emissive="#FEF9C3" emissiveIntensity={0.85} outlineColor="#161616" />
       ))}
 
-      {/* Duvarlar & Kırmızı Şerit */}
       <OutlineBox args={[0.3, 4.5, 22]} position={[-5.6, 2.25, -0.8]} color="#F4EDE2" outlineColor="#161616" />
       <OutlineBox args={[0.3, 4.5, 22]} position={[5.6, 2.25, -0.8]} color="#F4EDE2" outlineColor="#161616" />
       <OutlineBox args={[0.34, 0.38, 22]} position={[-5.56, 3.65, -0.8]} color="#D62828" outlineColor="#161616" />
@@ -285,18 +293,18 @@ export const MarketWorld: React.FC = () => {
       <SignPlate position={[2.35, 3.95, 9.98]} size={[1.5, 0.78]} text="7/24" bg="#FACC15" fg="#161616" fontSize={110} />
       <SignPlate position={[-2.9, 2.2, 9.92]} size={[1.1, 0.45]} text="AÇIK" bg="#DC2626" fg="#FFFFFF" fontSize={110} />
 
-      {/* İki Yanda Rengârenk Dolu 3D Koridor Rafları */}
+      {/* İki Yanda 3D Raf Tahtalı & Türkçe Etiketli Raflar */}
       <MarketShelf position={[-2.75, 0, -4.0]} length={6.2} side="left" />
       <MarketShelf position={[2.75, 0, -4.0]} length={6.2} side="right" />
       <MarketShelf position={[-2.75, 0, 2.8]} length={5.0} side="left" />
       <MarketShelf position={[2.75, 0, 2.8]} length={5.0} side="right" />
 
-      {/* KASA TEZGÂHI (Sağ ön köşe z = 7.8 — Sahne 2 kamerasının arkasında kalır, yolu kapatmaz!) */}
+      {/* KASA TEZGÂHI (Sağ ön köşe z = 7.8) + Dinamik 15 -> 240 -> 840 TL Dijital Ekran */}
       <group position={[3.1, 0, 7.8]} rotation={[0, -Math.PI / 2, 0]}>
         <OutlineBox args={[2.5, 1.05, 1.1]} position={[0, 0.525, 0]} color="#78350F" outlineColor="#161616" />
         <OutlineBox args={[2.6, 0.12, 1.2]} position={[0, 1.08, 0]} color="#94A3B8" outlineColor="#161616" />
-        <OutlineBox args={[0.75, 0.48, 0.52]} position={[0.45, 1.38, 0]} color="#1E293B" outlineColor="#161616" />
-        <SignPlate position={[0.45, 1.44, 0.27]} size={[0.64, 0.28]} text="840,00 ₺" bg="#0284C7" fg="#FFFFFF" fontSize={135} />
+        <OutlineBox args={[0.82, 0.5, 0.52]} position={[0.45, 1.39, 0]} color="#1E293B" outlineColor="#161616" />
+        <SignPlate position={[0.45, 1.44, 0.27]} size={[0.7, 0.3]} text={checkoutText} bg={checkoutBg} fg="#FFFFFF" fontSize={130} />
       </group>
     </group>
   );
