@@ -1,475 +1,473 @@
 {
- "fake": false,
- "model": "eleven_multilingual_v2",
- "duration": 33.947,
- "words": [
-  {
-   "text": "Bu",
-   "start": 0,
-   "end": 0.163,
-   "scene": 0
-  },
-  {
-   "text": "kapıdan",
-   "start": 0.209,
-   "end": 0.592,
-   "scene": 0
-  },
-  {
-   "text": "girdiğin",
-   "start": 0.65,
-   "end": 1.057,
-   "scene": 0
-  },
-  {
-   "text": "an",
-   "start": 1.126,
-   "end": 1.265,
-   "scene": 0
-  },
-  {
-   "text": "beyninin",
-   "start": 1.324,
-   "end": 1.73,
-   "scene": 0
-  },
-  {
-   "text": "zaman",
-   "start": 1.788,
-   "end": 2.032,
-   "scene": 0
-  },
-  {
-   "text": "algısı",
-   "start": 2.09,
-   "end": 2.415,
-   "scene": 0
-  },
-  {
-   "text": "kapatılıyor...",
-   "start": 2.461,
-   "end": 3.262,
-   "scene": 0
-  },
-  {
-   "text": "Sadece",
-   "start": 3.564,
-   "end": 3.947,
-   "scene": 0
-  },
-  {
-   "text": "bir",
-   "start": 4.005,
-   "end": 4.145,
-   "scene": 0
-  },
-  {
-   "text": "tişört",
-   "start": 4.191,
-   "end": 4.54,
-   "scene": 0
-  },
-  {
-   "text": "bakacaktın",
-   "start": 4.586,
-   "end": 5.166,
-   "scene": 0
-  },
-  {
-   "text": "ama",
-   "start": 5.329,
-   "end": 5.538,
-   "scene": 0
-  },
-  {
-   "text": "parlak",
-   "start": 5.584,
-   "end": 5.933,
-   "scene": 0
-  },
-  {
-   "text": "vitrinler",
-   "start": 5.991,
-   "end": 6.583,
-   "scene": 0
-  },
-  {
-   "text": "ve",
-   "start": 6.745,
-   "end": 6.861,
-   "scene": 0
-  },
-  {
-   "text": "o",
-   "start": 6.931,
-   "end": 6.989,
-   "scene": 0
-  },
-  {
-   "text": "sonsuz",
-   "start": 7.047,
-   "end": 7.396,
-   "scene": 0
-  },
-  {
-   "text": "koridor",
-   "start": 7.465,
-   "end": 7.86,
-   "scene": 0
-  },
-  {
-   "text": "seni",
-   "start": 7.93,
-   "end": 8.115,
-   "scene": 0
-  },
-  {
-   "text": "hemen",
-   "start": 8.162,
-   "end": 8.394,
-   "scene": 0
-  },
-  {
-   "text": "içine",
-   "start": 8.44,
-   "end": 8.696,
-   "scene": 0
-  },
-  {
-   "text": "çekti.",
-   "start": 8.742,
-   "end": 9.265,
-   "scene": 0
-  },
-  {
-   "text": "Buna",
-   "start": 9.485,
-   "end": 9.718,
-   "scene": 1
-  },
-  {
-   "text": "Gruen",
-   "start": 9.776,
-   "end": 10.066,
-   "scene": 1
-  },
-  {
-   "text": "Etkisi",
-   "start": 10.124,
-   "end": 10.414,
-   "scene": 1
-  },
-  {
-   "text": "deniyor.",
-   "start": 10.461,
-   "end": 11.006,
-   "scene": 1
-  },
-  {
-   "text": "AVM'ler",
-   "start": 11.564,
-   "end": 12.179,
-   "scene": 1
-  },
-  {
-   "text": "seni",
-   "start": 12.237,
-   "end": 12.446,
-   "scene": 1
-  },
-  {
-   "text": "labirent",
-   "start": 12.504,
-   "end": 12.934,
-   "scene": 1
-  },
-  {
-   "text": "gibi",
-   "start": 12.992,
-   "end": 13.189,
-   "scene": 1
-  },
-  {
-   "text": "kat",
-   "start": 13.247,
-   "end": 13.433,
-   "scene": 1
-  },
-  {
-   "text": "kat",
-   "start": 13.491,
-   "end": 13.665,
-   "scene": 1
-  },
-  {
-   "text": "döndürür;",
-   "start": 13.711,
-   "end": 14.291,
-   "scene": 1
-  },
-  {
-   "text": "beynin",
-   "start": 14.512,
-   "end": 14.826,
-   "scene": 1
-  },
-  {
-   "text": "o",
-   "start": 14.895,
-   "end": 14.93,
-   "scene": 1
-  },
-  {
-   "text": "kadar",
-   "start": 14.988,
-   "end": 15.22,
-   "scene": 1
-  },
-  {
-   "text": "uyarılır",
-   "start": 15.255,
-   "end": 15.673,
-   "scene": 1
-  },
-  {
-   "text": "ki",
-   "start": 15.731,
-   "end": 15.952,
-   "scene": 1
-  },
-  {
-   "text": "ne",
-   "start": 16.149,
-   "end": 16.265,
-   "scene": 1
-  },
-  {
-   "text": "zamanın",
-   "start": 16.323,
-   "end": 16.706,
-   "scene": 1
-  },
-  {
-   "text": "geçtiğini",
-   "start": 16.764,
-   "end": 17.298,
-   "scene": 1
-  },
-  {
-   "text": "ne",
-   "start": 17.461,
-   "end": 17.577,
-   "scene": 1
-  },
-  {
-   "text": "de",
-   "start": 17.624,
-   "end": 17.682,
-   "scene": 1
-  },
-  {
-   "text": "elindeki",
-   "start": 17.74,
-   "end": 18.146,
-   "scene": 1
-  },
-  {
-   "text": "poşetleri",
-   "start": 18.181,
-   "end": 18.657,
-   "scene": 1
-  },
-  {
-   "text": "fark",
-   "start": 18.692,
-   "end": 18.924,
-   "scene": 1
-  },
-  {
-   "text": "edersin.",
-   "start": 18.97,
-   "end": 19.528,
-   "scene": 1
-  },
-  {
-   "text": "Sonunda",
-   "start": 19.829,
-   "end": 20.213,
-   "scene": 2
-  },
-  {
-   "text": "kapıdan",
-   "start": 20.271,
-   "end": 20.607,
-   "scene": 2
-  },
-  {
-   "text": "çıktın.",
-   "start": 20.665,
-   "end": 21.141,
-   "scene": 2
-  },
-  {
-   "text": "Hava",
-   "start": 21.304,
-   "end": 21.525,
-   "scene": 2
-  },
-  {
-   "text": "kapkaranlık...",
-   "start": 21.571,
-   "end": 22.418,
-   "scene": 2
-  },
-  {
-   "text": "telefona",
-   "start": 22.523,
-   "end": 22.941,
-   "scene": 2
-  },
-  {
-   "text": "baktın:",
-   "start": 22.987,
-   "end": 23.44,
-   "scene": 2
-  },
-  {
-   "text": "saat",
-   "start": 23.579,
-   "end": 23.846,
-   "scene": 2
-  },
-  {
-   "text": "akşam",
-   "start": 23.916,
-   "end": 24.206,
-   "scene": 2
-  },
-  {
-   "text": "yedi",
-   "start": 24.276,
-   "end": 24.45,
-   "scene": 2
-  },
-  {
-   "text": "kırk!",
-   "start": 24.497,
-   "end": 24.938,
-   "scene": 2
-  },
-  {
-   "text": "Altı",
-   "start": 25.495,
-   "end": 25.785,
-   "scene": 2
-  },
-  {
-   "text": "saat",
-   "start": 25.82,
-   "end": 26.029,
-   "scene": 2
-  },
-  {
-   "text": "uçmuş,",
-   "start": 26.099,
-   "end": 26.482,
-   "scene": 2
-  },
-  {
-   "text": "elinde",
-   "start": 26.528,
-   "end": 26.83,
-   "scene": 2
-  },
-  {
-   "text": "dört",
-   "start": 26.888,
-   "end": 27.086,
-   "scene": 2
-  },
-  {
-   "text": "poşet.",
-   "start": 27.132,
-   "end": 27.631,
-   "scene": 2
-  },
-  {
-   "text": "Senin",
-   "start": 27.852,
-   "end": 28.154,
-   "scene": 2
-  },
-  {
-   "text": "AVM'de",
-   "start": 28.258,
-   "end": 28.792,
-   "scene": 2
-  },
-  {
-   "text": "rekorun",
-   "start": 28.85,
-   "end": 29.187,
-   "scene": 2
-  },
-  {
-   "text": "kaç",
-   "start": 29.245,
-   "end": 29.408,
-   "scene": 2
-  },
-  {
-   "text": "saat?",
-   "start": 29.443,
-   "end": 29.884,
-   "scene": 2
-  },
-  {
-   "text": "Yarın",
-   "start": 30.186,
-   "end": 30.441,
-   "scene": 3
-  },
-  {
-   "text": "kafe",
-   "start": 30.499,
-   "end": 30.72,
-   "scene": 3
-  },
-  {
-   "text": "menülerindeki",
-   "start": 30.755,
-   "end": 31.428,
-   "scene": 3
-  },
-  {
-   "text": "gizli",
-   "start": 31.474,
-   "end": 31.73,
-   "scene": 3
-  },
-  {
-   "text": "fiyat",
-   "start": 31.788,
-   "end": 32.02,
-   "scene": 3
-  },
-  {
-   "text": "tuzağını",
-   "start": 32.055,
-   "end": 32.426,
-   "scene": 3
-  },
-  {
-   "text": "açıyoruz...",
-   "start": 32.484,
-   "end": 33.053,
-   "scene": 3
-  },
-  {
-   "text": "kaçırma.",
-   "start": 33.158,
-   "end": 33.947,
-   "scene": 3
-  }
- ]
+  "duration": 38.5,
+  "words": [
+    {
+      "text": "Bu",
+      "start": 0,
+      "end": 0.142,
+      "scene": 0
+    },
+    {
+      "text": "kapıdan",
+      "start": 0.142,
+      "end": 0.637,
+      "scene": 0
+    },
+    {
+      "text": "girdiğin",
+      "start": 0.637,
+      "end": 1.204,
+      "scene": 0
+    },
+    {
+      "text": "an",
+      "start": 1.204,
+      "end": 1.346,
+      "scene": 0
+    },
+    {
+      "text": "beyninin",
+      "start": 1.346,
+      "end": 1.912,
+      "scene": 0
+    },
+    {
+      "text": "zaman",
+      "start": 1.912,
+      "end": 2.266,
+      "scene": 0
+    },
+    {
+      "text": "algısı",
+      "start": 2.266,
+      "end": 2.691,
+      "scene": 0
+    },
+    {
+      "text": "kapatılıyor.",
+      "start": 2.691,
+      "end": 3.47,
+      "scene": 0
+    },
+    {
+      "text": "Sadece",
+      "start": 4.08,
+      "end": 4.476,
+      "scene": 0
+    },
+    {
+      "text": "bir",
+      "start": 4.476,
+      "end": 4.674,
+      "scene": 0
+    },
+    {
+      "text": "tişört",
+      "start": 4.674,
+      "end": 5.07,
+      "scene": 0
+    },
+    {
+      "text": "bakacaktın.",
+      "start": 5.07,
+      "end": 5.73,
+      "scene": 0
+    },
+    {
+      "text": "Ama",
+      "start": 6.14,
+      "end": 6.379,
+      "scene": 0
+    },
+    {
+      "text": "parlak",
+      "start": 6.379,
+      "end": 6.857,
+      "scene": 0
+    },
+    {
+      "text": "vitrinler",
+      "start": 6.857,
+      "end": 7.573,
+      "scene": 0
+    },
+    {
+      "text": "ve",
+      "start": 7.573,
+      "end": 7.733,
+      "scene": 0
+    },
+    {
+      "text": "o",
+      "start": 7.733,
+      "end": 7.892,
+      "scene": 0
+    },
+    {
+      "text": "sonsuz",
+      "start": 7.892,
+      "end": 8.37,
+      "scene": 0
+    },
+    {
+      "text": "koridor",
+      "start": 8.37,
+      "end": 8.927,
+      "scene": 0
+    },
+    {
+      "text": "seni",
+      "start": 8.927,
+      "end": 9.246,
+      "scene": 0
+    },
+    {
+      "text": "hemen",
+      "start": 9.246,
+      "end": 9.644,
+      "scene": 0
+    },
+    {
+      "text": "içine",
+      "start": 9.644,
+      "end": 10.042,
+      "scene": 0
+    },
+    {
+      "text": "çekti.",
+      "start": 10.042,
+      "end": 10.44,
+      "scene": 0
+    },
+    {
+      "text": "Buna",
+      "start": 10.89,
+      "end": 11.186,
+      "scene": 1
+    },
+    {
+      "text": "Gruen",
+      "start": 11.186,
+      "end": 11.557,
+      "scene": 1
+    },
+    {
+      "text": "Etkisi",
+      "start": 11.557,
+      "end": 12.001,
+      "scene": 1
+    },
+    {
+      "text": "deniyor.",
+      "start": 12.001,
+      "end": 12.52,
+      "scene": 1
+    },
+    {
+      "text": "AVM'ler",
+      "start": 13.03,
+      "end": 13.547,
+      "scene": 1
+    },
+    {
+      "text": "seni",
+      "start": 13.547,
+      "end": 13.891,
+      "scene": 1
+    },
+    {
+      "text": "labirent",
+      "start": 13.891,
+      "end": 14.58,
+      "scene": 1
+    },
+    {
+      "text": "gibi",
+      "start": 14.58,
+      "end": 14.924,
+      "scene": 1
+    },
+    {
+      "text": "kat",
+      "start": 14.924,
+      "end": 15.183,
+      "scene": 1
+    },
+    {
+      "text": "kat",
+      "start": 15.183,
+      "end": 15.441,
+      "scene": 1
+    },
+    {
+      "text": "döndürür.",
+      "start": 15.441,
+      "end": 16.13,
+      "scene": 1
+    },
+    {
+      "text": "Beynin",
+      "start": 16.65,
+      "end": 17.052,
+      "scene": 1
+    },
+    {
+      "text": "o",
+      "start": 17.052,
+      "end": 17.186,
+      "scene": 1
+    },
+    {
+      "text": "kadar",
+      "start": 17.186,
+      "end": 17.52,
+      "scene": 1
+    },
+    {
+      "text": "uyarılır",
+      "start": 17.52,
+      "end": 18.056,
+      "scene": 1
+    },
+    {
+      "text": "ki",
+      "start": 18.056,
+      "end": 18.19,
+      "scene": 1
+    },
+    {
+      "text": "ne",
+      "start": 18.47,
+      "end": 18.609,
+      "scene": 1
+    },
+    {
+      "text": "zamanın",
+      "start": 18.609,
+      "end": 19.095,
+      "scene": 1
+    },
+    {
+      "text": "geçtiğini",
+      "start": 19.095,
+      "end": 19.72,
+      "scene": 1
+    },
+    {
+      "text": "ne",
+      "start": 19.96,
+      "end": 20.073,
+      "scene": 1
+    },
+    {
+      "text": "de",
+      "start": 20.073,
+      "end": 20.186,
+      "scene": 1
+    },
+    {
+      "text": "elindeki",
+      "start": 20.186,
+      "end": 20.639,
+      "scene": 1
+    },
+    {
+      "text": "poşetleri",
+      "start": 20.639,
+      "end": 21.148,
+      "scene": 1
+    },
+    {
+      "text": "fark",
+      "start": 21.148,
+      "end": 21.374,
+      "scene": 1
+    },
+    {
+      "text": "edersin.",
+      "start": 21.374,
+      "end": 21.77,
+      "scene": 1
+    },
+    {
+      "text": "Sonunda",
+      "start": 22.44,
+      "end": 22.878,
+      "scene": 2
+    },
+    {
+      "text": "kapıdan",
+      "start": 22.878,
+      "end": 23.315,
+      "scene": 2
+    },
+    {
+      "text": "çıktın.",
+      "start": 23.315,
+      "end": 23.69,
+      "scene": 2
+    },
+    {
+      "text": "Hava",
+      "start": 24.16,
+      "end": 24.395,
+      "scene": 2
+    },
+    {
+      "text": "kapkaranlık.",
+      "start": 24.395,
+      "end": 25.04,
+      "scene": 2
+    },
+    {
+      "text": "Telefona",
+      "start": 25.8,
+      "end": 26.246,
+      "scene": 2
+    },
+    {
+      "text": "baktın:",
+      "start": 26.246,
+      "end": 26.58,
+      "scene": 2
+    },
+    {
+      "text": "saat",
+      "start": 27.03,
+      "end": 27.338,
+      "scene": 2
+    },
+    {
+      "text": "akşam",
+      "start": 27.338,
+      "end": 27.724,
+      "scene": 2
+    },
+    {
+      "text": "yedi",
+      "start": 27.724,
+      "end": 28.032,
+      "scene": 2
+    },
+    {
+      "text": "kırk!",
+      "start": 28.032,
+      "end": 28.34,
+      "scene": 2
+    },
+    {
+      "text": "Altı",
+      "start": 28.72,
+      "end": 29.098,
+      "scene": 2
+    },
+    {
+      "text": "saat",
+      "start": 29.098,
+      "end": 29.477,
+      "scene": 2
+    },
+    {
+      "text": "uçmuş,",
+      "start": 29.477,
+      "end": 29.95,
+      "scene": 2
+    },
+    {
+      "text": "elinde",
+      "start": 30.28,
+      "end": 30.712,
+      "scene": 2
+    },
+    {
+      "text": "dört",
+      "start": 30.712,
+      "end": 31,
+      "scene": 2
+    },
+    {
+      "text": "poşet.",
+      "start": 31,
+      "end": 31.36,
+      "scene": 2
+    },
+    {
+      "text": "Senin",
+      "start": 31.85,
+      "end": 32.271,
+      "scene": 2
+    },
+    {
+      "text": "AVM'de",
+      "start": 32.271,
+      "end": 32.692,
+      "scene": 2
+    },
+    {
+      "text": "rekorun",
+      "start": 32.692,
+      "end": 33.281,
+      "scene": 2
+    },
+    {
+      "text": "kaç",
+      "start": 33.281,
+      "end": 33.533,
+      "scene": 2
+    },
+    {
+      "text": "saat?",
+      "start": 33.533,
+      "end": 33.87,
+      "scene": 2
+    },
+    {
+      "text": "Yarın",
+      "start": 34.39,
+      "end": 34.732,
+      "scene": 3
+    },
+    {
+      "text": "kafe",
+      "start": 34.732,
+      "end": 35.005,
+      "scene": 3
+    },
+    {
+      "text": "menülerindeki",
+      "start": 35.005,
+      "end": 35.893,
+      "scene": 3
+    },
+    {
+      "text": "gizli",
+      "start": 35.893,
+      "end": 36.235,
+      "scene": 3
+    },
+    {
+      "text": "fiyat",
+      "start": 36.235,
+      "end": 36.577,
+      "scene": 3
+    },
+    {
+      "text": "tuzağını",
+      "start": 36.577,
+      "end": 37.123,
+      "scene": 3
+    },
+    {
+      "text": "açıyoruz...",
+      "start": 37.123,
+      "end": 37.67,
+      "scene": 3
+    },
+    {
+      "text": "kaçırma.",
+      "start": 38.04,
+      "end": 38.5,
+      "scene": 3
+    }
+  ]
 }
