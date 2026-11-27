@@ -15,6 +15,7 @@ export const OutlineBox: React.FC<{
   emissive?: string;
   emissiveIntensity?: number;
   opacity?: number;
+  map?: THREE.Texture;
 }> = ({
   position = [0, 0, 0],
   args,
@@ -24,6 +25,7 @@ export const OutlineBox: React.FC<{
   emissive = "#000000",
   emissiveIntensity = 0,
   opacity = 1,
+  map,
 }) => {
   const edges = useMemo(() => {
     const box = new THREE.BoxGeometry(args[0], args[1], args[2]);
@@ -35,7 +37,8 @@ export const OutlineBox: React.FC<{
       <mesh>
         <boxGeometry args={args} />
         <meshStandardMaterial
-          color={color}
+          color={map ? "#FFFFFF" : color}
+          map={map}
           emissive={emissive}
           emissiveIntensity={emissiveIntensity}
           roughness={0.65}
@@ -88,7 +91,7 @@ export const CameraRig: React.FC<{
   return null;
 };
 
-/** Aksiyonlu 2D Arda Aktörü (5 poz: front, back, pushCart, holdReceipt, closeupShock) */
+/** Aksiyonlu 2D Arda Aktörü (dururken sabit basar, yürürken doğal adım atar) */
 export const Arda3D: React.FC<{
   position?: [number, number, number];
   camPos?: [number, number, number];
@@ -97,6 +100,7 @@ export const Arda3D: React.FC<{
   face?: "normal" | "shock" | "happy" | "wink";
   walking?: boolean;
   talking?: boolean;
+  sweating?: boolean;
   flip?: boolean;
 }> = ({
   position = [0, 0, 0],
@@ -106,15 +110,21 @@ export const Arda3D: React.FC<{
   face = "normal",
   walking = false,
   talking = false,
+  sweating = false,
   flip = false,
 }) => {
   const frame = useCurrentFrame();
 
   const blink = (frame % 90) > 85;
-  const bob = walking ? Math.abs(Math.sin(frame / 4)) * 0.09 : talking ? Math.sin(frame / 5) * 0.02 : Math.sin(frame / 11) * 0.015;
-  const swing = walking ? Math.sin(frame / 4) * 18 : 0;
+  // Dururken zıplama YOK! Yalnızca yürürken çok hafif doğal adım yaylanması
+  const bob = walking ? Math.abs(Math.sin(frame / 4)) * 0.032 : 0;
+  const breath = !walking ? Math.sin(frame / 14) * 0.012 : 0;
+  const swing = walking ? Math.sin(frame / 4) * 20 : 0;
+  const mouthTalk = talking ? (Math.sin(frame / 2.2) > 0.2 ? 1 : 0) : 0;
   const rotY = camPos ? Math.atan2(camPos[0] - position[0], camPos[2] - position[2]) : 0;
   const activeFace = pose === "closeupShock" ? "shock" : face;
+  const showSweat = sweating || pose === "closeupShock";
+  const sweatStep = Math.floor((frame % 18) / 6);
 
   const texture = useMemo(() => {
     const canvas = document.createElement("canvas");
@@ -129,122 +139,127 @@ export const Arda3D: React.FC<{
     ctx.lineJoin = "round";
     ctx.lineCap = "round";
     ctx.strokeStyle = ink;
-    ctx.lineWidth = 5;
+    ctx.lineWidth = 4.5;
 
-    // Legs (with walking swing)
+    // Legs (only alternate stride when walking; planted firmly when standing)
+    const legL = walking ? Math.sin((swing * Math.PI) / 180) * 10 : 0;
+    const legR = -legL;
     ctx.fillStyle = "#1E293B";
     ctx.beginPath();
-    ctx.roundRect(88, 276 + (swing > 0 ? -swing * 0.35 : 0), 24, 44, 10);
+    ctx.roundRect(90, 274 + legL * 0.4, 22, 46, 9);
     ctx.fill();
     ctx.stroke();
     ctx.beginPath();
-    ctx.roundRect(128, 276 + (swing < 0 ? swing * 0.35 : 0), 24, 44, 10);
+    ctx.roundRect(128, 274 + legR * 0.4, 22, 46, 9);
     ctx.fill();
     ctx.stroke();
 
     // Shoes
     ctx.fillStyle = ink;
     ctx.beginPath();
-    ctx.ellipse(98, 322, 22, 10, 0, 0, Math.PI * 2);
+    ctx.ellipse(99, 323 + legL * 0.35, 20, 9, 0, 0, Math.PI * 2);
     ctx.fill();
     ctx.beginPath();
-    ctx.ellipse(142, 322, 22, 10, 0, 0, Math.PI * 2);
+    ctx.ellipse(141, 323 + legR * 0.35, 20, 9, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    const drawArm = (x: number, y: number, angleDeg: number, len = 74) => {
+    const drawArm = (x: number, y: number, angleDeg: number, len = 72) => {
       ctx.save();
       ctx.translate(x, y);
       ctx.rotate((angleDeg * Math.PI) / 180);
       ctx.fillStyle = "#2B3445";
       ctx.beginPath();
-      ctx.roundRect(-12, -6, 24, len, 12);
+      ctx.roundRect(-11, -6, 22, len, 11);
       ctx.fill();
       ctx.stroke();
+      // Sleeve cuff
+      ctx.fillStyle = "#3B4659";
+      ctx.fillRect(-11, len - 18, 22, 10);
+      ctx.strokeRect(-11, len - 18, 22, 10);
+      // Hand
       ctx.fillStyle = "#F4C095";
       ctx.beginPath();
-      ctx.arc(0, len, 14, 0, Math.PI * 2);
+      ctx.arc(0, len + 2, 12, 0, Math.PI * 2);
       ctx.fill();
       ctx.stroke();
       ctx.restore();
     };
 
     if (pose === "back") {
-      // Arms behind/sides
-      drawArm(64, 202, 12 + swing * 0.8);
-      drawArm(176, 202, -12 - swing * 0.8);
+      drawArm(65, 200, 10 + swing * 0.7);
+      drawArm(175, 200, -10 - swing * 0.7);
 
-      // Back of Charcoal Trenchcoat
+      // Back of Charcoal Trenchcoat + belt & vent
       ctx.fillStyle = "#2B3445";
       ctx.beginPath();
-      ctx.moveTo(68, 184);
-      ctx.lineTo(172, 184);
-      ctx.lineTo(182, 284);
-      ctx.lineTo(58, 284);
+      ctx.moveTo(70, 182);
+      ctx.lineTo(170, 182);
+      ctx.lineTo(180, 282);
+      ctx.lineTo(60, 282);
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
 
-      // Back coat collar & center vent seam
+      ctx.fillStyle = "#1E293B";
+      ctx.fillRect(66, 222, 108, 12);
+      ctx.strokeRect(66, 222, 108, 12);
+
       ctx.fillStyle = "#3B4659";
-      ctx.fillRect(92, 174, 56, 18);
-      ctx.strokeRect(92, 174, 56, 18);
+      ctx.fillRect(92, 174, 56, 16);
+      ctx.strokeRect(92, 174, 56, 16);
       ctx.beginPath();
-      ctx.moveTo(120, 220);
-      ctx.lineTo(120, 284);
+      ctx.moveTo(120, 234);
+      ctx.lineTo(120, 282);
       ctx.stroke();
 
-      // Back of neck & dark hair
       ctx.fillStyle = "#E6AE82";
-      ctx.fillRect(104, 152, 32, 24);
-      ctx.strokeRect(104, 152, 32, 24);
+      ctx.fillRect(105, 152, 30, 24);
+      ctx.strokeRect(105, 152, 30, 24);
       ctx.fillStyle = "#27201E";
       ctx.beginPath();
-      ctx.roundRect(74, 78, 92, 78, 32);
+      ctx.roundRect(76, 78, 88, 76, 30);
       ctx.fill();
       ctx.stroke();
 
-      // Back of Navy Fedora + Cyan Band
+      // Back of Fedora
       ctx.fillStyle = "#1B2A4A";
       ctx.beginPath();
-      ctx.moveTo(76, 78);
-      ctx.lineTo(88, 30);
-      ctx.quadraticCurveTo(120, 24, 152, 30);
-      ctx.lineTo(164, 78);
+      ctx.moveTo(78, 78);
+      ctx.lineTo(90, 32);
+      ctx.quadraticCurveTo(120, 26, 150, 32);
+      ctx.lineTo(162, 78);
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
-
       ctx.fillStyle = "#38BDF8";
-      ctx.fillRect(78, 63, 84, 10);
+      ctx.fillRect(80, 64, 80, 9);
       ctx.fillStyle = "#111C35";
       ctx.beginPath();
-      ctx.ellipse(120, 80, 72, 12, 0, 0, Math.PI * 2);
+      ctx.ellipse(120, 80, 70, 11, 0, 0, Math.PI * 2);
       ctx.fill();
       ctx.stroke();
     } else {
-      // Arms for front / pushCart / holdReceipt / closeupShock
       if (pose === "pushCart") {
-        // Arms extended forward/right toward cart handle
-        drawArm(76, 200, -52, 72);
-        drawArm(168, 200, -68, 76);
+        drawArm(76, 198, -56, 72);
+        drawArm(168, 198, -70, 76);
       } else if (pose === "holdReceipt") {
-        drawArm(66, 202, 18);
-        drawArm(166, 204, 48, 64);
+        drawArm(65, 200, 14);
+        drawArm(174, 200, -52, 68);
       } else if (pose === "closeupShock") {
-        drawArm(64, 202, 115);
-        drawArm(176, 202, -115);
+        drawArm(64, 200, 112);
+        drawArm(176, 200, -112);
       } else {
-        drawArm(66, 202, 15 + swing);
-        drawArm(174, 202, -15 - swing);
+        drawArm(65, 200, 12 + swing * 0.7);
+        drawArm(175, 200, -12 - swing * 0.7);
       }
 
-      // Charcoal Trenchcoat
+      // Charcoal Trenchcoat + Belt + Lapels
       ctx.fillStyle = "#2B3445";
       ctx.beginPath();
-      ctx.moveTo(68, 184);
-      ctx.lineTo(172, 184);
-      ctx.lineTo(182, 284);
-      ctx.lineTo(58, 284);
+      ctx.moveTo(70, 182);
+      ctx.lineTo(170, 182);
+      ctx.lineTo(180, 282);
+      ctx.lineTo(60, 282);
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
@@ -252,166 +267,184 @@ export const Arda3D: React.FC<{
       // Inner V-neck
       ctx.fillStyle = "#0B1120";
       ctx.beginPath();
-      ctx.moveTo(96, 184);
-      ctx.lineTo(120, 224);
-      ctx.lineTo(144, 184);
+      ctx.moveTo(98, 182);
+      ctx.lineTo(120, 222);
+      ctx.lineTo(142, 182);
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
+
+      // Coat belt
+      ctx.fillStyle = "#1E293B";
+      ctx.fillRect(65, 226, 110, 11);
+      ctx.strokeRect(65, 226, 110, 11);
+      ctx.fillStyle = "#94A3B8";
+      ctx.fillRect(113, 225, 14, 13);
+      ctx.strokeRect(113, 225, 14, 13);
 
       // Popped Collar
       ctx.fillStyle = "#3B4659";
       ctx.beginPath();
-      ctx.moveTo(66, 188);
-      ctx.lineTo(74, 142);
-      ctx.lineTo(100, 186);
-      ctx.lineTo(90, 202);
+      ctx.moveTo(68, 186);
+      ctx.lineTo(76, 142);
+      ctx.lineTo(100, 184);
+      ctx.lineTo(90, 200);
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
       ctx.beginPath();
-      ctx.moveTo(174, 188);
-      ctx.lineTo(166, 142);
-      ctx.lineTo(140, 186);
-      ctx.lineTo(150, 202);
+      ctx.moveTo(172, 186);
+      ctx.lineTo(164, 142);
+      ctx.lineTo(140, 184);
+      ctx.lineTo(150, 200);
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
 
-      // Held white paper receipt in hand
+      // Small receipt aligned in Arda's right hand (not glued to chest!)
       if (pose === "holdReceipt") {
+        ctx.save();
+        ctx.translate(216, 228);
+        ctx.rotate(-0.18);
         ctx.fillStyle = "#FAF8F5";
         ctx.strokeStyle = ink;
-        ctx.lineWidth = 4;
+        ctx.lineWidth = 3.5;
         ctx.beginPath();
-        ctx.roundRect(124, 204, 44, 58, 4);
+        ctx.roundRect(-16, -24, 34, 48, 3);
         ctx.fill();
         ctx.stroke();
         ctx.strokeStyle = "#64748B";
-        ctx.lineWidth = 2.5;
-        for (let ry = 216; ry <= 246; ry += 9) {
+        ctx.lineWidth = 2;
+        for (let ry = -14; ry <= 14; ry += 7) {
           ctx.beginPath();
-          ctx.moveTo(132, ry);
-          ctx.lineTo(160, ry);
+          ctx.moveTo(-10, ry);
+          ctx.lineTo(12, ry);
           ctx.stroke();
         }
+        ctx.restore();
         ctx.strokeStyle = ink;
-        ctx.lineWidth = 5;
+        ctx.lineWidth = 4.5;
       }
 
       // Neck & Ears
       ctx.fillStyle = "#E6AE82";
-      ctx.fillRect(105, 162, 30, 28);
-      ctx.strokeRect(105, 162, 30, 28);
+      ctx.fillRect(106, 160, 28, 26);
+      ctx.strokeRect(106, 160, 28, 26);
       ctx.fillStyle = "#F4C095";
       ctx.beginPath();
-      ctx.ellipse(72, 120, 10, 13, 0, 0, Math.PI * 2);
+      ctx.ellipse(74, 120, 9, 12, 0, 0, Math.PI * 2);
       ctx.fill();
       ctx.stroke();
       ctx.beginPath();
-      ctx.ellipse(168, 120, 10, 13, 0, 0, Math.PI * 2);
+      ctx.ellipse(166, 120, 9, 12, 0, 0, Math.PI * 2);
       ctx.fill();
       ctx.stroke();
 
       // Face
       ctx.fillStyle = "#F4C095";
       ctx.beginPath();
-      ctx.moveTo(74, 82);
-      ctx.quadraticCurveTo(74, 66, 120, 66);
-      ctx.quadraticCurveTo(166, 66, 166, 82);
-      ctx.lineTo(164, 132);
-      ctx.quadraticCurveTo(158, 166, 120, 172);
-      ctx.quadraticCurveTo(82, 166, 76, 132);
+      ctx.moveTo(76, 82);
+      ctx.quadraticCurveTo(76, 66, 120, 66);
+      ctx.quadraticCurveTo(164, 66, 164, 82);
+      ctx.lineTo(162, 132);
+      ctx.quadraticCurveTo(156, 166, 120, 171);
+      ctx.quadraticCurveTo(84, 166, 78, 132);
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
 
       // Eyebrows
       ctx.strokeStyle = "#1E1B18";
-      ctx.lineWidth = 4.5;
+      ctx.lineWidth = 4.2;
       ctx.beginPath();
       if (activeFace === "shock") {
-        ctx.moveTo(84, 92);
-        ctx.quadraticCurveTo(96, 84, 108, 90);
+        ctx.moveTo(85, 92);
+        ctx.quadraticCurveTo(97, 84, 108, 90);
         ctx.moveTo(132, 90);
-        ctx.quadraticCurveTo(144, 84, 156, 92);
+        ctx.quadraticCurveTo(143, 84, 155, 92);
       } else {
-        ctx.moveTo(84, 97);
+        ctx.moveTo(85, 97);
         ctx.quadraticCurveTo(98, 91, 110, 96);
         ctx.moveTo(130, 96);
-        ctx.quadraticCurveTo(142, 91, 156, 97);
+        ctx.quadraticCurveTo(142, 91, 155, 97);
       }
       ctx.stroke();
 
       // Eyes
-      const ry = blink ? 1.5 : activeFace === "shock" ? 9 : 7.5;
+      const ry = blink ? 1.5 : activeFace === "shock" ? 8.5 : 7.2;
       ctx.fillStyle = "#FFFFFF";
       ctx.beginPath();
-      ctx.ellipse(97, 113, 9.5, ry, 0, 0, Math.PI * 2);
+      ctx.ellipse(98, 113, 9, ry, 0, 0, Math.PI * 2);
       ctx.fill();
       if (activeFace === "wink") {
         ctx.strokeStyle = "#1E1B18";
         ctx.lineWidth = 4;
         ctx.beginPath();
         ctx.moveTo(132, 113);
-        ctx.quadraticCurveTo(143, 105, 153, 113);
+        ctx.quadraticCurveTo(143, 105, 152, 113);
         ctx.stroke();
       } else {
         ctx.beginPath();
-        ctx.ellipse(143, 113, 9.5, ry, 0, 0, Math.PI * 2);
+        ctx.ellipse(142, 113, 9, ry, 0, 0, Math.PI * 2);
         ctx.fill();
       }
       if (!blink) {
         ctx.fillStyle = "#1E3A5F";
         ctx.beginPath();
-        ctx.arc(99, 113, 5, 0, Math.PI * 2);
+        ctx.arc(99, 113, 4.8, 0, Math.PI * 2);
         ctx.fill();
         if (activeFace !== "wink") {
           ctx.beginPath();
-          ctx.arc(145, 113, 5, 0, Math.PI * 2);
+          ctx.arc(143, 113, 4.8, 0, Math.PI * 2);
           ctx.fill();
         }
       }
 
       // Nose & Mouth
       ctx.strokeStyle = "#9A6B4C";
-      ctx.lineWidth = 3;
+      ctx.lineWidth = 2.8;
       ctx.beginPath();
       ctx.moveTo(119, 116);
-      ctx.lineTo(116, 131);
-      ctx.quadraticCurveTo(120, 134, 125, 131);
+      ctx.lineTo(116, 130);
+      ctx.quadraticCurveTo(120, 133, 125, 130);
       ctx.stroke();
 
       ctx.strokeStyle = "#1E1B18";
-      ctx.lineWidth = 3.8;
+      ctx.lineWidth = 3.6;
       if (activeFace === "shock") {
         ctx.fillStyle = "#1E293B";
         ctx.beginPath();
-        ctx.ellipse(120, 148, 8, 10, 0, 0, Math.PI * 2);
+        ctx.ellipse(120, 148, 7.5, 9.5, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+      } else if (mouthTalk > 0) {
+        ctx.fillStyle = "#1E293B";
+        ctx.beginPath();
+        ctx.ellipse(120, 146, 8, 5, 0, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
       } else if (activeFace === "happy") {
         ctx.beginPath();
-        ctx.moveTo(105, 144);
-        ctx.quadraticCurveTo(120, 158, 136, 143);
+        ctx.moveTo(106, 144);
+        ctx.quadraticCurveTo(120, 156, 135, 143);
         ctx.stroke();
       } else {
         ctx.beginPath();
-        ctx.moveTo(107, 146);
-        ctx.quadraticCurveTo(122, 153, 135, 143);
+        ctx.moveTo(108, 146);
+        ctx.quadraticCurveTo(122, 152, 134, 143);
         ctx.stroke();
       }
 
       // Round Glasses
       ctx.strokeStyle = ink;
-      ctx.lineWidth = 4.2;
-      ctx.fillStyle = "rgba(56,189,248,0.22)";
+      ctx.lineWidth = 4;
+      ctx.fillStyle = "rgba(56,189,248,0.2)";
       ctx.beginPath();
-      ctx.arc(97, 113, 18, 0, Math.PI * 2);
+      ctx.arc(98, 113, 17, 0, Math.PI * 2);
       ctx.fill();
       ctx.stroke();
       ctx.beginPath();
-      ctx.arc(143, 113, 18, 0, Math.PI * 2);
+      ctx.arc(142, 113, 17, 0, Math.PI * 2);
       ctx.fill();
       ctx.stroke();
       ctx.beginPath();
@@ -419,34 +452,44 @@ export const Arda3D: React.FC<{
       ctx.quadraticCurveTo(120, 108, 125, 112);
       ctx.stroke();
 
-      // Navy Fedora with Cyan Band
+      // Navy Fedora
       ctx.fillStyle = "#1B2A4A";
       ctx.beginPath();
-      ctx.moveTo(76, 78);
-      ctx.lineTo(88, 30);
-      ctx.quadraticCurveTo(120, 24, 152, 30);
-      ctx.lineTo(164, 78);
+      ctx.moveTo(78, 78);
+      ctx.lineTo(90, 32);
+      ctx.quadraticCurveTo(120, 26, 150, 32);
+      ctx.lineTo(162, 78);
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
 
       ctx.fillStyle = "#38BDF8";
-      ctx.beginPath();
-      ctx.moveTo(79, 65);
-      ctx.quadraticCurveTo(120, 60, 161, 65);
-      ctx.lineTo(163, 75);
-      ctx.quadraticCurveTo(120, 70, 77, 75);
-      ctx.closePath();
-      ctx.fill();
+      ctx.fillRect(80, 64, 80, 9);
 
       ctx.fillStyle = "#111C35";
       ctx.beginPath();
-      ctx.moveTo(48, 80);
-      ctx.quadraticCurveTo(120, 66, 192, 80);
-      ctx.quadraticCurveTo(120, 94, 48, 80);
+      ctx.moveTo(50, 80);
+      ctx.quadraticCurveTo(120, 67, 190, 80);
+      ctx.quadraticCurveTo(120, 93, 50, 80);
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
+
+      // Sweat drops when shocked / sweating
+      if (showSweat) {
+        const dy = sweatStep * 4;
+        ctx.fillStyle = "#38BDF8";
+        ctx.strokeStyle = ink;
+        ctx.lineWidth = 2.5;
+        for (const sx of [52, 188]) {
+          ctx.beginPath();
+          ctx.moveTo(sx, 48 + dy);
+          ctx.quadraticCurveTo(sx - 8, 62 + dy, sx, 68 + dy);
+          ctx.quadraticCurveTo(sx + 8, 62 + dy, sx, 48 + dy);
+          ctx.fill();
+          ctx.stroke();
+        }
+      }
     }
 
     ctx.restore();
@@ -454,12 +497,16 @@ export const Arda3D: React.FC<{
     tex.colorSpace = THREE.SRGBColorSpace;
     tex.needsUpdate = true;
     return tex;
-  }, [pose, activeFace, blink, Math.round(swing / 4)]);
+  }, [pose, activeFace, blink, mouthTalk, showSweat, sweatStep, Math.round(swing / 6)]);
 
   const w = height * (240 / 340);
 
   return (
-    <group position={[position[0], position[1] + height / 2 + bob, position[2]]} rotation={[0, rotY, 0]}>
+    <group
+      position={[position[0], position[1] + height / 2 + bob, position[2]]}
+      rotation={[pose === "pushCart" ? -0.06 : 0, rotY, 0]}
+      scale={[1, 1 + breath, 1]}
+    >
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -height / 2 - bob + 0.015, 0]}>
         <circleGeometry args={[w * 0.42, 24]} />
         <meshBasicMaterial color="#020617" transparent opacity={0.28} />

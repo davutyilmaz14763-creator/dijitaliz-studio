@@ -33,7 +33,7 @@ const wAt = (s: number, m: string) => {
 };
 
 /** Tırtıklı 2D Market Fişi (Sahne 5) */
-const MarketReceipt: React.FC<{ at?: number }> = ({ at = 1.4 }) => {
+const MarketReceipt: React.FC<{ at?: number }> = ({ at = 1.2 }) => {
   const p = usePopAt(at, 15, 200);
   const rows = [
     ["1x EKMEK", "15 TL"],
@@ -45,7 +45,7 @@ const MarketReceipt: React.FC<{ at?: number }> = ({ at = 1.4 }) => {
       style={{
         position: "absolute",
         left: "50%",
-        top: 170,
+        top: 155,
         width: 680,
         transform: `translate(-50%, ${interpolate(p, [0, 1], [80, 0])}px) scale(${interpolate(p, [0, 1], [0.85, 1])})`,
         opacity: Math.min(1, p * 2.5),
@@ -98,7 +98,7 @@ const MarketReceipt: React.FC<{ at?: number }> = ({ at = 1.4 }) => {
   );
 };
 
-/** 6 Farklı Sinema Kamera Açısı + 5 Aksiyon Pozlu Arda3D */
+/** 6 Farklı Sinema Kamera Açısı + Aksiyonlu Arda3D + Tüm Hata Düzeltmeleri */
 const MarketScene3D: React.FC<{
   s0: number;
   s1: number;
@@ -110,11 +110,13 @@ const MarketScene3D: React.FC<{
 }> = ({ s0, s1, s2, s3, s4, s5, splitFrame }) => {
   const frame = useCurrentFrame();
 
-  let camPos: [number, number, number] = [0, 2.2, 16.5];
-  let camTarget: [number, number, number] = [0, 1.5, 9.8];
-  let ardaPos: [number, number, number] = [0, 0, 13.0];
+  let camPos: [number, number, number] = [0, 2.3, 21.0];
+  let camTarget: [number, number, number] = [0, 2.1, 9.8];
+  let ardaPos: [number, number, number] = [0, 0, 13.8];
   let ardaPose: ArdaPose = "back";
+  let ardaFace: "normal" | "shock" | "happy" | "wink" = "normal";
   let ardaWalking = false;
+  let ardaSweating = false;
   let showCart = true;
   let cartPos: [number, number, number] = [0.7, 0, 5.2];
   let cartRot = 0;
@@ -123,60 +125,70 @@ const MarketScene3D: React.FC<{
   let bgHex = "#0B132B";
 
   if (frame < s1) {
-    // SAHNE 1 (0-4 sn): DIŞ ÇEKİM — Gece otoparktan 7/24 Market girişine yaklaşma + Arda (back) kapıdan içeri girer
+    // SAHNE 1 (0-4 sn): DIŞ ÇEKİM — "DİJİTALİZ MARKET 7/24" tabelası kenarlardan kesilmeden tam görünür
     const p = interpolate(frame, [s0, s1], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    camPos = [interpolate(p, [0, 1], [-0.4, 0]), interpolate(p, [0, 1], [2.4, 1.85]), interpolate(p, [0, 1], [17.2, 12.6])];
-    camTarget = [0, 1.8, 9.4];
-    ardaPos = [0, 0, interpolate(p, [0, 1], [13.8, 8.6])];
+    camPos = [interpolate(p, [0, 1], [-0.1, 0]), interpolate(p, [0, 1], [2.5, 1.95]), interpolate(p, [0, 1], [24.2, 14.0])];
+    camTarget = [0.25, 2.1, 9.6];
+    ardaPos = [0, 0, interpolate(p, [0, 1], [14.2, 8.6])];
     ardaPose = "back";
     ardaWalking = true;
     showCart = false;
     bgHex = "#0B132B";
   } else if (frame < s2) {
-    // SAHNE 2 (4-9 sn): İÇ GİRİŞ — 45° yan açıdan dev araba iten Arda (pushCart)
+    // SAHNE 2 (4-9 sn): 45° YAN AÇI + 1937 SEPETİNİN 2x BÜYÜMESİ
     const p = interpolate(frame, [s1, s2], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    const zWalk = interpolate(p, [0, 1], [6.4, 3.0]);
-    camPos = [2.85, 1.9, zWalk + 2.85];
-    camTarget = [-0.18, 1.0, zWalk - 0.35];
-    ardaPos = [-0.15, 0, zWalk + 0.72];
+    const zWalk = interpolate(p, [0, 1], [5.2, 2.4]);
+    camPos = [2.45, 1.9, zWalk + 2.65];
+    camTarget = [-0.45, 1.0, zWalk - 0.15];
+    ardaPos = [-0.42, 0, zWalk + 0.52];
     ardaPose = "pushCart";
     ardaWalking = true;
-    cartPos = [0.22, 0, zWalk - 0.28];
-    cartRot = -0.3;
-    cartScale = 1.25;
+    cartPos = [0.35, 0, zWalk - 0.35];
+    cartRot = -0.35;
+    // Küçük 1937 sepeti -> göz önünde 2x büyüyerek dev arabaya dönüşür!
+    const growAt = sceneStart(1) + wAt(1, "iki");
+    cartScale = interpolate(frame / FPS, [sceneStart(1), growAt, growAt + 0.85], [0.58, 0.58, 1.28], {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    });
+    ardaFace = frame / FPS >= growAt ? "shock" : "normal";
     bgHex = "#EDE4D3";
   } else if (frame < s3) {
     // SAHNE 3 (9-15 sn): OMUZ ÜSTÜ / ARKADAN KORİDOR — Arda (back) renkli raflar arasından Süt/Ekmek dolabına yürür
     const p = interpolate(frame, [s2, s3], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    const zWalk = interpolate(p, [0, 1], [2.4, -4.6]);
-    camPos = [interpolate(p, [0, 1], [0.45, -0.35]), 1.9, zWalk + 2.8];
+    const zWalk = interpolate(p, [0, 1], [2.2, -4.6]);
+    camPos = [interpolate(p, [0, 1], [0.4, -0.3]), 1.9, zWalk + 2.9];
     camTarget = [0, 1.35, -9.8];
     ardaPos = [0, 0, zWalk];
     ardaPose = "back";
     ardaWalking = p < 0.85;
     cartPos = [0, 0, zWalk - 1.1];
     cartRot = 0;
-    cartScale = 1.2;
+    cartScale = 1.22;
     bgHex = "#EDE4D3";
   } else if (frame < s4) {
-    // SAHNE 4 (15-20 sn): ÜST ÇAPRAZ SEPET YAKIN PLANI — 4 ürün düşer, Arda sıkışmaz
+    // SAHNE 4 (15-20 sn): ÜST ÇAPRAZ SEPET YAKIN PLANI — Arda sola/geriye çekildi, kırmızı sap gözlüğünü ASLA kapatmaz!
     const p = interpolate(frame, [s3, s4], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    camPos = [interpolate(p, [0, 1], [1.65, 1.3]), interpolate(p, [0, 1], [2.5, 2.2]), interpolate(p, [0, 1], [-2.5, -3.0])];
-    camTarget = [-0.2, 0.8, -5.2];
-    ardaPos = [-0.95, 0, -5.4];
+    camPos = [interpolate(p, [0, 1], [1.55, 1.35]), interpolate(p, [0, 1], [2.45, 2.2]), interpolate(p, [0, 1], [-2.2, -2.5])];
+    camTarget = [-0.2, 0.85, -5.2];
+    ardaPos = [-1.12, 0, -5.85];
     ardaPose = "front";
-    cartPos = [0.3, 0, -5.2];
-    cartRot = -0.45;
-    cartScale = 1.28;
-    dropProgress = interpolate(p, [0.08, 0.84], [0, 4.2], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    ardaFace = "shock";
+    cartPos = [0.45, 0, -4.95];
+    cartRot = -0.42;
+    cartScale = 1.25;
+    dropProgress = interpolate(p, [0.06, 0.84], [0, 4.2], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
     bgHex = "#EDE4D3";
   } else if (frame < s5) {
-    // SAHNE 5 (20-26 sn): KASA TEZGÂHI — 840,00 ₺ kasa ekranı önünde fiş tutan Arda (holdReceipt)
+    // SAHNE 5 (20-26 sn): KASA TEZGÂHI — Fiş açıldığı an Arda şaşırır ve terler (shock + sweating)
     const p = interpolate(frame, [s4, s5], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-    camPos = [interpolate(p, [0, 1], [0.25, 0.55]), 1.78, interpolate(p, [0, 1], [10.1, 9.5])];
-    camTarget = [1.55, 1.15, 6.7];
-    ardaPos = [1.05, 0, 6.9];
+    camPos = [interpolate(p, [0, 1], [0.45, 0.7]), 1.82, interpolate(p, [0, 1], [11.6, 10.9])];
+    camTarget = [1.55, 1.15, 7.7];
+    ardaPos = [1.32, 0, 7.9];
     ardaPose = "holdReceipt";
+    const receiptOpened = frame / FPS >= sceneStart(4) + 1.2;
+    ardaFace = receiptOpened ? "shock" : "normal";
+    ardaSweating = receiptOpened;
     showCart = false;
     bgHex = "#EDE4D3";
   } else {
@@ -186,6 +198,8 @@ const MarketScene3D: React.FC<{
     camTarget = [0, 1.25, -4.0];
     ardaPos = [0, 0, -4.0];
     ardaPose = "closeupShock";
+    ardaFace = "shock";
+    ardaSweating = true;
     showCart = false;
     bgHex = "#EDE4D3";
   }
@@ -194,14 +208,23 @@ const MarketScene3D: React.FC<{
     <ThreeCanvas
       width={1080}
       height={1920}
-      camera={{ position: [0, 2.4, 17.2], fov: 54, aspect: 1080 / 1920 }}
+      camera={{ position: [0, 2.45, 21.2], fov: 52, aspect: 1080 / 1920 }}
       style={{ width: 1080, height: 1920 }}
     >
       <color attach="background" args={[bgHex]} />
-      <fog attach="fog" args={[bgHex, 18, 36]} />
-      <CameraRig position={camPos} target={camTarget} fov={54} />
+      <fog attach="fog" args={[bgHex, 20, 40]} />
+      <CameraRig position={camPos} target={camTarget} fov={52} />
       <MarketWorld />
-      <Arda3D position={ardaPos} camPos={camPos} height={2.0} pose={ardaPose} walking={ardaWalking} talking />
+      <Arda3D
+        position={ardaPos}
+        camPos={camPos}
+        height={2.0}
+        pose={ardaPose}
+        face={ardaFace}
+        walking={ardaWalking}
+        talking
+        sweating={ardaSweating}
+      />
       {showCart && <Cart3D position={cartPos} scale={cartScale} rotationY={cartRot} dropProgress={dropProgress} />}
     </ThreeCanvas>
   );
@@ -268,15 +291,15 @@ const FinalSplit3D: React.FC = () => (
 
 type Hit = [number, number, string, number, number?];
 const hits = (): Hit[] => [
-  [0, 0.4, "ding_correct-answer", 0.42], // Sahne 1 kapı zili
-  [1, 0.15, "whoosh_short-sweep", 0.35], // Sahne 2 araba itme
-  [3, 0.25, "pop_bubble-alert", 0.4], // Sahne 4 ürün 1
-  [3, 1.0, "pop_message", 0.4], // Sahne 4 ürün 2
-  [3, 1.75, "pop_bubble-alert", 0.4], // Sahne 4 ürün 3
-  [3, 2.5, "ding_correct-reward", 0.44], // Sahne 4 %40
-  [4, 0.35, "ding_correct-answer", 0.42], // Sahne 5 kasa bip
-  [4, 1.4, "pop_hard", 0.45], // Sahne 5 fiş açılışı
-  [5, 0.1, "pop_bubble-alert", 0.42], // Sahne 6 şok
+  [0, 0.4, "ding_correct-answer", 0.42],
+  [1, wAt(1, "iki"), "whoosh_short-sweep", 0.42],
+  [3, 0.2, "pop_bubble-alert", 0.4],
+  [3, 0.95, "pop_message", 0.4],
+  [3, 1.7, "pop_bubble-alert", 0.4],
+  [3, 2.45, "ding_correct-reward", 0.44],
+  [4, 0.35, "ding_correct-answer", 0.42],
+  [4, 1.2, "pop_hard", 0.45],
+  [5, 0.1, "pop_bubble-alert", 0.42],
 ];
 
 export const DijitalizMarket3D: React.FC = () => {
@@ -292,22 +315,18 @@ export const DijitalizMarket3D: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ background: "#0B132B" }}>
-      {/* Sahne 1..6 İlk Kısım — Sürekli 3D Mini Dizi */}
       <Sequence name="3D_MiniDizi" from={s0} durationInFrames={splitFrame - s0}>
         <MarketScene3D s0={s0} s1={s1} s2={s2} s3={s3} s4={s4} s5={s5} splitFrame={splitFrame} />
       </Sequence>
 
-      {/* Sahne 4 Kompakt %40 Satış Barı */}
       <Sequence from={s3} durationInFrames={s4 - s3}>
         <CizgiStatBar y={115} at={wAt(3, "yüzde") - 0.15} label="Satışlardaki Artış" percent={40} suffix="%" barColor="#16A34A" />
       </Sequence>
 
-      {/* Sahne 5 Tırtıklı 2D Kasa Fişi */}
       <Sequence from={s4} durationInFrames={s5 - s4}>
-        <MarketReceipt at={1.4} />
+        <MarketReceipt at={1.2} />
       </Sequence>
 
-      {/* Sahne 6 İkinci Kısım — Keskin Geçişli Temiz İkilem Finali */}
       <Sequence name="Final_Split" from={splitFrame} durationInFrames={end - splitFrame}>
         <FinalSplit3D />
       </Sequence>
@@ -321,7 +340,7 @@ export const DijitalizMarket3D: React.FC = () => {
       <Audio src={staticFile("dijitaliz-market/voice.mp3")} volume={0.95} />
       <FloatingParticles />
       <PaperGrain />
-      <ViralCaptions words={words} y={1580} highlight={["ekmek", "dev", "arkaya", "eksik", "kırk", "kırk", "tuzağıydı", "sepeti"]} />
+      <ViralCaptions words={words} y={1580} highlight={["ekmek", "iki", "dev", "arkaya", "eksik", "kırk", "tuzağıydı", "sepeti"]} />
     </AbsoluteFill>
   );
 };

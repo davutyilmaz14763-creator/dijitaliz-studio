@@ -5,12 +5,12 @@
     "stability": 0.4,
     "similarity_boost": 0.8,
     "style": 0.22,
-    "speed": 1.07,
+    "speed": 1.08,
     "use_speaker_boost": true
   },
   "scenes": [
     "Sadece bir ekmek almak için markete girdin...",
-    "Kapıda eline dev bir araba tutuşturuldu. Oysa alacağın tek şey bir ekmekti.",
+    "Kapıda eline 1937'dekinin tam iki katı dev bir araba tutuşturuldu. Oysa alacağın tek şey bir ekmekti.",
     "Ama ekmek bilerek en arkaya saklanmıştı. Oraya yürürken bomboş sepet gözüne battı...",
     "Beynin 'eksik var' dedi. Fark etmeden elin rafa gitti... ve satışlar sırf bu dev sepet yüzünden yüzde kırk fırladı.",
     "Kasaya geldiğinde fişe baktın: bir ekmek on beş lira... ama toplam sekiz yüz kırk lira.",
