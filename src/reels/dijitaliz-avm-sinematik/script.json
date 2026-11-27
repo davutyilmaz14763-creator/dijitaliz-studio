@@ -5,13 +5,13 @@
     "stability": 0.4,
     "similarity_boost": 0.8,
     "style": 0.22,
-    "speed": 1.09,
+    "speed": 1.08,
     "use_speaker_boost": true
   },
   "scenes": [
-    "Sadece bir tişört bakıp çıkacaktın... saat öğlen birdi. İçeri adım attın; etrafına baktın, ne tek bir pencere var ne de duvarda bir saat.",
-    "Buna Gruen Etkisi deniyor. AVM'ler seni labirent gibi döndürür ki... dışarıda güneşin battığını asla fark etme.",
-    "Sonunda kapıdan çıktın. Hava kapkaranlık... telefona baktın: saat akşam yedi kırk! Altı saat uçmuş, elinde dört poşet.",
-    "Zamanı çalan sen değildin, o penceresiz tasarımdı. Senin AVM'de rekorun kaç saat? Yarın kafe menülerindeki gizli fiyat tuzağını açıyoruz... kaçırma."
+    "Bu kapıdan girdiğin an beyninin zaman algısı kapatılıyor... Sadece bir tişört bakacaktın ama parlak vitrinler ve o sonsuz koridor seni hemen içine çekti.",
+    "Buna Gruen Etkisi deniyor. AVM'ler seni labirent gibi kat kat döndürür; beynin o kadar uyarılır ki ne zamanın geçtiğini ne de elindeki poşetleri fark edersin.",
+    "Sonunda kapıdan çıktın. Hava kapkaranlık... telefona baktın: saat akşam yedi kırk! Altı saat uçmuş, elinde dört poşet. Senin AVM'de rekorun kaç saat?",
+    "Yarın kafe menülerindeki gizli fiyat tuzağını açıyoruz... kaçırma."
   ]
 }

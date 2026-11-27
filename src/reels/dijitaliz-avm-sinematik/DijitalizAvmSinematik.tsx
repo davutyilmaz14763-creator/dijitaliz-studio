@@ -18,7 +18,7 @@ const FPS = 30;
 const words = voice.words as VWord[];
 const N_SCENES = Math.max(...words.map((w) => w.scene)) + 1;
 
-export const DIJITALIZ_AVM_SINEMATIK_FRAMES = Math.ceil((voice.duration + 0.6) * FPS);
+export const DIJITALIZ_AVM_SINEMATIK_FRAMES = Math.ceil((voice.duration + 0.5) * FPS);
 
 const sceneStart = (i: number) => (i === 0 ? 0 : Math.max(0, words.find((w) => w.scene === i)!.start - 0.08));
 const sceneEnd = (i: number) => (i === N_SCENES - 1 ? DIJITALIZ_AVM_SINEMATIK_FRAMES / FPS : sceneStart(i + 1));
@@ -125,7 +125,7 @@ const ShockCard: React.FC<{ at: number }> = ({ at }) => {
 };
 
 /** Klipler: tam ekran dikey (9:16), orijinal ses tamamen kapalı */
-const ClipLayer: React.FC<{ src: string; shakeAt?: number }> = ({ src, shakeAt }) => {
+const ClipLayer: React.FC<{ src: string; sceneDurSec: number; shakeAt?: number }> = ({ src, sceneDurSec, shakeAt }) => {
   const frame = useCurrentFrame();
   let tx = 0;
   let ty = 0;
@@ -141,6 +141,8 @@ const ClipLayer: React.FC<{ src: string; shakeAt?: number }> = ({ src, shakeAt }
     }
   }
 
+  const playbackRate = sceneDurSec > 9.8 ? Number((9.8 / sceneDurSec).toFixed(4)) : 1;
+
   return (
     <AbsoluteFill
       style={{
@@ -152,6 +154,7 @@ const ClipLayer: React.FC<{ src: string; shakeAt?: number }> = ({ src, shakeAt }
         src={staticFile(src)}
         muted
         volume={0}
+        playbackRate={playbackRate}
         style={{
           width: "100%",
           height: "100%",
@@ -162,14 +165,14 @@ const ClipLayer: React.FC<{ src: string; shakeAt?: number }> = ({ src, shakeAt }
   );
 };
 
-/** 0:25–0:35 Sinematik Kapanış Kartı */
+/** 3 saniyelik Sinematik Kapanış Kartı */
 const ClosingCard: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const qPop = spring({ frame, fps, config: { damping: 16, stiffness: 160 } });
-  const linePop = spring({ frame: Math.max(0, frame - 18), fps, config: { damping: 18, stiffness: 140 } });
-  const nextPop = spring({ frame: Math.max(0, frame - 55), fps, config: { damping: 16, stiffness: 170 } });
-  const subPop = spring({ frame: Math.max(0, frame - 85), fps, config: { damping: 18, stiffness: 160 } });
+  const qPop = spring({ frame, fps, config: { damping: 16, stiffness: 200 } });
+  const linePop = spring({ frame: Math.max(0, frame - 6), fps, config: { damping: 18, stiffness: 180 } });
+  const nextPop = spring({ frame: Math.max(0, frame - 12), fps, config: { damping: 16, stiffness: 200 } });
+  const subPop = spring({ frame: Math.max(0, frame - 20), fps, config: { damping: 18, stiffness: 190 } });
 
   return (
     <AbsoluteFill
@@ -279,24 +282,23 @@ export const DijitalizAvmSinematik: React.FC = () => {
     <AbsoluteFill style={{ background: "#020617" }}>
       {/* Sahne 0: Gündüz AVM girişi (clip1.mp4) */}
       <Sequence name="Clip1_Giris" from={s0} durationInFrames={s1 - s0}>
-        <ClipLayer src="avm-sinematik/clip1.mp4" />
-        <TopBadge text="👕 1 TİŞÖRT · 13:00" at={0.1} until={3.2} />
-        <TopBadge text="🚫 PENCERE YOK · 🚫 SAAT YOK" at={5.0} until={9.2} />
+        <ClipLayer src="avm-sinematik/clip1.mp4" sceneDurSec={(s1 - s0) / FPS} />
+        <TopBadge text="⏱️ ZAMAN TUZAĞI" at={0.1} until={2.6} />
       </Sequence>
 
       {/* Sahne 1: Yürüyen merdiven / labirent (clip2.mp4) */}
       <Sequence name="Clip2_Labirent" from={s1} durationInFrames={s2 - s1}>
-        <ClipLayer src="avm-sinematik/clip2.mp4" />
+        <ClipLayer src="avm-sinematik/clip2.mp4" sceneDurSec={(s2 - s1) / FPS} />
         <TopBadge text="GRUEN ETKİSİ" at={0.2} bg="rgba(15, 23, 42, 0.8)" color="#FACC15" border="rgba(250,204,21,0.5)" />
       </Sequence>
 
       {/* Sahne 2: Gece çıkışı ve 19:40 şoku (clip3.mp4) */}
       <Sequence name="Clip3_GeceSok" from={s2} durationInFrames={s3 - s2}>
-        <ClipLayer src="avm-sinematik/clip3.mp4" shakeAt={shockAt} />
+        <ClipLayer src="avm-sinematik/clip3.mp4" sceneDurSec={(s3 - s2) / FPS} shakeAt={shockAt} />
         <ShockCard at={shockAt} />
       </Sequence>
 
-      {/* Sahne 3: Sinematik Kapanış Kartı */}
+      {/* Sahne 3: 3 Saniyelik Sinematik Kapanış Kartı */}
       <Sequence name="Kapanis_Karti" from={s3} durationInFrames={end - s3}>
         <ClosingCard />
       </Sequence>
@@ -323,7 +325,7 @@ export const DijitalizAvmSinematik: React.FC = () => {
       <ViralCaptions
         words={words}
         y={1580}
-        highlight={["tişört", "pencere", "saat", "gruen", "labirent", "yedi", "kırk", "altı", "dört", "tuzağını", "kaçırma"]}
+        highlight={["zaman", "tişört", "gruen", "labirent", "yedi", "kırk", "altı", "dört", "rekorun", "tuzağını", "kaçırma"]}
       />
     </AbsoluteFill>
   );
