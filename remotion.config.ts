@@ -8,7 +8,8 @@
 import { Config } from "@remotion/cli/config";
 
 Config.setRspack(true);
-Config.setVideoImageFormat("jpeg");
+Config.setVideoImageFormat("png");
+Config.setCrf(15);
 Config.setOverwriteOutput(true);
 Config.setDefaultPremountInSeconds(2);
 Config.setChromiumOpenGlRenderer(process.env.CI ? "swangle" : "angle");

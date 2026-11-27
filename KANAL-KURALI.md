@@ -19,3 +19,11 @@ Bu proje için onaylanan kalıcı ana format: **2. Tekil Şahıs ("Sen") Hikâye
 - **Altyazı (`ViralCaptions`):** En alt güvenli alanda 2–3 kelimelik akıcı gruplar; yalnızca 1 anahtar kelime altın renkte (`#FACC15`).
 - **Stok Fotoğraf Yok:** Tüm sahneler siyah `#161616` konturlu sıcak stilize 3D dünyadır (`EdgesGeometry`).
 - **Doğrulama & Çıktı:** `npx tsc --noEmit` + her sahneden 1 adet olmak üzere 6 kontrol karesi (PNG) doğrulanır → GitHub Actions (`--gl=swangle`, `publish_ig: false`) → `.mp4` mutlaka `C:\Users\Davut Can\Desktop\Kanal-Studio\out\` klasörüne kaydedilir.
+
+### Kalite Önceliği (Hız Uğruna Kaliteden Ödün Yok)
+- **Render süresi kısıtımız yok:** Tüm Full HD render'lar bulutta (GitHub Actions) alındığı için "hızlı render alsın" diye düşük detay, sadeleştirilmiş kutu/küp, dokusuz düz yüzey, gölgesiz ışık veya eksik animasyon kesinlikle kullanma.
+- **Maksimum görsel gerçekçilik ve sürükleyicilik:**
+  - 3D sahnelerde tam detaylı objeler, gerçekçi etiketli Canvas dokular, antialiasing, yumuşak gölgeler (`shadows` + `castShadow`/`receiveShadow`), atmosfer sisi (`fog`), ışık parlamaları ve doğal sinematik kamera ivmeleri (`Easing`) kullan.
+  - Karakter (`Arda` ve gerekiyorsa yan karakterler) her sahnede gerçek aksiyon, doğal yürüyüş adımı, göz kırpma, el/kol hareketi ve anlık duygu tepkileriyle canlı olsun.
+  - Her bölümde en az 5–6 farklı sinema kamera açısı, temiz foley ses efektleri ve sinematik ses dengesi (konuşma + fon müziği + SFX) eksiksiz kurulsun.
+- **Çıktı kalitesi:** `remotion.config.ts` ve `render.yml` tarafında yüksek görüntü kalitesi (`setVideoImageFormat("png")`, `setCrf(15)`) korunur.

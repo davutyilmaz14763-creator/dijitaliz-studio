@@ -247,8 +247,21 @@ export const MarketWorld: React.FC<{ checkoutText?: string; checkoutBg?: string 
 
   return (
     <group>
-      <ambientLight intensity={0.95} color="#FFF8EE" />
-      <directionalLight position={[4, 10, 8]} intensity={1.15} color="#FFFBEB" />
+      <ambientLight intensity={0.88} color="#FFF8EE" />
+      <directionalLight
+        position={[4, 10, 8]}
+        intensity={1.25}
+        color="#FFFBEB"
+        castShadow
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
+        shadow-camera-near={1}
+        shadow-camera-far={35}
+        shadow-camera-left={-12}
+        shadow-camera-right={12}
+        shadow-camera-top={12}
+        shadow-camera-bottom={-12}
+      />
       <pointLight position={[0, 3.6, -7.5]} intensity={2.0} color="#BAE6FD" distance={12} />
 
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.01, 18]}>

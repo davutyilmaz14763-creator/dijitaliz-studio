@@ -34,7 +34,7 @@ export const OutlineBox: React.FC<{
 
   return (
     <group position={position} rotation={rotation}>
-      <mesh>
+      <mesh castShadow receiveShadow>
         <boxGeometry args={args} />
         <meshStandardMaterial
           color={map ? "#FFFFFF" : color}
@@ -85,7 +85,7 @@ export const TileFloor: React.FC<{ width?: number; depth?: number; positionZ?: n
   }, [width, depth]);
 
   return (
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, positionZ]}>
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, positionZ]} receiveShadow>
       <planeGeometry args={[width, depth]} />
       <meshStandardMaterial map={tileTex} roughness={0.82} />
     </mesh>

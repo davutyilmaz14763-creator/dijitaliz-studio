@@ -256,6 +256,8 @@ const MarketScene3D: React.FC<{
     <ThreeCanvas
       width={1080}
       height={1920}
+      shadows
+      gl={{ antialias: true }}
       camera={{ position: [0, 2.5, 24.2], fov: 52, aspect: 1080 / 1920 }}
       style={{ width: 1080, height: 1920, filter: "contrast(1.05) saturate(1.10)" }}
     >
