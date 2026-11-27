@@ -1,0 +1,205 @@
+{
+ "fake": false,
+ "model": "eleven_multilingual_v2",
+ "duration": 14.489,
+ "words": [
+  {
+   "text": "Asansöre",
+   "start": 0,
+   "end": 0.534,
+   "scene": 0
+  },
+  {
+   "text": "bindiğinde",
+   "start": 0.58,
+   "end": 1.173,
+   "scene": 0
+  },
+  {
+   "text": "kapıyı",
+   "start": 1.312,
+   "end": 1.66,
+   "scene": 0
+  },
+  {
+   "text": "kapat",
+   "start": 1.707,
+   "end": 2.009,
+   "scene": 0
+  },
+  {
+   "text": "tuşuna",
+   "start": 2.043,
+   "end": 2.345,
+   "scene": 0
+  },
+  {
+   "text": "basarsın",
+   "start": 2.392,
+   "end": 2.926,
+   "scene": 0
+  },
+  {
+   "text": "ama",
+   "start": 3.088,
+   "end": 3.274,
+   "scene": 0
+  },
+  {
+   "text": "hiçbir",
+   "start": 3.309,
+   "end": 3.599,
+   "scene": 0
+  },
+  {
+   "text": "şey",
+   "start": 3.646,
+   "end": 3.785,
+   "scene": 0
+  },
+  {
+   "text": "olmaz.",
+   "start": 3.831,
+   "end": 4.307,
+   "scene": 0
+  },
+  {
+   "text": "Çünkü",
+   "start": 4.47,
+   "end": 4.76,
+   "scene": 1
+  },
+  {
+   "text": "çoğu",
+   "start": 4.83,
+   "end": 5.027,
+   "scene": 1
+  },
+  {
+   "text": "binada",
+   "start": 5.085,
+   "end": 5.526,
+   "scene": 1
+  },
+  {
+   "text": "o",
+   "start": 5.689,
+   "end": 5.793,
+   "scene": 1
+  },
+  {
+   "text": "tuş",
+   "start": 5.851,
+   "end": 6.049,
+   "scene": 1
+  },
+  {
+   "text": "bilerek",
+   "start": 6.107,
+   "end": 6.444,
+   "scene": 1
+  },
+  {
+   "text": "devre",
+   "start": 6.513,
+   "end": 6.769,
+   "scene": 1
+  },
+  {
+   "text": "dışı",
+   "start": 6.815,
+   "end": 7.012,
+   "scene": 1
+  },
+  {
+   "text": "bırakılmıştır;",
+   "start": 7.047,
+   "end": 7.883,
+   "scene": 1
+  },
+  {
+   "text": "sadece",
+   "start": 8.231,
+   "end": 8.661,
+   "scene": 1
+  },
+  {
+   "text": "sana",
+   "start": 8.719,
+   "end": 8.905,
+   "scene": 1
+  },
+  {
+   "text": "kontrol",
+   "start": 8.963,
+   "end": 9.334,
+   "scene": 1
+  },
+  {
+   "text": "hissi",
+   "start": 9.369,
+   "end": 9.578,
+   "scene": 1
+  },
+  {
+   "text": "verir.",
+   "start": 9.625,
+   "end": 10.054,
+   "scene": 1
+  },
+  {
+   "text": "Beklerken",
+   "start": 10.519,
+   "end": 11.088,
+   "scene": 2
+  },
+  {
+   "text": "meşgul",
+   "start": 11.157,
+   "end": 11.482,
+   "scene": 2
+  },
+  {
+   "text": "olduğun",
+   "start": 11.54,
+   "end": 11.796,
+   "scene": 2
+  },
+  {
+   "text": "için",
+   "start": 11.842,
+   "end": 12.086,
+   "scene": 2
+  },
+  {
+   "text": "zamanın",
+   "start": 12.283,
+   "end": 12.713,
+   "scene": 2
+  },
+  {
+   "text": "daha",
+   "start": 12.783,
+   "end": 12.992,
+   "scene": 2
+  },
+  {
+   "text": "hızlı",
+   "start": 13.015,
+   "end": 13.27,
+   "scene": 2
+  },
+  {
+   "text": "geçtiğini",
+   "start": 13.317,
+   "end": 13.711,
+   "scene": 2
+  },
+  {
+   "text": "sanırsın!",
+   "start": 13.746,
+   "end": 14.489,
+   "scene": 2
+  }
+ ]
+}

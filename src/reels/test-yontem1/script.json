@@ -1,0 +1,16 @@
+{
+  "voiceId": "JBFqnCBsd6RMkjVDRZzb",
+  "model": "eleven_multilingual_v2",
+  "voiceSettings": {
+    "stability": 0.4,
+    "similarity_boost": 0.8,
+    "style": 0.22,
+    "speed": 1.09,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    "Asansöre bindiğinde kapıyı kapat tuşuna basarsın ama hiçbir şey olmaz.",
+    "Çünkü çoğu binada o tuş bilerek devre dışı bırakılmıştır; sadece sana kontrol hissi verir.",
+    "Beklerken meşgul olduğun için zamanın daha hızlı geçtiğini sanırsın!"
+  ]
+}
