@@ -1,0 +1,17 @@
+{
+  "voiceId": "JBFqnCBsd6RMkjVDRZzb",
+  "model": "eleven_multilingual_v2",
+  "voiceSettings": {
+    "stability": 0.4,
+    "similarity_boost": 0.8,
+    "style": 0.22,
+    "speed": 1.09,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    "Sadece bir tişört bakıp çıkacaktın... saat öğlen birdi. İçeri adım attın; etrafına baktın, ne tek bir pencere var ne de duvarda bir saat.",
+    "Buna Gruen Etkisi deniyor. AVM'ler seni labirent gibi döndürür ki... dışarıda güneşin battığını asla fark etme.",
+    "Sonunda kapıdan çıktın. Hava kapkaranlık... telefona baktın: saat akşam yedi kırk! Altı saat uçmuş, elinde dört poşet.",
+    "Zamanı çalan sen değildin, o penceresiz tasarımdı. Senin AVM'de rekorun kaç saat? Yarın kafe menülerindeki gizli fiyat tuzağını açıyoruz... kaçırma."
+  ]
+}

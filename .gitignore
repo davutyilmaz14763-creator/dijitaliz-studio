@@ -24,3 +24,4 @@ public/**
 !public/sfx/*.wav
 !public/sfx/*.mp3
 !public/cizgi/*.jpg
+!public/avm-sinematik/*.mp4

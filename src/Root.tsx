@@ -39,6 +39,7 @@ import { DijitalizZengin, DIJITALIZ_ZENGIN_FRAMES } from "./reels/dijitaliz-zeng
 import { DijitalizViralTest, DIJITALIZ_VIRAL_TEST_FRAMES } from "./reels/dijitaliz-viral-test/DijitalizViralTest";
 import { DijitalizMarket, DIJITALIZ_MARKET_FRAMES } from "./reels/dijitaliz-market/DijitalizMarket";
 import { DijitalizMarket3D, DIJITALIZ_MARKET_3D_FRAMES } from "./reels/dijitaliz-market-3d/DijitalizMarket3D";
+import { DijitalizAvmSinematik, DIJITALIZ_AVM_SINEMATIK_FRAMES } from "./reels/dijitaliz-avm-sinematik/DijitalizAvmSinematik";
 import { TestYontem1, TEST_YONTEM1_FRAMES } from "./reels/test-yontem1/TestYontem1";
 
 export const RemotionRoot: React.FC = () => {
@@ -167,6 +168,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition id="DijitalizViralTest" component={DijitalizViralTest} durationInFrames={DIJITALIZ_VIRAL_TEST_FRAMES} fps={30} width={1080} height={1920} />
       <Composition id="DijitalizMarket" component={DijitalizMarket} durationInFrames={DIJITALIZ_MARKET_FRAMES} fps={30} width={1080} height={1920} />
       <Composition id="DijitalizMarket3D" component={DijitalizMarket3D} durationInFrames={DIJITALIZ_MARKET_3D_FRAMES} fps={30} width={1080} height={1920} />
+      <Composition id="DijitalizAvmSinematik" component={DijitalizAvmSinematik} durationInFrames={DIJITALIZ_AVM_SINEMATIK_FRAMES} fps={30} width={1080} height={1920} />
       <Composition id="TestYontem1" component={TestYontem1} durationInFrames={TEST_YONTEM1_FRAMES} fps={30} width={1080} height={1920} />
     </>
   );
